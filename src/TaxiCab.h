@@ -15,7 +15,7 @@ private:
     int numberOfKilometers;
     int tariff;
 public:
-    //constractor
+    //constructor
     TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId, int numOfKilometers, int tariff);
 
     //getters and setters
@@ -35,6 +35,16 @@ public:
 
     //getters and setters
     void setTariff(int tariff);
+
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Vehicle); 
+        archive & BOOST_SERIALIZATION_NVP(cabId);
+        archive & BOOST_SERIALIZATION_NVP(numberOfKilometers);
+        archive & BOOST_SERIALIZATION_NVP(tariff);
+    }
+
 };
 
 

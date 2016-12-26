@@ -2,8 +2,9 @@
 #define NEWEX1_POINT_H
 
 
-#include <iosfwd>
 #include "Node.h"
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 
 class Point {
 private:
@@ -26,6 +27,13 @@ public:
 
     //overloading <<
     friend ostream& operator<<(ostream &os, const Point &p);
+
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & BOOST_SERIALIZATION_NVP(xVal);
+        archive & BOOST_SERIALIZATION_NVP(yVal);
+    }
 };
 
 
