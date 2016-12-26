@@ -6,6 +6,7 @@
 
 Driver::Driver(Point location, int id, int age, int yearsOfExperience,
                int averageSatisfaction, STATUS status, TaxiCab taxi) : Person(id, age, status, location), taxi(taxi) {
+
     this->yearsOfExperience = yearsOfExperience;
     this->averageSatisfaction = averageSatisfaction;
 }
