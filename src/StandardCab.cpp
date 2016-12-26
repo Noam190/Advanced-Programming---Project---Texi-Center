@@ -4,7 +4,7 @@
 
 #include "StandardCab.h"
 #include "StandardCab.h"
-//constractor
+//constructor
 StandardCab::StandardCab(int cabId, int numOfKilometers,
                      int tariff,MANUFACTURER carManufacturer, COLOR color) :
         TaxiCab(carManufacturer, color, cabId, numOfKilometers, tariff) {}
