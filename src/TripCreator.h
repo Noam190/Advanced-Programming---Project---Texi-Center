@@ -9,7 +9,7 @@
 #include "Trip.h"
 #include "Matrix.h"
 
-//help to craete a trip
+//help to create a trip
 Trip createTrip(Matrix grid, int id, int xStart, int yStart,
                 int xEnd, int yEnd, int numOfPass, double tariff);
 
