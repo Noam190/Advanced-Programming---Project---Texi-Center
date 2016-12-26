@@ -13,7 +13,7 @@ protected:
     MANUFACTURER manu;
     COLOR c;
 public:
-    //constractor
+    //constructor
     Vehicle(MANUFACTURER carManufacturer, COLOR c);
 
     //get the COLOR of the Vehicle
