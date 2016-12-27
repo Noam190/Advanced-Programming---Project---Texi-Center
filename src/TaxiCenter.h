@@ -37,7 +37,7 @@ public:
     TaxiCab getTaxi(int idVehicle);
 
     //add a trip to the center
-        void addTrip(Trip t);
+    void addTrip(Trip t);
 
     //remove a driver to the center
     void removeDriver(int id);
