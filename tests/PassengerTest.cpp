@@ -11,18 +11,11 @@ namespace {
     class  PassengerTest : public testing::Test {
     public:
         Passenger passenger;
-        PassengerTest() : passenger(0, 0, MARRIED, Point(0, 0), Point(0, 0), Point(1, 1)) {
+        PassengerTest() : passenger(0, 0, MARRIED, Point(0, 0), Point(1, 1)) {
         }
     };
 }
 //getters ang setters
-TEST_F(PassengerTest, passangerGetStartPoint){
-    ASSERT_EQ(Point(0,0),passenger.getSourcePoint());
-}
-TEST_F(PassengerTest, passangerSetStartPoint){
-    passenger.setSourcePoint(Point(0,1));
-    ASSERT_EQ(Point(0,1),passenger.getSourcePoint());
-}
 TEST_F(PassengerTest, passangerSetDestanationPoint){
     passenger.setDestinationPoint(Point(0, 1));
     ASSERT_EQ(Point(0,1),passenger.getDestinationPoint());
