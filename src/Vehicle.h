@@ -5,11 +5,21 @@
 #ifndef EX2AP_VEHICLE_H
 #define EX2AP_VEHICLE_H
 
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
+
 enum MANUFACTURER {HONDA, SUBARO, TESLA, FIAT};
 enum COLOR {RED, GREEN, BLUE, PINK, WHITE};
 
 class Vehicle {
-protected:
+private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & manu;
+        archive & c;
+    }
     MANUFACTURER manu;
     COLOR c;
 public:

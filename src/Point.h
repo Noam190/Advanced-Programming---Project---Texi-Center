@@ -2,12 +2,20 @@
 #define NEWEX1_POINT_H
 
 
-#include <iosfwd>
 #include "Node.h"
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 
 class Point {
 private:
     int xVal, yVal;
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & xVal;
+        archive & yVal;
+    }
 public:
     // Constructor uses int x and y values
     Point(int x, int y);

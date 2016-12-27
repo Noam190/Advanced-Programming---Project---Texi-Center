@@ -10,7 +10,7 @@ Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers
     this->length = length;
     this->id = id;
     this->totalMeters = totalMeters;
-    this->numberOfPassengers = numberOfPassengers;
+    this->numOfPassengers = numberOfPassengers;
     this->tariff = tariff;
     this->startPoint = start;
     this->endPoint = end;
@@ -42,7 +42,7 @@ void Trip::setTotalMeters(int totalMeters){
 }
 //getters ang setters
 int Trip::getNumberOfPassengers(){
-    return this->numberOfPassengers;
+    return this->numOfPassengers;
 }
 
 //getters ang setters
@@ -83,5 +83,5 @@ void Trip::updateLocation(Point p){
 }
 
 void Trip::setNumberOfPassengers(int numberOfPassengers) {
-    this->numberOfPassengers = numberOfPassengers;
+    this->numOfPassengers = numberOfPassengers;
 }
