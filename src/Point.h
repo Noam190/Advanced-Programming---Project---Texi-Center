@@ -9,6 +9,13 @@
 class Point {
 private:
     int xVal, yVal;
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & xVal;
+        archive & yVal;
+    }
 public:
     // Constructor uses int x and y values
     Point(int x, int y);
@@ -27,13 +34,6 @@ public:
 
     //overloading <<
     friend ostream& operator<<(ostream &os, const Point &p);
-
-    template<class Archive>
-    void serialize(Archive& archive, const unsigned int version)
-    {
-        archive & BOOST_SERIALIZATION_NVP(xVal);
-        archive & BOOST_SERIALIZATION_NVP(yVal);
-    }
 };
 
 

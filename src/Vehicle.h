@@ -12,7 +12,14 @@ enum MANUFACTURER {HONDA, SUBARO, TESLA, FIAT};
 enum COLOR {RED, GREEN, BLUE, PINK, WHITE};
 
 class Vehicle {
-protected:
+private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & manu;
+        archive & c;
+    }
     MANUFACTURER manu;
     COLOR c;
 public:
@@ -24,14 +31,6 @@ public:
 
     //get the MANUFACTURER of the Vehicle
     MANUFACTURER  getCarManufacturer();
-
-    template<class Archive>
-    void serialize(Archive& archive, const unsigned int version)
-    {
-        archive & BOOST_SERIALIZATION_NVP(manu);
-        archive & BOOST_SERIALIZATION_NVP(c);
-    }
-
 };
 
 

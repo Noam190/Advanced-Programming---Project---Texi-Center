@@ -7,6 +7,19 @@
 
 class Trip {
 private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & startPoint;
+        archive & endPoint;
+        archive & currentLocation;
+        archive & length;
+        archive & id;
+        archive & totalMeters;
+        archive & numOfPassengers;
+        archive & tariff;
+    }
 
     unsigned long length;
     int id;
@@ -16,7 +29,9 @@ private:
     Point startPoint;
     Point endPoint;
     Point currentLocation;
+
 public:
+
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters,
            int numberOfPass,
@@ -72,20 +87,6 @@ public:
 
     //update the trip location
    void updateLocation(Point p);
-
-    template<class Archive>
-    void serialize(Archive& archive, const unsigned int version)
-    {
-        archive & BOOST_SERIALIZATION_NVP(length);
-        archive & BOOST_SERIALIZATION_NVP(id);
-        archive & BOOST_SERIALIZATION_NVP(totalMeters);
-        archive & BOOST_SERIALIZATION_NVP(numOfPassengers);
-        archive & BOOST_SERIALIZATION_NVP(tariff);
-        archive & BOOST_SERIALIZATION_NVP(startPoint);
-        archive & BOOST_SERIALIZATION_NVP(endPoint);
-        archive & BOOST_SERIALIZATION_NVP(currentLocation);
-    }
-
 };
 
 
