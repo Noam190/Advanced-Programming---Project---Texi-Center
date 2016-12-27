@@ -23,4 +23,3 @@ TEST_F(PassengerTest, passangerSetDestanationPoint){
 TEST_F(PassengerTest, passangerGetDestanationPoint){
     ASSERT_EQ(Point(1,1), passenger.getDestinationPoint());
 }
--
