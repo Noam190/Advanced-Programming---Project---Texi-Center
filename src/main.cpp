@@ -3,6 +3,7 @@
 #include "Matrix.h"
 #include "TaxiCenter.h"
 #include "Menu.h"
+#include "stdlib.h"
 int main() {
     TaxiCenter taxiCenter = TaxiCenter();
 
