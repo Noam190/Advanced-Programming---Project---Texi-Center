@@ -11,6 +11,15 @@ enum  STATUS {SINGLE, MARRIED, DIVORCED, WIDOWED };
 
 class Person {
 private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & id;
+        archive & age;
+        archive & status;
+        archive & location;
+    }
     int id;
     int age;
     STATUS status;

@@ -11,10 +11,21 @@ using namespace std;
 
 class TaxiCab : public Vehicle {
 private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & boost::serialization::base_object<Vehicle>(*this);
+        archive & cabId;
+        archive & numberOfKilometers;
+        archive & tariff;
+    }
     int cabId;
     int numberOfKilometers;
     int tariff;
+
 public:
+
     //constructor
     TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId, int numOfKilometers, int tariff);
 
@@ -35,15 +46,6 @@ public:
 
     //getters and setters
     void setTariff(int tariff);
-
-    template<class Archive>
-    void serialize(Archive& archive, const unsigned int version)
-    {
-        archive & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Vehicle); 
-        archive & BOOST_SERIALIZATION_NVP(cabId);
-        archive & BOOST_SERIALIZATION_NVP(numberOfKilometers);
-        archive & BOOST_SERIALIZATION_NVP(tariff);
-    }
 
 };
 

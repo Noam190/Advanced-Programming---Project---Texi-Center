@@ -13,6 +13,15 @@
 
 class Driver : public Person{
 private:
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & boost::serialization::base_object<Person>(*this);
+        archive & taxi;
+        archive & yearsOfExperience;
+        archive & averageSatisfaction;
+    }
     int yearsOfExperience;
     int averageSatisfaction;
     TaxiCab taxi;

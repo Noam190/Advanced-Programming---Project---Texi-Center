@@ -5,18 +5,8 @@
 #include <random>
 #include "Passenger.h"
 //constructor
-Passenger::Passenger(int id, int age, STATUS status, Point location, Point sourceNew, Point destinationNew)
-        : Person(id, age, status, location), source(sourceNew), destination(destinationNew) {}
-
-//getters and setters
-Point Passenger::getSourcePoint(){
-    return this->source;
-}
-
-//getters and setters
-void Passenger::setSourcePoint(Point p){
-    this->source = p;
-}
+Passenger::Passenger(int id, int age, STATUS status, Point location, Point destination)
+        : Person(id, age, status, location), destination(destination) {}
 
 //getters and setters
 Point Passenger::getDestinationPoint(){

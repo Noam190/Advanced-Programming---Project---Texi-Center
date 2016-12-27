@@ -4,7 +4,7 @@
 
 #include "TaxiCab.h"
 
-//constractor
+//constructor
 TaxiCab::TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId, int numOfKilometers, int tariff)
         : Vehicle(carManufacturer, color) {
     this->cabId = cabId;

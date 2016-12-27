@@ -10,17 +10,17 @@
 
 class Passenger : public Person{
 private:
-    Point source;
+    friend boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive& archive, const unsigned int version)
+    {
+        archive & boost::serialization::base_object<Person>(*this);
+        archive & destination;
+    }
     Point destination;
 public:
     //constructor
-    Passenger(int id, int age, STATUS status, Point location, Point sourceNew, Point destinationNew);
-
-    //getters and setters
-    Point getSourcePoint();
-
-    //getters and setters
-    void setSourcePoint(Point p);
+    Passenger(int id, int age, STATUS status, Point location, Point destination);
 
     //getters and setters
     Point getDestinationPoint();
