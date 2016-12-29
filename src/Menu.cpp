@@ -72,7 +72,7 @@ void Menu::insertDriver() {
     char status;
     int experience, vehicleId;
     std::cin >> id >> dummy >> age >> dummy >> status >> dummy >> experience >> dummy >> vehicleId;
-    Driver d = createDriver(id, age, status, experience, vehicleId, taxiCenter);
+    Driver d = createDriver(id, age, status, experience, vehicleId);
     taxiCenter.addDriver(d);
 
 }
@@ -109,5 +109,6 @@ void Menu::startDrivingAll() {
     taxiCenter.moveAllRidesToTheEnd();
 
 }
+
 //constructor to a new 
 Menu::Menu(TaxiCenter taxiCenter, Matrix grid) : grid(grid), taxiCenter(taxiCenter) {}

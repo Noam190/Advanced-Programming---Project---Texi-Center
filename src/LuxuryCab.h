@@ -7,8 +7,14 @@
 #include "TaxiCab.h"
 
 class LuxuryCab : public TaxiCab {
-public:
+private:
+    friend boost::serialization::access;
 
+    template<class Archive>
+    void serialize(Archive &archive, const unsigned int version) {
+        archive & boost::serialization::base_object<Vehicle>(*this);
+    }
+public:
     //create a new luxury cab
     LuxuryCab(int cabId, int numOfKilometers, int tariff, MANUFACTURER carManufacturer, COLOR color);
 
