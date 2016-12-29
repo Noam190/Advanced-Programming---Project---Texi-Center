@@ -6,6 +6,9 @@
 #include "Trip.h"
 #include "TaxiCab.h"
 
+#include <boost/archive/xml_iarchive.hpp>
+#include <boost/archive/xml_oarchive.hpp>
+
 #ifndef EX2AP_DRIVER_H
 #define EX2AP_DRIVER_H
 
@@ -24,12 +27,13 @@ private:
     }
     int yearsOfExperience;
     int averageSatisfaction;
-    TaxiCab taxi;
+    TaxiCab *taxi;
 
 public:
+
     // Constructor all the members
     Driver(Point location, int id, int age, int yearsOfExperience,
-           int averageSatisfaction, STATUS status, TaxiCab taxi);
+           int averageSatisfaction, STATUS status);
 
     //getters and setters
     int getYearsOfExperience();

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.3)
 
-project(ex2ap)
+project(Taxi-Center)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

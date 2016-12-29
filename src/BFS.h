@@ -11,10 +11,9 @@
 
 using namespace std;
 
-class BFS {
-public:
-    //do BFS algorithm
-    std::list<Node*> funcBFS(Node* start, Node* end);
-};
+
+//do BFS algorithm
+std::list<Node *> BFS(Node *start, Node *end);
+
 
 #endif //NEWEX1_BFS_H

@@ -11,7 +11,8 @@ void Ride::moveToTheEnd() {
 
 //move the ride one step
 void Ride::moveOneStep() {
-    return;
+    this->trip->moveOneStep();
+    this->driver->updateLocation(this->trip->getCurrentPoint());
 }
 
 //constructor

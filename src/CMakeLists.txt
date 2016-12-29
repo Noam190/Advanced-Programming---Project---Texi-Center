@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.6)
-project(ex2ap)
+project(Taxi-Center)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 
@@ -15,8 +15,7 @@ set(SOURCE_FILES main.cpp Point.cpp Point.h Node.cpp Node.h Matrix.cpp
         Menu.cpp Menu.h Ride.cpp Ride.h)
 
 
+add_executable(source ${SOURCE_FILES} main.cpp)
 add_library(core ${SOURCE_FILES} main.cpp)
-#add_executable(ex1 ${SOURCE_FILES} main.cpp mainTest.cpp)
-add_executable(ex1 ${SOURCE_FILES}  main.cpp)
-target_link_libraries(ex1 ${Boost_LIBRARIES})
+target_link_libraries(source ${Boost_LIBRARIES})
 

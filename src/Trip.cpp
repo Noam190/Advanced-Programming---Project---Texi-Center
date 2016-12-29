@@ -5,17 +5,16 @@
 #include "Trip.h"
 // Constructor all the members
 Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-           double tariff, Point start, Point end) :
-        currentLocation(0,0), startPoint(0,0), endPoint(0,0){
+           double tariff, Point start, Point end, list <Point> path) :
+        currentLocation(start), startPoint(start), endPoint(end), path(path) {
+
     this->length = length;
     this->id = id;
     this->totalMeters = totalMeters;
     this->numOfPassengers = numberOfPassengers;
     this->tariff = tariff;
-    this->startPoint = start;
-    this->endPoint = end;
-    this->currentLocation = start;
 }
+
 //getters ang setters
 unsigned long Trip::getLength(){
     return this->length;
@@ -84,4 +83,9 @@ void Trip::updateLocation(Point p){
 
 void Trip::setNumberOfPassengers(int numberOfPassengers) {
     this->numOfPassengers = numberOfPassengers;
+}
+
+void Trip::moveOneStep() {
+    this->path.pop_front();
+    this->updateLocation(this->path.front());
 }
