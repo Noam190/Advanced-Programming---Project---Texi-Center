@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.3)
 
+project(Taxi-Center)
+
 set(REPO ~/ClionProjects/.repo)
 
-project(ex2ap)
 
 include(CTest)
 
@@ -22,8 +23,6 @@ download_project(
 )
 
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR} EXCLUDE_FROM_ALL)
-
-
 
 add_executable(runUnitTests ${test_SRCS} gtest.cpp)
 

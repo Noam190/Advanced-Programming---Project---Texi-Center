@@ -11,8 +11,7 @@ namespace {
     class  PassengerTest : public testing::Test {
     public:
         Passenger passenger;
-        PassengerTest() : passenger(0, 0, MARRIED, Point(0, 0), Point(1, 1)) {
-        }
+        PassengerTest() : passenger(0, 0, MARRIED, Point(0, 0), Point(1, 1)) {}
     };
 }
 //getters ang setters

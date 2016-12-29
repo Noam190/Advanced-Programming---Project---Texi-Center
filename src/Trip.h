@@ -21,6 +21,7 @@ private:
         archive & tariff;
     }
 
+    list<Point> path;
     unsigned long length;
     int id;
     int totalMeters;
@@ -33,9 +34,11 @@ private:
 public:
 
     // Constructor all the members
-    Trip(unsigned long length, int id, int totalMeters,
-           int numberOfPass,
-         double tariff, Point start, Point end);
+    Trip(unsigned long length, int id, int totalMeters, int numberOfPass,
+         double tariff, Point start, Point end, list<Point> path);
+
+    //move the one step - to the next point.
+    void moveOneStep();
 
     //getters ang setters
     unsigned long getLength();

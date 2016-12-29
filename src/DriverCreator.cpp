@@ -3,8 +3,8 @@
 //
 
 #include "DriverCreator.h"
-//define the status as macro
-Driver createDriver(int id, int age, char status, int experience, int vehicleId, TaxiCenter center){
+
+Driver createDriver(int id, int age, char status, int experience, int vehicleId) {
     STATUS st;
     switch(status){
         case 'S':
@@ -25,5 +25,5 @@ Driver createDriver(int id, int age, char status, int experience, int vehicleId,
     }
 
 //return the new driver
-    return Driver(Point(0,0), id, age, experience, 0, st, center.getTaxi(vehicleId));
+    return Driver(Point(0, 0), id, age, experience, 0, st);
 }

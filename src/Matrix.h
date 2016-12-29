@@ -24,6 +24,8 @@ public:
     //get a Node
     Node* getNode(int x, int y);
 
+    Point getPoint(Node *n);
+
     //initialize the matrix
     void initDistanceForAll(int d);
     //add a new obstacle

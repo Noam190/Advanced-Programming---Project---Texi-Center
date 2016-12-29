@@ -8,9 +8,6 @@
 
 class Grid {
 public:
-    //virtual func to get the node
-    virtual Node* getNode(int x, int y) = 0;
-
     //virtual initialize the grid
     virtual void initDistanceForAll(int d) = 0;
 
