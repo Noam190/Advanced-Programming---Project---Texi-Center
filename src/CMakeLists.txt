@@ -13,12 +13,13 @@ set(SOURCE_FILES main.cpp Point.cpp Point.h Node.cpp Node.h Matrix.cpp
         StandardCab.h Statistics.cpp Statistics.h Person.cpp Person.h TaxiCenter.cpp TaxiCenter.h Vehicle.cpp
         Vehicle.h TripCreator.cpp TripCreator.h TaxiCreator.cpp TaxiCreator.h DriverCreator.cpp DriverCreator.h
         Menu.cpp Menu.h Ride.cpp Ride.h
-        sockets/Socket.cpp sockets/Udp.cpp sockets/Tcp.cpp
-        client.cpp server.cpp)
+        client.cpp server.cpp
+        sockets/Socket.cpp sockets/Udp.cpp sockets/Tcp.cpp sockets/Udp.h
+        )
 
 
 add_library(core ${SOURCE_FILES} main.cpp)
-#add_library(sockets ${core_sockets})
+add_library(sockets ${core_sockets})
 
 #add_executable(ex1 ${SOURCE_FILES} main.cpp mainTest.cpp)
 add_executable(ex1 ${SOURCE_FILES}  main.cpp)
