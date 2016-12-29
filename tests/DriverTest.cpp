@@ -13,7 +13,7 @@ namespace {
 
         Driver driver;
 
-        DriverTest() : driver(Point(0,0), 0, 9, 5, 6, SINGLE, TaxiCab(HONDA, GREEN, 8, 2,2)) {
+        DriverTest() : driver(Point(0, 0), 0, 9, 5, 6, SINGLE) {
         }
     };
 }

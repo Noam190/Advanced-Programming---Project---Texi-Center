@@ -11,7 +11,8 @@ namespace {
     class  TripTest : public testing::Test {
     public:
         Trip trip;
-        TripTest() : trip(0,0,0,0,0.0,Point(0,0),Point(0,0)){
+
+        TripTest() : trip(0, 0, 0, 0, 0.0, Point(0, 0), Point(0, 0), list<Point>()) {
             trip;
         }
     };

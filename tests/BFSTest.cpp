@@ -9,14 +9,10 @@
 
 using testing::Eq;
 namespace {
-    class  BFSTest : public testing::Test {
-    public:
-        BFS bfs;
-        BFSTest() : bfs(){
-            bfs;
-        }
+    class BFSTest : public testing::Test {
     };
 }
+
 TEST_F(BFSTest, BFSfunc){
     int width = 4;
     int height = 4;
@@ -34,7 +30,7 @@ TEST_F(BFSTest, BFSfunc){
         }
 
     }
-    std::list<Node*> list1 = bfs.funcBFS(start,end);
+    std::list<Node *> list1 = BFS(start, end);
     while (!list1.empty()) {
         ASSERT_EQ(list1.front(),list.front());
         list1.pop_front();
