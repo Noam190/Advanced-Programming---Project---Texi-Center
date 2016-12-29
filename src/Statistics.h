@@ -5,7 +5,7 @@
 #ifndef EX2AP_STATISTICS_H
 #define EX2AP_STATISTICS_H
 
-#include "Person.h"
+#include "persons/Person.h"
 
 class Statistics {
 public:

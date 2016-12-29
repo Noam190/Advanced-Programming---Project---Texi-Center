@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/Passenger.h"
+#include "../src/persons/Passenger.h"
 
 using  testing::Eq;
 namespace {

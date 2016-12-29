@@ -7,8 +7,8 @@
 
 
 #include <vector>
-#include "Driver.h"
-#include "TaxiCab.h"
+#include "persons/Driver.h"
+#include "cabs/TaxiCab.h"
 #include "Trip.h"
 #include "Ride.h"
 

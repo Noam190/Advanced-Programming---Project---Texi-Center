@@ -6,7 +6,9 @@
 #define EX2AP_PERSON_H
 
 #include <string>
-#include "Point.h"
+#include <boost/serialization/access.hpp>
+#include "../core_classes/Point.h"
+
 enum  STATUS {SINGLE, MARRIED, DIVORCED, WIDOWED };
 
 class Person {

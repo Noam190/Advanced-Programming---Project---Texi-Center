@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/NodeMatrix.h"
-#include "../src/Matrix.h"
+#include "../src/core_classes/NodeMatrix.h"
+#include "../src/core_classes/Matrix.h"
 
 using testing::Eq;
 namespace {

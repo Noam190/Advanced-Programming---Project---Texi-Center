@@ -6,8 +6,8 @@
 #define EX2AP_TRIPCREATOR_H
 
 
-#include "Trip.h"
-#include "Matrix.h"
+#include "../Trip.h"
+#include "../core_classes/Matrix.h"
 
 //help to create a trip
 Trip createTrip(Matrix grid, int id, int xStart, int yStart,

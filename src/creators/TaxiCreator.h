@@ -6,7 +6,7 @@
 #define EX2AP_TAXICREATOR_H
 
 
-#include "TaxiCab.h"
+#include "../cabs/TaxiCab.h"
 
 //help to create a taxi with macro of MANUFACTURER and COLOR
 TaxiCab createTaxi(int id, int taxiType, char manufacturer, char color);

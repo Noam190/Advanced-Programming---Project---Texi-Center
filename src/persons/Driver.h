@@ -3,8 +3,8 @@
 //
 #include <string>
 #include "Person.h"
-#include "Trip.h"
-#include "TaxiCab.h"
+#include "../Trip.h"
+#include "../cabs/TaxiCab.h"
 
 #include <boost/archive/xml_iarchive.hpp>
 #include <boost/archive/xml_oarchive.hpp>

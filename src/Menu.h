@@ -6,11 +6,11 @@
 #define EX2AP_MANUOPTIONS_H
 
 #include <iostream>
-#include "DriverCreator.h"
-#include "TripCreator.h"
-#include "TaxiCreator.h"
+#include "creators/DriverCreator.h"
+#include "creators/TripCreator.h"
+#include "creators/TaxiCreator.h"
 #include "TaxiCenter.h"
-#include "Grid.h"
+#include "core_classes/Grid.h"
 class Menu {
 private:
     Matrix grid;

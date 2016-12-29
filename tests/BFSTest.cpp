@@ -4,8 +4,8 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/BFS.h"
-#include "../src/Matrix.h"
+#include "../src/core_classes/BFS.h"
+#include "../src/core_classes/Matrix.h"
 
 using testing::Eq;
 namespace {

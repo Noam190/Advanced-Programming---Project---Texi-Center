@@ -3,7 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/NodeMatrix.h"
+#include "../src/core_classes/NodeMatrix.h"
 
 using testing::Eq;
 class  NodeMatrixTest : public testing::Test {

@@ -7,8 +7,8 @@
 
 
 #include "Trip.h"
-#include "Driver.h"
-#include "TaxiCab.h"
+#include "persons/Driver.h"
+#include "cabs/TaxiCab.h"
 
 class Ride {
 private:

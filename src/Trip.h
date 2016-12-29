@@ -1,7 +1,7 @@
 //
 // Created by mei on 29/11/16.
 //
-#include "Point.h"
+#include "core_classes/Point.h"
 #ifndef EX2AP_TRIP_H
 #define EX2AP_TRIP_H
 

@@ -4,7 +4,7 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/TaxiCab.h"
+#include "../src/cabs/TaxiCab.h"
 
 using  testing::Eq;
 namespace {

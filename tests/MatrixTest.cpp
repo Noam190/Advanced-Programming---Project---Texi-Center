@@ -2,7 +2,7 @@
 // Created by mei on 02/12/16.
 //
 
-#include "../src/Matrix.h"
+#include "../src/core_classes/Matrix.h"
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 

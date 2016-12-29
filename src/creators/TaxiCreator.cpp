@@ -3,8 +3,8 @@
 //
 
 #include "TaxiCreator.h"
-#include "StandardCab.h"
-#include "LuxuryCab.h"
+#include "../cabs/StandardCab.h"
+#include "../cabs/LuxuryCab.h"
 //help to create a taxi with macro of MANUFACTURER and COLOR
 TaxiCab createTaxi(int id, int taxiType, char manufacturer, char color){
     COLOR c;
