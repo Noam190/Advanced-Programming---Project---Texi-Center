@@ -14,7 +14,7 @@ set(SOURCE_FILES main.cpp Point.cpp Point.h Node.cpp Node.h Matrix.cpp
         Vehicle.h TripCreator.cpp TripCreator.h TaxiCreator.cpp TaxiCreator.h DriverCreator.cpp DriverCreator.h
         Menu.cpp Menu.h Ride.cpp Ride.h
         client.cpp server.cpp
-        sockets/Socket.cpp sockets/Udp.cpp sockets/Tcp.cpp sockets/Udp.h
+        sockets/Socket.cpp sockets/Udp.cpp sockets/Socket.h sockets/Udp.h
         )
 
 
