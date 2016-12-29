@@ -28,5 +28,5 @@ target_link_libraries(server sockets)
 target_link_libraries(client sockets)
 
 add_executable(source ${SOURCE_FILES} main.cpp)
-add_library(core ${SOURCE_FILES} main.cpp)
+add_library(core ${SOURCE_FILES} main.cpp Serialization.cpp Serialization.h)
 target_link_libraries(source ${Boost_LIBRARIES})

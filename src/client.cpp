@@ -1,9 +1,7 @@
 
 #include "sockets/Udp.h"
-#include "stdlib.h"
+#include "core_classes/Point.h"
 
-
-using namespace std;
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from client" << std::endl;
@@ -16,7 +14,6 @@ int main(int argc, char *argv[]) {
     udp.sendData("hello");
     udp.receiveData(buffer, sizeof(buffer));
     cout << buffer << endl;
-
 
     return 0;
 }
