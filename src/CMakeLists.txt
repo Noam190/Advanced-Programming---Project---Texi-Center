@@ -14,7 +14,7 @@ set(SOURCE_FILES Serialization.cpp Serialization.h core_classes/Point.cpp core_c
         cabs/LuxuryCab.h cabs/StandardCab.cpp cabs/StandardCab.h Statistics.cpp Statistics.h persons/Person.cpp
         persons/Person.h TaxiCenter.cpp TaxiCenter.h cabs/Vehicle.cpp cabs/Vehicle.h creators/TripCreator.cpp
         creators/TripCreator.h creators/TaxiCreator.cpp creators/TaxiCreator.h creators/DriverCreator.cpp
-        creators/DriverCreator.h Menu.cpp Menu.h Ride.cpp Ride.h)
+        creators/DriverCreator.h Menu.cpp Menu.h MenuServer.cpp MenuServer.h Ride.cpp Ride.h)
 
 set(SOCKETS_FILES sockets/Socket.cpp sockets/Udp.cpp sockets/Socket.h sockets/Udp.h)
 

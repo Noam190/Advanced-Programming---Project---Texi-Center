@@ -3,13 +3,11 @@
 #include "core_classes/Matrix.h"
 #include "TaxiCenter.h"
 #include "MenuServer.h"
-#include "stdlib.h"
 
 #include <fstream>
 #include <sstream>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
-#include <boost/tokenizer.hpp>
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
@@ -19,11 +17,12 @@
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 template<class T>
-T deserialize(string serial_str) {
-    T p;
-    boost::iostreams::basic_array_source<char> device(serial_str.c_str(), serial_str.size());
-    boost::iostreams::stream<boost::iostreams::basic_array_source<char>> s2(device);
-    boost::archive::binary_iarchive ia(s2);
+T *deserialize(string serial_str) {
+    T *p;
+    unsigned long x = serial_str.size();
+    boost::iostreams::basic_array_source<char> device(serial_str.c_str(), x);
+    boost::iostreams::stream<boost::iostreams::basic_array_source<char>> s(device);
+    boost::archive::binary_iarchive ia(s);
     ia >> p;
 
     return p;
@@ -42,9 +41,11 @@ string serialize(T *object) {
 
     return serial_str;
 }
+
+
 int main() {
     std::cout << "Hello, from server" << std::endl;
-    std::cout<< "standart menu" << std::endl;
+    std::cout << "standard menu" << std::endl;
 
     TaxiCenter taxiCenter = TaxiCenter();
     int width, height;
@@ -73,10 +74,10 @@ int main() {
 // deserialize driver
     string serial_str_driver;
     std::cin>> serial_str_driver;
-    Driver d = deserialize(serial_str_driver);
-    taxiCenter.addDriver(d);
+    Driver *d = deserialize<Driver>(serial_str_driver);
+    taxiCenter.addDriver(*d);
 
-    TaxiCab taxiCab =taxiCenter.getTaxi(d.getVehicleId());
+    TaxiCab taxiCab = taxiCenter.getTaxi(d->getVehicleId());
     //serialize taxi
 
     string serial_str_vehicle =serialize(&taxiCab);
@@ -86,7 +87,7 @@ int main() {
 
     //serialize trip
     taxiCenter.createRides();
-    Trip* trip= taxiCenter.getTrip(d.getId());
+    Trip *trip = taxiCenter.getTrip(d->getId());
     string serial_str_trip=serialize(trip);
     udp.sendData(serial_str_trip);
 
