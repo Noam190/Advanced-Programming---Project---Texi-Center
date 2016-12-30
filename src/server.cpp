@@ -43,36 +43,7 @@ string serialize(T *object) {
     return serial_str;
 }
 
-void updatesFromClient(TaxiCenter taxiCenter){
-    Udp udp(1, 5555);
-    udp.initialize();
 
-    char buffer[1024];
-    udp.receiveData(buffer, sizeof(buffer));
-    cout << buffer << endl;
-    udp.sendData("sup?");
-
-
-// deserialize driver
-    string serial_str_driver;
-    std::cin>> serial_str_driver;
-    Driver *d = deserialize<Driver>(serial_str_driver);
-    taxiCenter.addDriver(*d);
-
-    TaxiCab taxiCab = taxiCenter.getTaxi(d->getVehicleId());
-    //serialize taxi
-    string serial_str_vehicle =serialize(&taxiCab);
-
-    //sent back the taxi
-    udp.sendData(serial_str_vehicle);
-
-    //serialize trip
-    taxiCenter.createRides();
-    Trip *trip = taxiCenter.getTrip(d->getId());
-    string serial_str_trip=serialize(trip);
-    udp.sendData(serial_str_trip);
-
-}
 int main() {
     std::cout << "Hello, from server" << std::endl;
     std::cout << "standard menu" << std::endl;
