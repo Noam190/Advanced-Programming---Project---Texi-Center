@@ -15,7 +15,7 @@ void Menu::run() {
         cin.ignore();
         switch (option) {
             case 1: //insert drivers
-                insertDriver();
+                expectingDriver();
                 break;
             case 2: //insert trip
                 insertTrip();
@@ -38,15 +38,27 @@ void Menu::run() {
     }
 }
 
-//insert a new taxi from the input arguments
-void Menu::insertTaxi() {
-    char dummy;
-    int id, taxiType;
-    char manufacturer, color;
-    std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
-    //create the taxi
-    TaxiCab cab = createTaxi(id, taxiType, manufacturer, color);
-    taxiCenter.addTaxiCab(cab);
+////insert a new taxi from the input arguments
+//void Menu::insertTaxi() {
+//    char dummy;
+//    int id, taxiType;
+//    char manufacturer, color;
+//    std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
+//    //create the taxi
+//    TaxiCab cab = createTaxi(id, taxiType, manufacturer, color);
+//    taxiCenter.addTaxiCab(cab);
+//
+//}
+
+//expecting a new driver from the client
+void Menu::expectingDriver(){
+    int numOfDrivers;
+    std::cin>>numOfDrivers;
+    int index =1;
+    while (index<=numOfDrivers){
+
+        index++;
+    }
 
 }
 
