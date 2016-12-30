@@ -3,7 +3,6 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
-//#include "Serialization.h"
 #include "sockets/Udp.h"
 #include "core_classes/Point.h"
 #include "persons/Driver.h"

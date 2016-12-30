@@ -20,7 +20,7 @@ public:
     Menu(TaxiCenter taxiCenter, Matrix grid);
     
     //run the funcs with input
-    void run();
+    void run(TaxiCenter taxiCenter);
     
     //create obstacles from the input arguments
     void getObstacles();
@@ -28,8 +28,12 @@ public:
 //    //insert a new driver from the input arguments
 //    void insertDriver();
 
+
+    void updatesFromClient(TaxiCenter taxiCenter);
+
+
     //insert a new driver from the input arguments
-    void expectingDriver();
+    void expectingDriver(TaxiCenter taxiCenter);
     
     //insert a new trip from the input arguments
     void insertTrip();
