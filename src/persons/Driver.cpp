@@ -5,7 +5,7 @@
 #include "Driver.h"
 //constructor
 Driver::Driver(Point location, int id, int age, int yearsOfExperience,
-               int averageSatisfaction, STATUS status) : Person(id, age, status, location), taxi(NULL) {
+               int averageSatisfaction, STATUS status) : Person(id, age, status, location) {
     this->yearsOfExperience = yearsOfExperience;
     this->averageSatisfaction = averageSatisfaction;
 }

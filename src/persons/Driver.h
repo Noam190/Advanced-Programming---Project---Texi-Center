@@ -20,14 +20,15 @@ private:
     template<class Archive>
     void serialize(Archive& archive, const unsigned int version)
     {
-        archive & boost::serialization::base_object<Person>(*this);
-        archive & taxi;
+        int check = archive & boost::serialization::base_object<Person>(*this);
+        if (!check) {
+
+        }
         archive & yearsOfExperience;
         archive & averageSatisfaction;
     }
     int yearsOfExperience;
     int averageSatisfaction;
-    TaxiCab *taxi;
 
 public:
 

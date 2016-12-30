@@ -17,6 +17,9 @@ private:
         archive & yVal;
     }
 public:
+    Point() : xVal(0), yVal(0) {}
+
+
     // Constructor uses int x and y values
     Point(int x, int y);
 

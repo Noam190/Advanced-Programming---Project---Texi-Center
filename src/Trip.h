@@ -34,7 +34,7 @@ private:
 public:
 
     // Constructor all the members
-    Trip(unsigned long length, int id, int totalMeters, int numberOfPass,
+    Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,
          double tariff, Point start, Point end, list<Point> path);
 
     //move the one step - to the next point.

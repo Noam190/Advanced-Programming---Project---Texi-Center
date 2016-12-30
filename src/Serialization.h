@@ -23,11 +23,12 @@ using namespace std;
 using namespace boost::archive;
 using namespace boost::iostreams;
 
-template<class T>
-T deserialize(string serial_str);
+class Serialization {
+public:
+    template<class T>
+    T deserialize(string serial_str);
 
-template<class T>
-string serialize(T *object);
-
-
+    template<class T>
+    string serialize(T *object);
+};
 #endif //TAXI_CENTER_SERIALIZATION_H
