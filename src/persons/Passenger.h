@@ -19,6 +19,7 @@ private:
     }
     Point destination;
 public:
+    Passenger() : destination(0, 0) {};
     //constructor
     Passenger(int id, int age, STATUS status, Point location, Point destination);
 

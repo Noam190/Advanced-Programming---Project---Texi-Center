@@ -5,11 +5,12 @@
 #include "Serialization.h"
 
 template<class T>
-T Serialization::deserialize(string serial_str) {
-    T p;
-    boost::iostreams::basic_array_source<char> device(serial_str.c_str(), serial_str.size());
-    boost::iostreams::stream<boost::iostreams::basic_array_source<char>> s2(device);
-    boost::archive::binary_iarchive ia(s2);
+T *deserialize(string serial_str) {
+    T *p;
+    unsigned long x = serial_str.size();
+    boost::iostreams::basic_array_source<char> device(serial_str.c_str(), x);
+    boost::iostreams::stream<boost::iostreams::basic_array_source<char>> s(device);
+    boost::archive::binary_iarchive ia(s);
     ia >> p;
 
     return p;
@@ -17,7 +18,7 @@ T Serialization::deserialize(string serial_str) {
 
 
 template<class T>
-string Serialization::serialize(T *object) {
+string serialize(T *object) {
     std::string serial_str;
 
     boost::iostreams::back_insert_device<std::string> insertDevice(serial_str);

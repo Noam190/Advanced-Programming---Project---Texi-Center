@@ -12,9 +12,10 @@ private:
 
     template<class Archive>
     void serialize(Archive &archive, const unsigned int version) {
-        archive & boost::serialization::base_object<Vehicle>(*this);
+        archive & boost::serialization::base_object<TaxiCab>(*this);
     }
 public:
+    LuxuryCab() {};
     //create a new luxury cab
     LuxuryCab(int cabId, int numOfKilometers, int tariff, MANUFACTURER carManufacturer, COLOR color);
 

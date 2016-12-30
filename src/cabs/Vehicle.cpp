@@ -3,7 +3,8 @@
 //
 
 #include "Vehicle.h"
-//constractor
+
+//constructor
 Vehicle::Vehicle(MANUFACTURER carManufacturer, COLOR c) {
     this->manu = carManufacturer;
     this->c = c;

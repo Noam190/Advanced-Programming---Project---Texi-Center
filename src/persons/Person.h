@@ -9,7 +9,9 @@
 #include <boost/serialization/access.hpp>
 #include "../core_classes/Point.h"
 
-enum  STATUS {SINGLE, MARRIED, DIVORCED, WIDOWED };
+enum STATUS {
+    SINGLE, MARRIED, DIVORCED, WIDOWED
+};
 
 class Person {
 private:
@@ -27,6 +29,7 @@ private:
     STATUS status;
     Point location;
 public:
+    Person() : id(0), age(0), status(SINGLE), location(0, 0) {};
     //constructor
     Person(int id, int age, STATUS status, Point location);
 

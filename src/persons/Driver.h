@@ -21,20 +21,22 @@ private:
     void serialize(Archive& archive, const unsigned int version)
     {
         archive & boost::serialization::base_object<Person>(*this);
-        archive & taxi;
+        archive & taxiCab;
+        archive & vehicleId;
         archive & yearsOfExperience;
         archive & averageSatisfaction;
     }
     int yearsOfExperience;
     int averageSatisfaction;
-    TaxiCab *taxi;
     int vehicleId;
+    TaxiCab *taxiCab;
 
 public:
 
+    Driver() : taxiCab(NULL) {};
+
     // Constructor all the members
-    Driver(Point location, int id, int age, int yearsOfExperience,
-           int averageSatisfaction, STATUS status, int vehicleId);
+    Driver(Point location, int id, int age, int yearsOfExperience, int vehicleId, STATUS status);
 
     //getters and setters
     int getYearsOfExperience();
@@ -48,11 +50,13 @@ public:
     //getters and setters
     void setAverageSatisfaction(int averageSatisfaction);
 
-    //getters and setters
+    void setVehicleId(int vehicleId);
+
     int getVehicleId();
 
-    //getters and setters
-    void setVehicleId(int vehicleIdNew);
+    void setTaxiCab(TaxiCab *taxi);
+
+    TaxiCab *getTaxiCab();
 };
 
 

@@ -3,9 +3,12 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+//#include "Serialization.h"
 #include "sockets/Udp.h"
 #include "core_classes/Point.h"
 #include "persons/Driver.h"
+#include "cabs/StandardCab.h"
+#include "cabs/LuxuryCab.h"
 
 template<class T>
 T *deserialize(string serial_str) {
@@ -37,14 +40,32 @@ string serialize(T *object) {
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from client" << std::endl;
 
-    Driver d = Driver(Point(0, 0), 0, 30, 3, 1, MARRIED);
 
     Point p = Point(1, 9);
     std::string str = serialize<Point>(&p);
-    Point *d2 = deserialize<Point>(str);
-    cout << d2;
+    Point *p2 = deserialize<Point>(str);
+    cout << *p2;
 
-    Trip trip = Trip(6, 4, 5, 4, 34, p, Point(3, 3), list<>);
+    Trip trip = Trip(6, 4, 5, 4, 34, p, Point(3, 3), list<Point>());
+    std::string str2 = serialize<Trip>(&trip);
+    Trip *T2 = deserialize<Trip>(str2);
+
+    TaxiCab taxi = TaxiCab(HONDA, RED, 12, 45, 4);
+    std::string str3 = serialize<TaxiCab>(&taxi);
+    TaxiCab *taxi2 = deserialize<TaxiCab>(str3);
+
+    StandardCab standard = StandardCab(23, 43, 7, TESLA, PINK);
+    std::string str4 = serialize<StandardCab>(&standard);
+    StandardCab *standard2 = deserialize<StandardCab>(str4);
+
+    LuxuryCab luxury = LuxuryCab(21, 56, 14, SUBARO, GREEN);
+    std::string str5 = serialize<LuxuryCab>(&luxury);
+    LuxuryCab *luxury2 = deserialize<LuxuryCab>(str5);
+
+    Driver d = Driver(Point(0, 0), 0, 30, 3, 1, MARRIED);
+    d.setTaxiCab(standard2);
+    std::string str6 = serialize<Driver>(&d);
+    Driver *dr2 = deserialize<Driver>(str6);
 
 
     cout << argv[1] << endl;

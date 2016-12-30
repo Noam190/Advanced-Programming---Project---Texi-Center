@@ -23,6 +23,7 @@ private:
     MANUFACTURER manu;
     COLOR c;
 public:
+    Vehicle() : manu(TESLA), c(GREEN) {};
     //constructor
     Vehicle(MANUFACTURER carManufacturer, COLOR c);
 

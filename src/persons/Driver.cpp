@@ -5,10 +5,9 @@
 #include "Driver.h"
 //constructor
 Driver::Driver(Point location, int id, int age, int yearsOfExperience,
-               int averageSatisfaction, STATUS status, int vehicleId) : Person(id, age, status, location), taxi(NULL) {
+               int vehicleId, STATUS status) : Person(id, age, status, location), taxiCab(NULL) {
     this->yearsOfExperience = yearsOfExperience;
-    this->averageSatisfaction = averageSatisfaction;
-    this->vehicleId=vehicleId;
+    this->vehicleId = vehicleId;
 }
 
 //getters and setters
@@ -27,12 +26,19 @@ int Driver::getAverageSatisfaction(){
 void Driver::setAverageSatisfaction(int averageSatisfaction){
     this->averageSatisfaction = averageSatisfaction;
 }
-//getters and setters
-int Driver::getVehicleId(){
-    return  this->vehicleId;
+
+void Driver::setTaxiCab(TaxiCab *taxi) {
+    this->taxiCab = taxi;
 }
 
-//getters and setters
-void Driver::setVehicleId(int vehicleIdNew){
-    this->vehicleId =vehicleIdNew;
+TaxiCab *Driver::getTaxiCab() {
+    return this->taxiCab;
+}
+
+void Driver::setVehicleId(int vehicleId) {
+    this->vehicleId = vehicleId;
+}
+
+int Driver::getVehicleId() {
+    return  this->vehicleId;
 }

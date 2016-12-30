@@ -17,18 +17,18 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_oarchive.hpp>
+#include <boost/iostreams/device/back_inserter.hpp>
+#include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 
 using namespace std;
 using namespace boost::archive;
 using namespace boost::iostreams;
 
-class Serialization {
-public:
-    template<class T>
-    T deserialize(string serial_str);
+template<class T>
+T *deserialize(string serial_str);
 
-    template<class T>
-    string serialize(T *object);
-};
+template<class T>
+string serialize(T *object);
+
 #endif //TAXI_CENTER_SERIALIZATION_H

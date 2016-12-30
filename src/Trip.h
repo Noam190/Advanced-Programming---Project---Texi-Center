@@ -1,7 +1,10 @@
 //
 // Created by mei on 29/11/16.
 //
+
 #include "core_classes/Point.h"
+#include <boost/serialization/list.hpp>
+
 #ifndef EX2AP_TRIP_H
 #define EX2AP_TRIP_H
 
@@ -32,6 +35,7 @@ private:
     Point currentLocation;
 
 public:
+    Trip() {};
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,
