@@ -56,10 +56,11 @@ void MenuServer::insertTrip() {
     int xStart, yStart, xEnd, yEnd;
     int numOfPass;
     double tariff;
+    int timeOfStart;
     std::cin >> id >> dummy >> xStart >> dummy >> yStart >> dummy >> xEnd
-             >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff;
+             >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff >>timeOfStart;
     //create the trip
-    Trip newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd, numOfPass, tariff);
+    Trip newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd, numOfPass, tariff,timeOfStart);
     taxiCenter.addTrip(newTrip);
 
 }

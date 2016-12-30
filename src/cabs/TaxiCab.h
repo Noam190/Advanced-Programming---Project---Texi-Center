@@ -29,7 +29,8 @@ public:
     TaxiCab() : cabId(0), numberOfKilometers(0), tariff(3) {};
 
     //constructor
-    TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId, int numOfKilometers, int tariff);
+    TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId,
+            int numOfKilometers, int tariff);
 
     //getters and setters
     int getId();

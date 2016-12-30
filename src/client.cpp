@@ -9,6 +9,7 @@
 #include "cabs/StandardCab.h"
 #include "cabs/LuxuryCab.h"
 #include "creators/DriverCreator.h"
+#include "Clock.h"
 
 template<class T>
 T *deserialize(string serial_str) {
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]) {
 //    std::string str6 = serialize<Driver>(&d);
 //    Driver *dr2 = deserialize<Driver>(str6);
 
-    //create a driver
+//create a driver
     Driver d =insertDriver();
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(&d);
@@ -86,19 +87,26 @@ int main(int argc, char *argv[]) {
     Udp udp(0, atoi(argv[1]));
     udp.initialize();
 
-    char buffer_receive_vehicle[1024];
+
     udp.sendData(serial_str_driver);
+
+    //desreialize receive vehicle
+    char buffer_receive_vehicle[1024];
     udp.receiveData(buffer_receive_vehicle, sizeof(buffer_receive_vehicle));
     std::string veihcleStr(buffer_receive_vehicle);
-    //desreialize receive vehicle
     Vehicle *v = deserialize<Vehicle>(veihcleStr);
 
+    //desreialize receive trip
     char buffer_receive_trip[1024];
     udp.receiveData(buffer_receive_trip, sizeof(buffer_receive_trip));
     std::string tripStr(buffer_receive_trip);
-    //desreialize receive vehicle
     Trip *t = deserialize<Trip>(tripStr);
 
+    //desreialze receive clock
+    char buffer_receive_clock[1024];
+    udp.receiveData(buffer_receive_trip, sizeof(buffer_receive_clock));
+    std::string clockStr(buffer_receive_clock);
+    Clock *c = deserialize<Clock>(clockStr);
 
 
 

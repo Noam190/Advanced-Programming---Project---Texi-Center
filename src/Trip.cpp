@@ -5,7 +5,7 @@
 #include "Trip.h"
 // Constructor all the members
 Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-           double tariff, Point start, Point end, list <Point> path) :
+           double tariff, Point start, Point end, list <Point> path, int timeOfStart) :
         currentLocation(start), startPoint(start), endPoint(end), path(path) {
 
     this->length = length;
@@ -13,6 +13,7 @@ Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers
     this->totalMeters = totalMeters;
     this->numOfPassengers = numberOfPassengers;
     this->tariff = tariff;
+    this->timeOfStart=timeOfStart;
 }
 
 //getters ang setters
@@ -80,9 +81,19 @@ void Trip::setCurrentPoint(Point p){
 void Trip::updateLocation(Point p){
     this->currentLocation = p;
 }
-
+//getters and setters
 void Trip::setNumberOfPassengers(int numberOfPassengers) {
     this->numOfPassengers = numberOfPassengers;
+}
+
+//getters and setters
+int Trip::getTimeOfStart(){
+    return  this->timeOfStart;
+}
+
+//getters and setters
+void Trip::setTimeOfStart(int newTimeOfStart){
+    this->timeOfStart=newTimeOfStart;
 }
 
 void Trip::moveOneStep() {

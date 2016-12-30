@@ -11,13 +11,16 @@
 #include "creators/TaxiCreator.h"
 #include "TaxiCenter.h"
 #include "core_classes/Grid.h"
+#include "Clock.h"
+
 class Menu {
 private:
     Matrix grid;
     TaxiCenter taxiCenter;
+    Clock clock;
 public:
     //constructor to a new
-    Menu(TaxiCenter taxiCenter, Matrix grid);
+    Menu(TaxiCenter taxiCenter, Matrix grid, Clock clock);
     
     //run the funcs with input
     void run(TaxiCenter taxiCenter);
@@ -28,9 +31,11 @@ public:
 //    //insert a new driver from the input arguments
 //    void insertDriver();
 
-
+    //pass date from server<->client
     void updatesFromClient(TaxiCenter taxiCenter);
 
+    //update clock time
+    void updateTimeClock();
 
     //insert a new driver from the input arguments
     void expectingDriver(TaxiCenter taxiCenter);
@@ -46,7 +51,10 @@ public:
     
     // move all the drivers to the next node in the trip
     void startDrivingAll();
-};
+    //serialize Clock To Client
+    void serializeClockToClient(TaxiCenter taxiCenter) ;
+
+    };
 
 
 

@@ -76,7 +76,8 @@ Point TaxiCenter::getDriverLocation(int id) {
 //create a new ride
 void TaxiCenter::createRides() {
     unsigned long index = 0;
-    for (vector<Driver>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it, ++index) {
+    for (vector<Driver>::iterator it = freeDrivers.begin();
+                        it != freeDrivers.end(); ++it, ++index) {
         if(freeTrips.size() < 1 ) {
             return;
         }

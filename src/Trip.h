@@ -33,13 +33,14 @@ private:
     Point startPoint;
     Point endPoint;
     Point currentLocation;
+    int timeOfStart;
 
 public:
     Trip() {};
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,
-         double tariff, Point start, Point end, list<Point> path);
+         double tariff, Point start, Point end, list<Point> path , int timeOfStart);
 
     //move the one step - to the next point.
     void moveOneStep();
@@ -86,6 +87,12 @@ public:
     //getters ang setters
     void setEndPoint(Point p);
 
+    //getters and setters
+    int getTimeOfStart();
+
+    //getters and setters
+    void setTimeOfStart(int newTimeOfStart);
+
     //getters ang setters
     Point getCurrentPoint();
 
@@ -94,6 +101,7 @@ public:
 
     //update the trip location
    void updateLocation(Point p);
+
 };
 
 

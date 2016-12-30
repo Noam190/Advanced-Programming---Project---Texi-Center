@@ -54,8 +54,8 @@ int main() {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix grid=Matrix(width,height);
-
-    Menu menu = Menu(taxiCenter, grid);
+    Clock clock = Clock();
+    Menu menu = Menu(taxiCenter, grid, clock);
     //run all the other inputs
     menu.run(taxiCenter);
 

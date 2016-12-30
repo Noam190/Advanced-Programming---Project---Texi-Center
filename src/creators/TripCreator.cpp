@@ -5,7 +5,7 @@
 #include "TripCreator.h"
 //help to create a trip
 Trip createTrip(Matrix grid, int id, int xStart, int yStart,
-                int xEnd, int yEnd, int numOfPass, double tariff){
+                int xEnd, int yEnd, int numOfPass, double tariff, int timeOfStart){
     unsigned long length;
     Point start = Point(xStart, yStart);
     Point end = Point(xEnd, yEnd);
@@ -24,5 +24,5 @@ Trip createTrip(Matrix grid, int id, int xStart, int yStart,
         pathPoints.push_back(p);
     }
 
-    return Trip(length, id, 0, numOfPass, tariff, start, end, pathPoints);
+    return Trip(length, id, 0, numOfPass, tariff, start, end, pathPoints, timeOfStart);
 }
