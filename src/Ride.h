@@ -33,7 +33,7 @@ public:
     Point getStartPoint();
 
     //getters and setters
-    Trip* getTrip();
+    Trip* getTrip(int idDriver);
 
     //getters and setters
     Driver* getDriver();

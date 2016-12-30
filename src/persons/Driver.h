@@ -20,21 +20,21 @@ private:
     template<class Archive>
     void serialize(Archive& archive, const unsigned int version)
     {
-        int check = archive & boost::serialization::base_object<Person>(*this);
-        if (!check) {
-
-        }
+        archive & boost::serialization::base_object<Person>(*this);
+        archive & taxi;
         archive & yearsOfExperience;
         archive & averageSatisfaction;
     }
     int yearsOfExperience;
     int averageSatisfaction;
+    TaxiCab *taxi;
+    int vehicleId;
 
 public:
 
     // Constructor all the members
     Driver(Point location, int id, int age, int yearsOfExperience,
-           int averageSatisfaction, STATUS status);
+           int averageSatisfaction, STATUS status, int vehicleId);
 
     //getters and setters
     int getYearsOfExperience();
@@ -47,6 +47,12 @@ public:
 
     //getters and setters
     void setAverageSatisfaction(int averageSatisfaction);
+
+    //getters and setters
+    int getVehicleId();
+
+    //getters and setters
+    void setVehicleId(int vehicleIdNew);
 };
 
 

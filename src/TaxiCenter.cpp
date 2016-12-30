@@ -121,5 +121,13 @@ TaxiCab TaxiCenter::getTaxi(int idVehicle) {
         }
     }
 }
+Trip* TaxiCenter::getTrip(int idDriver){
+    int index = 0;
+    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it ,++index) {
+        if(it->getDriver()->getId() == idDriver) {
+            return rides[index].getTrip(idDriver);
+        }
+    }
+}
 
 

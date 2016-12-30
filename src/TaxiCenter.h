@@ -36,6 +36,9 @@ public:
     //get a taxi from the list by vehicle id
     TaxiCab getTaxi(int idVehicle);
 
+    //get a trip the last from the list of rides
+    Trip* getTrip(int idDriver);
+
     //add a trip to the center
     void addTrip(Trip t);
 
