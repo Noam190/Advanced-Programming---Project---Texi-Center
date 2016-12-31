@@ -5,7 +5,7 @@
 #include <random>
 #include "Passenger.h"
 //constructor
-Passenger::Passenger(int id, int age, STATUS status, Point location, Point destination)
+Passenger::Passenger(int id, unsigned int age, STATUS status, Point location, Point destination)
         : Person(id, age, status, location), destination(destination) {}
 
 //getters and setters

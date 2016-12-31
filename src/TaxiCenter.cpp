@@ -26,8 +26,20 @@ void TaxiCenter::addTaxiCab(TaxiCab taxi) {
 }
 
 //add a trip to the center
-void TaxiCenter::addTrip(Trip t) {
+int TaxiCenter::insertTrip(Trip t) {
+    int index = 0;
+    for (vector<Driver>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it, ++index) {
+        if (it->getCurrentLocation() == t.getStartPoint()) {
+            busyDrivers.push_back(freeDrivers[index]);
+            freeDrivers.erase(it);
+            busyTrips.push_back(t);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back());
+            rides.push_back(r);
+            return 1;
+        }
+    }
     this->freeTrips.push_back(t);
+    return 0;
 }
 
 //remove a driver to the center
@@ -86,7 +98,7 @@ void TaxiCenter::createRides() {
         freeTrips.erase(freeTrips.begin());
 
         busyDrivers.push_back(freeDrivers[0]);
-        it=freeDrivers.erase(freeDrivers.begin());
+        it = freeDrivers.erase(freeDrivers.begin());
 
         Ride r = Ride(&busyTrips.front(), &busyDrivers.front());
         rides.push_back(r);
@@ -98,6 +110,9 @@ void TaxiCenter::createRides() {
 void TaxiCenter::moveAllRidesOneStep() {
     for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it) {
         it->moveOneStep();
+        if (it->isDone()) {
+            it = rides.erase(it);
+        }
     }
 }
 
@@ -123,13 +138,32 @@ TaxiCab TaxiCenter::getTaxi(int idVehicle) {
     }
 }
 
-Trip* TaxiCenter::getTrip(int idDriver){
+void TaxiCenter::addTaxiToDriver(Driver *driver) {
     int index = 0;
-    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it ,++index) {
-        if(it->getDriver()->getId() == idDriver) {
-            return rides[index].getTrip();
+    for (vector<TaxiCab>::iterator it = freeCabs.begin(); it != freeCabs.end(); ++it, ++index) {
+        if (it->getId() == driver->getId()) {
+            driver->setTaxiCab(&freeCabs[index]);
         }
     }
+}
+
+Trip *TaxiCenter::insertNewDriver(Driver driver) {
+    Trip *trip;
+    int index = 0;
+    Point startPoint = driver.getCurrentLocation();
+    addTaxiToDriver(&driver);
+    for (vector<Trip>::iterator it = freeTrips.begin(); it != freeTrips.end(); ++it, ++index) {
+        if (it->getStartPoint() == startPoint) {
+            busyDrivers.push_back(driver);
+            busyTrips.push_back(freeTrips[index]);
+            freeTrips.erase(it);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back());
+            rides.push_back(r);
+            return &busyTrips.back();
+        }
+    }
+    freeDrivers.push_back(driver);
+    return NULL;
 }
 
 

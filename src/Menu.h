@@ -23,13 +23,15 @@ public:
     Menu(TaxiCenter taxiCenter, Matrix grid, Clock clock);
     
     //run the funcs with input
-    void run(TaxiCenter taxiCenter);
+    void run();
     
     //create obstacles from the input arguments
     void getObstacles();
     
 //    //insert a new driver from the input arguments
-//    void insertDriver();
+//    void insertNewDriver();
+
+    void advance();
 
     //pass date from server<->client
     void updatesFromClient(TaxiCenter taxiCenter);
@@ -50,11 +52,10 @@ public:
     void getDriverLocation();
     
     // move all the drivers to the next node in the trip
-    void startDrivingAll();
+    void moveAllDriversToTheEnd();
     //serialize Clock To Client
     void serializeClockToClient(TaxiCenter taxiCenter) ;
-
-    };
+};
 
 
 

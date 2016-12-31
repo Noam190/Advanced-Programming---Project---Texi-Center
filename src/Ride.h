@@ -20,6 +20,8 @@ public:
     //constructor
     Ride(Trip* trip, Driver* driver);
 
+    bool isDone();
+
     //move the ride one step
     void moveOneStep();
 

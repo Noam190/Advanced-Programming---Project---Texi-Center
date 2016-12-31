@@ -47,13 +47,11 @@ TEST_F(DriverTest, driverSetYearsOfExperience){
 }
 
 TEST_F(DriverTest, driverGetaverageSatisfaction){
-    ASSERT_EQ(6, driver.getAverageSatisfaction());
+    driver.rateDriver(4);
+    driver.rateDriver(2);
+    ASSERT_EQ(3, driver.getAverageSatisfaction());
 }
 
-TEST_F(DriverTest, driverSetaverageSatisfaction){
-    driver.setAverageSatisfaction(1);
-    ASSERT_EQ(1, driver.getAverageSatisfaction());
-}
 
 TEST_F(DriverTest, driverGetmaritalstatus){
     ASSERT_EQ(driver.getStatus(), SINGLE);

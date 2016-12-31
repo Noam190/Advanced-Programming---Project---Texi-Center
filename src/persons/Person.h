@@ -25,13 +25,13 @@ private:
         archive & location;
     }
     int id;
-    int age;
+    unsigned int age;
     STATUS status;
     Point location;
 public:
     Person() : id(0), age(0), status(SINGLE), location(0, 0) {};
     //constructor
-    Person(int id, int age, STATUS status, Point location);
+    Person(int id, unsigned int age, STATUS status, Point location);
 
     //getters and setters
     Point getCurrentLocation();
@@ -49,10 +49,10 @@ public:
     void setId(int id);
 
     //getters and setters
-    int getAge();
+    unsigned int getAge();
 
     //getters and setters
-    void setAge(int age);
+    void setAge(unsigned int age);
 
     //getters and setters
     STATUS getStatus();

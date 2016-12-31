@@ -12,7 +12,7 @@ namespace {
     public:
         Trip trip;
 
-        TripTest() : trip(0, 0, 0, 0, 0.0, Point(0, 0), Point(0, 0), list<Point>()) {
+        TripTest() : trip(0, 0, 0, 0, 0.0, Point(0, 0), Point(0, 0), list<Point>(), 1) {
             trip;
         }
     };

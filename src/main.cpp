@@ -12,9 +12,9 @@ int main() {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix grid = Matrix(width, height);
-    Menu menu = Menu(taxiCenter, grid);
+//    Menu menu = Menu(taxiCenter, grid);
     
     //run all the other inputs
-    menu.run();
+//    menu.run();
     return 0;
 }

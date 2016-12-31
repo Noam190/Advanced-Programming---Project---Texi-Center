@@ -41,3 +41,7 @@ Driver *Ride::getDriver() {
     return this->driver;
 }
 
+bool Ride::isDone() {
+    return this->end == this->trip->getCurrentPoint();
+}
+

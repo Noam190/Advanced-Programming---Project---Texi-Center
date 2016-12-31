@@ -21,7 +21,7 @@ private:
 public:
     Passenger() : destination(0, 0) {};
     //constructor
-    Passenger(int id, int age, STATUS status, Point location, Point destination);
+    Passenger(int id, unsigned int age, STATUS status, Point location, Point destination);
 
     //getters and setters
     Point getDestinationPoint();

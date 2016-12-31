@@ -4,10 +4,13 @@
 
 #include "Driver.h"
 //constructor
-Driver::Driver(Point location, int id, int age, int yearsOfExperience,
+Driver::Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
                int vehicleId, STATUS status) : Person(id, age, status, location), taxiCab(NULL) {
     this->yearsOfExperience = yearsOfExperience;
     this->vehicleId = vehicleId;
+    this->averageSatisfaction = 0;
+    this->numberOfVotes = 0;
+    this->totalPoints = 0;
 }
 
 //getters and setters
@@ -15,16 +18,12 @@ int Driver::getYearsOfExperience(){
     return this->yearsOfExperience;
 }
 //getters and setters
-void Driver::setYearsOfExperience(int yearsOfExperience){
+void Driver::setYearsOfExperience(unsigned yearsOfExperience) {
     this->yearsOfExperience = yearsOfExperience;
 }
 //getters and setters
-int Driver::getAverageSatisfaction(){
+unsigned int Driver::getAverageSatisfaction() {
     return this->averageSatisfaction;
-}
-//getters and setters
-void Driver::setAverageSatisfaction(int averageSatisfaction){
-    this->averageSatisfaction = averageSatisfaction;
 }
 
 void Driver::setTaxiCab(TaxiCab *taxi) {
@@ -41,4 +40,10 @@ void Driver::setVehicleId(int vehicleId) {
 
 int Driver::getVehicleId() {
     return  this->vehicleId;
+}
+
+void Driver::rateDriver(unsigned int points) {
+    this->totalPoints += points;
+    this->numberOfVotes++;
+    this->averageSatisfaction = totalPoints / numberOfVotes;
 }

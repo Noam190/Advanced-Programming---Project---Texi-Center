@@ -25,7 +25,7 @@ public:
     int getCurrentTime();
 
     //add 'addTime' to the current time
-    void addToCurrentTime(int addTime );
+    void addToCurrentTime(int addTime);
 };
 
 

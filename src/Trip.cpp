@@ -13,7 +13,7 @@ Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers
     this->totalMeters = totalMeters;
     this->numOfPassengers = numberOfPassengers;
     this->tariff = tariff;
-    this->timeOfStart=timeOfStart;
+    this->timeOfStart = timeOfStart;
 }
 
 //getters ang setters
@@ -93,7 +93,7 @@ int Trip::getTimeOfStart(){
 
 //getters and setters
 void Trip::setTimeOfStart(int newTimeOfStart){
-    this->timeOfStart=newTimeOfStart;
+    this->timeOfStart = newTimeOfStart;
 }
 
 void Trip::moveOneStep() {

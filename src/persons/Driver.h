@@ -25,30 +25,32 @@ private:
         archive & vehicleId;
         archive & yearsOfExperience;
         archive & averageSatisfaction;
+        archive & totalPoints;
+        archive & numberOfVotes;
     }
-    int yearsOfExperience;
-    int averageSatisfaction;
+
+    unsigned int yearsOfExperience;
+    unsigned int averageSatisfaction;
+    unsigned int totalPoints;
+    unsigned int numberOfVotes;
     int vehicleId;
     TaxiCab *taxiCab;
 
 public:
 
-    Driver() : taxiCab(NULL) {};
+    Driver() : taxiCab(NULL), averageSatisfaction(0), totalPoints(0), numberOfVotes(0) {};
 
     // Constructor all the members
-    Driver(Point location, int id, int age, int yearsOfExperience, int vehicleId, STATUS status);
+    Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience, int vehicleId, STATUS status);
 
     //getters and setters
     int getYearsOfExperience();
 
     //getters and setters
-    void setYearsOfExperience(int yearsOfExperience);
+    void setYearsOfExperience(unsigned int yearsOfExperience);
 
     //getters and setters
-    int getAverageSatisfaction();
-
-    //getters and setters
-    void setAverageSatisfaction(int averageSatisfaction);
+    unsigned int getAverageSatisfaction();
 
     void setVehicleId(int vehicleId);
 
@@ -57,6 +59,9 @@ public:
     void setTaxiCab(TaxiCab *taxi);
 
     TaxiCab *getTaxiCab();
+
+    void rateDriver(unsigned int points);
+
 };
 
 

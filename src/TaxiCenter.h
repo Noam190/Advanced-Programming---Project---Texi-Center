@@ -20,7 +20,10 @@ private:
     std::vector<Trip> freeTrips;
     std::vector<Driver> busyDrivers;
     std::vector<Trip> busyTrips;
+
+    void addTaxiToDriver(Driver *driver);
 public:
+
     //answer call
     void answerCall();
 
@@ -36,11 +39,11 @@ public:
     //get a taxi from the list by vehicle id
     TaxiCab getTaxi(int idVehicle);
 
-    //get a trip the last from the list of rides
-    Trip* getTrip(int idDriver);
+    //get a trip
+    Trip *insertNewDriver(Driver driver);
 
     //add a trip to the center
-    void addTrip(Trip t);
+    int insertTrip(Trip t);
 
     //remove a driver to the center
     void removeDriver(int id);
@@ -59,7 +62,6 @@ public:
 
     //get the driver location
     Point getDriverLocation(int id);
-
 };
 
 #endif //EX2AP_TAXICENTER_H

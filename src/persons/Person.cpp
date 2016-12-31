@@ -5,7 +5,7 @@
 
 #include "Person.h"
 //constructor
-Person::Person(int id, int age, STATUS status, Point location) : location(location){
+Person::Person(int id, unsigned int age, STATUS status, Point location) : location(location) {
     this->id = id;
     this->age = age;
     this->status = status;
@@ -35,11 +35,11 @@ void Person::setId(int  id){
     this->id = id;
 }
 //getters and setters
-int Person::getAge(){
+unsigned int Person::getAge() {
     return this->age;
 }
 //getters and setters
-void Person::setAge(int age){
+void Person::setAge(unsigned int age) {
     this->age = age;
 }
 

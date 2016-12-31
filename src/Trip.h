@@ -22,6 +22,7 @@ private:
         archive & totalMeters;
         archive & numOfPassengers;
         archive & tariff;
+        archive & timeOfStart;
     }
 
     list<Point> path;
