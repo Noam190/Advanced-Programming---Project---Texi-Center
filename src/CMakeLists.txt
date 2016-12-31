@@ -14,7 +14,7 @@ set(SOURCE_FILES Serialization.h core_classes/Point.cpp core_classes/Point.h cor
         cabs/LuxuryCab.h cabs/StandardCab.cpp cabs/StandardCab.h Statistics.cpp Statistics.h persons/Person.cpp
         persons/Person.h TaxiCenter.cpp TaxiCenter.h cabs/Vehicle.cpp cabs/Vehicle.h creators/TripCreator.cpp
         creators/TripCreator.h creators/TaxiCreator.cpp creators/TaxiCreator.h creators/DriverCreator.cpp
-        creators/DriverCreator.h Menu.cpp Menu.h Ride.cpp Ride.h)
+        creators/DriverCreator.h Menu.cpp Menu.h Ride.cpp Ride.h Clock.cpp Clock.h)
 
 set(SOCKETS_FILES sockets/Socket.cpp sockets/Udp.cpp sockets/Socket.h sockets/Udp.h)
 
@@ -28,7 +28,7 @@ add_executable(client client.cpp)
 target_link_libraries(server sockets core)
 target_link_libraries(client sockets core)
 
-add_executable(source ${SOURCE_FILES} main.cpp Clock.cpp Clock.h)
+add_executable(source ${SOURCE_FILES} main.cpp)
 target_link_libraries(source ${Boost_LIBRARIES})
 target_link_libraries(server ${Boost_LIBRARIES})
 target_link_libraries(client ${Boost_LIBRARIES})
