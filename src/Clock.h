@@ -13,15 +13,13 @@ private:
     void serialize(Archive& archive, const unsigned int version)
     {
         archive & currentTime;
-        archive & endTime;
-
     }
     int currentTime;
-    int endTime; // time to stop
 public:
     //constructor -init
-    Clock() : currentTime(0), endTime(5){};
-    //return the current time, if the time is over return -1
+    Clock() : currentTime(0) {};
+
+    //return the current time.
     int getCurrentTime();
 
     //add 'addTime' to the current time
