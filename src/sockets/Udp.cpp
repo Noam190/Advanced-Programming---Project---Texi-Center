@@ -73,10 +73,10 @@ int Udp::sendData(string data) {
     sin.sin_addr.s_addr = inet_addr(this->ip_address.c_str());
     sin.sin_port = htons((uint16_t) this->port_number);
     const char *datas = data.c_str();
-    unsigned long data_len = data.length() + 1;
+    unsigned long data_size = data.size() + 1;
     //send
     ssize_t sent_bytes = sendto(this->socketDescriptor,
-                                datas, data_len, 0, (struct sockaddr *) &sin, sizeof(sin));
+                                datas, data_size, 0, (struct sockaddr *) &sin, sizeof(sin));
     //check if send successfully
     if (sent_bytes < 0) {
         return ERROR_SEND;

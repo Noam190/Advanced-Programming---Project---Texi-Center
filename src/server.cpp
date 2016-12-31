@@ -8,7 +8,7 @@ int main() {
     std::cout << "Hello, from server" << std::endl;
     std::cout << "standard menu" << std::endl;
 
-    Udp udp(1, 5555);
+    Udp udp(true, 5555);
     udp.initialize();
 
     Clock clock = Clock();
@@ -18,7 +18,7 @@ int main() {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix grid = Matrix(width, height);
-    Menu menu = Menu(taxiCenter, grid, &clock, udp);
+    Menu menu = Menu(taxiCenter, grid, &clock, &udp);
     //run all the other inputs
     menu.run();
 
