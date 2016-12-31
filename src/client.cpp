@@ -6,7 +6,6 @@
 #include "core_classes/Point.h"
 #include "persons/Driver.h"
 #include "creators/DriverCreator.h"
-#include "Clock.h"
 #include "Serialization.h"
 
 Driver insertDriver() {
@@ -47,18 +46,27 @@ int main(int argc, char *argv[]) {
     //deserialize receive vehicle
     TaxiCab *v = deserialize<TaxiCab>(vehicleStr);
 
-    char buffer_receive_trip[1024];
+    char buffer_receive_data[1024];
     while (1) {
 
-        udp.receiveData(buffer_receive_trip, sizeof(buffer_receive_trip));
-        std::string tripStr(buffer_receive_trip);
+        udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
+        std::string data(buffer_receive_data);
+        if (data == "exit") {
+            return 0;
+        }
+
+        if (data == "advance") {
+            continue;
+        }
+
+        std::string tripStr(buffer_receive_data);
         //deserialize receive vehicle
         Trip *t = deserialize<Trip>(tripStr);
         Ride ride = Ride(t, &driver, c);
 
         while (!ride.isDone()) {
-            udp.receiveData(buffer_receive_trip, sizeof(buffer_receive_trip));
-            std::string operation(buffer_receive_trip);
+            udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
+            std::string operation(buffer_receive_data);
             if (operation == "advance") {
                 c->addToCurrentTime(1);
                 ride.moveOneStep();
@@ -67,6 +75,4 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-
-    return 0;
 }
