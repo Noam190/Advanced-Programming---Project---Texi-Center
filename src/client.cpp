@@ -23,24 +23,26 @@ Driver insertDriver() {
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from client" << std::endl;
+    cout << argv[1] << endl;
+    Udp udp(false, atoi(argv[1]));
+    udp.initialize();
 
     //create a driver
     Driver driver = insertDriver();
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(&driver);
+    cout << serial_str_driver;
+    udp.sendData(serial_str_driver);
 
-    cout << argv[1] << endl;
-    Udp udp(0, atoi(argv[1]));
-    udp.initialize();
 
     //deserialize receive clock
     char buffer_receive_clock[1024];
     udp.receiveData(buffer_receive_clock, sizeof(buffer_receive_clock));
     std::string clockStr(buffer_receive_clock);
     Clock *c = deserialize<Clock>(clockStr);
+    std::cout << clockStr;
 
     char buffer_receive_vehicle[1024];
-    udp.sendData(serial_str_driver);
     udp.receiveData(buffer_receive_vehicle, sizeof(buffer_receive_vehicle));
     std::string vehicleStr(buffer_receive_vehicle);
     //deserialize receive vehicle

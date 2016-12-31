@@ -12,17 +12,18 @@
 #include "TaxiCenter.h"
 #include "core_classes/Grid.h"
 #include "Clock.h"
+#include "sockets/Udp.h"
 
 class Menu {
 private:
     Matrix grid;
     TaxiCenter taxiCenter;
     Clock *clock;
-    Udp udp;
+    Udp *udp;
 public:
 
     //constructor to a new
-    Menu(TaxiCenter taxiCenter, Matrix grid, Clock *clock, Udp udp);
+    Menu(TaxiCenter taxiCenter, Matrix grid, Clock *clock, Udp *udp);
 
     //run the funcs with input
     void run();
