@@ -17,44 +17,38 @@ class Menu {
 private:
     Matrix grid;
     TaxiCenter taxiCenter;
-    Clock clock;
+    Clock *clock;
+    Udp udp;
 public:
+
     //constructor to a new
-    Menu(TaxiCenter taxiCenter, Matrix grid, Clock clock);
-    
+    Menu(TaxiCenter taxiCenter, Matrix grid, Clock *clock, Udp udp);
+
     //run the funcs with input
     void run();
-    
+
     //create obstacles from the input arguments
     void getObstacles();
-    
-//    //insert a new driver from the input arguments
-//    void insertNewDriver();
 
     void advance();
 
     //pass date from server<->client
-    void updatesFromClient(TaxiCenter taxiCenter);
-
-    //update clock time
-    void updateTimeClock();
+    void updatesFromClient();
 
     //insert a new driver from the input arguments
-    void expectingDriver(TaxiCenter taxiCenter);
-    
+    void expectingDriver();
+
     //insert a new trip from the input arguments
     void insertTrip();
-    
+
     //insert a new taxi from the input arguments
     void insertTaxi();
-    
+
     //get the driver location from the input arguments
     void getDriverLocation();
-    
+
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
-    //serialize Clock To Client
-    void serializeClockToClient(TaxiCenter taxiCenter) ;
 };
 
 

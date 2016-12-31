@@ -17,7 +17,7 @@ void Menu::run() {
         cin.ignore();
         switch (option) {
             case 1: //insert drivers
-                expectingDriver(this->taxiCenter);
+                expectingDriver();
                 break;
             case 2: //insert trip
                 insertTrip();
@@ -32,10 +32,10 @@ void Menu::run() {
                 moveAllDriversToTheEnd();
                 break;
             case 9: //update clock time
-                updateTimeClock();
                 advance();
                 break;
             case 7: //exit
+                this->udp.sendData("exit");
                 return;
             default:
                 break;
@@ -52,55 +52,45 @@ void Menu::insertTaxi() {
     std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
     //create the taxi
     TaxiCab cab = createTaxi(id, taxiType, manufacturer, color);
-    taxiCenter.addTaxiCab(cab);
+    this->taxiCenter.addTaxiCab(cab);
 
 }
 
 //pass date from server<->client
-void Menu::updatesFromClient(TaxiCenter taxiCenter) {
-    Udp udp(true, 5555);
-    udp.initialize();
-
+void Menu::updatesFromClient() {
     char buffer[1024];
-    udp.receiveData(buffer, sizeof(buffer));
+    this->udp.receiveData(buffer, sizeof(buffer));
+
+    string serial_str_clock = serialize(&(this->clock));
+    this->udp.sendData(serial_str_clock);
 
     // deserialize driver
     string serial_str_driver;
     std::cin >> serial_str_driver;
     Driver *d = deserialize<Driver>(serial_str_driver);
 
-    TaxiCab taxiCab = taxiCenter.getTaxi(d->getVehicleId());
+    TaxiCab taxiCab = this->taxiCenter.getTaxi(d->getVehicleId());
 
     //serialize taxi
-    string serial_str_vehicle = serialize(&taxiCab);
+    string serial_str_taxi = serialize(&taxiCab);
     //sent back the taxi
-    udp.sendData(serial_str_vehicle);
+    this->udp.sendData(serial_str_taxi);
 
 
     //serialize trip
-    Trip *trip = taxiCenter.insertNewDriver(*d);
+    Trip *trip = this->taxiCenter.insertNewDriver(*d);
     if (trip != NULL) {
         string serial_str_trip = serialize(trip);
-        udp.sendData(serial_str_trip);
+        this->udp.sendData(serial_str_trip);
     }
 }
 
-void Menu::serializeClockToClient(TaxiCenter taxiCenter) {
-    Udp udp(1, 5555); //TODO NOT SURE WE HAVE TO OPEN NEW UDP
-    udp.initialize(); //TODO NOT SURE WE HAVE TO OPEN NEW UDP
-    //serialize clock
-    Clock * clockForSerialize= &clock;
-    string serial_str_clock=serialize(clockForSerialize);
-    udp.sendData(serial_str_clock);
-}
-
-
 //expecting a new driver from the client
-void Menu::expectingDriver(TaxiCenter taxiCenter){
+void Menu::expectingDriver() {
     int numOfDrivers;
     std::cin >> numOfDrivers;
     for (int i = 0; i < numOfDrivers; ++i) {
-        updatesFromClient(taxiCenter);
+        updatesFromClient();
     }
 }
 
@@ -121,10 +111,8 @@ void Menu::insertTrip() {
 
     int port = taxiCenter.insertTrip(newTrip);
     if (port == 1) {
-        Udp udp(true, 5555);
-        udp.initialize();
         string serial_str_trip = serialize(&newTrip);
-        udp.sendData(serial_str_trip);
+        this->udp.sendData(serial_str_trip);
     }
 }
 
@@ -139,7 +127,7 @@ void Menu::getObstacles() {
     while (numOfObstacles > 0) {
         std::cin >> x >> dummy  >> y;
         Node* n = new NodeMatrix(x, y);
-        grid.addObstacle(n);
+        this->grid.addObstacle(n);
         delete n;
         numOfObstacles--;
     }
@@ -150,28 +138,25 @@ void Menu::getObstacles() {
 void Menu::getDriverLocation() {
     int idDriver;
     std::cin >> idDriver;
-    std::cout << taxiCenter.getDriverLocation(idDriver);
-
+    std::cout << this->taxiCenter.getDriverLocation(idDriver);
 }
 
 // move all the drivers to the next node in the trip
 void Menu::moveAllDriversToTheEnd() {
-    taxiCenter.moveAllRidesToTheEnd();
+    this->taxiCenter.moveAllRidesToTheEnd();
 }
 
 
 //constructor to a new
-Menu::Menu(TaxiCenter taxiCenter, Matrix grid, Clock clock)
-        : grid(grid), taxiCenter(taxiCenter), clock(clock) {
-            this->clock=clock;
-}
+Menu::Menu(TaxiCenter taxiCenter, Matrix grid, Clock *clock, Udp udp)
+        : grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
 
-//update clock time
-void Menu::updateTimeClock(){
-    this->clock.addToCurrentTime(1);
-    serializeClockToClient(taxiCenter);
 }
 
 void Menu::advance() {
-    taxiCenter.moveAllRidesOneStep();
+    this->clock->addToCurrentTime(1);
+
+    this->udp.sendData("advance");
+
+    this->taxiCenter.moveAllRidesOneStep();
 }

@@ -2,12 +2,9 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
 #include "sockets/Udp.h"
 #include "core_classes/Point.h"
 #include "persons/Driver.h"
-#include "cabs/StandardCab.h"
-#include "cabs/LuxuryCab.h"
 #include "creators/DriverCreator.h"
 #include "Clock.h"
 #include "Serialization.h"
@@ -23,6 +20,7 @@ Driver insertDriver() {
     return d;
 
 }
+
 
 int main(int argc, char *argv[]) {
     std::cout << "Hello, from client" << std::endl;
@@ -56,12 +54,13 @@ int main(int argc, char *argv[]) {
         std::string tripStr(buffer_receive_trip);
         //deserialize receive vehicle
         Trip *t = deserialize<Trip>(tripStr);
-        Ride ride = Ride(t, &driver);
+        Ride ride = Ride(t, &driver, c);
 
         while (!ride.isDone()) {
             udp.receiveData(buffer_receive_trip, sizeof(buffer_receive_trip));
             std::string operation(buffer_receive_trip);
-            if (operation == "operation") {
+            if (operation == "advance") {
+                c->addToCurrentTime(1);
                 ride.moveOneStep();
             } else if (operation == "exit") {
                 return 0;

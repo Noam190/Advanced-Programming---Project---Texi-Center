@@ -5,7 +5,7 @@
 #include "Menu.h"
 #include "stdlib.h"
 int main() {
-    TaxiCenter taxiCenter = TaxiCenter();
+//    TaxiCenter taxiCenter = TaxiCenter();
 
     int width, height;
     
