@@ -168,7 +168,7 @@ Menu::Menu(TaxiCenter taxiCenter, Matrix grid, Clock clock)
 
 //update clock time
 void Menu::updateTimeClock(){
-  //  this->clock.addToCurrentTime(1);
+    this->clock.addToCurrentTime(1);
     serializeClockToClient(taxiCenter);
 }
 

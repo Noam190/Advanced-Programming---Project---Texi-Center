@@ -5,12 +5,9 @@
 #include "Clock.h"
 
 
-//return the current time, if the time is over return -1
+//return the current time.
 int Clock::getCurrentTime() {
-    if (this->currentTime <= this->endTime) {
-        return this->currentTime;
-    }
-    return -1;
+    return this->currentTime;
 }
 
 //add 'addTime' to the current time
