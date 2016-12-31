@@ -23,6 +23,7 @@ private:
 
     void addTaxiToDriver(Driver *driver);
 public:
+    TaxiCenter(Clock *clock);
 
     //answer call
     void answerCall();
@@ -62,6 +63,8 @@ public:
 
     //get the driver location
     Point getDriverLocation(int id);
+
+    Clock *clock;
 };
 
 #endif //EX2AP_TAXICENTER_H

@@ -9,6 +9,7 @@
 #include "Trip.h"
 #include "persons/Driver.h"
 #include "cabs/TaxiCab.h"
+#include "Clock.h"
 
 class Ride {
 private:
@@ -16,9 +17,11 @@ private:
     Point end;
     Trip* trip;
     Driver* driver;
+    Clock *clock;
 public:
+
     //constructor
-    Ride(Trip* trip, Driver* driver);
+    Ride(Trip *trip, Driver *driver, Clock *clock);
 
     bool isDone();
 

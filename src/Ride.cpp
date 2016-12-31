@@ -3,22 +3,28 @@
 //
 
 #include "Ride.h"
+
 //move the ride to the end
 void Ride::moveToTheEnd() {
-    this->trip->updateLocation(this->end);
-    this->driver->updateLocation(this->end);
+    if (clock->getCurrentTime() >= trip->getTimeOfStart()) {
+        this->trip->updateLocation(this->end);
+        this->driver->updateLocation(this->end);
+    }
 }
 
 //move the ride one step
 void Ride::moveOneStep() {
-    this->trip->moveOneStep();
-    this->driver->updateLocation(this->trip->getCurrentPoint());
+    if (clock->getCurrentTime() >= trip->getTimeOfStart()) {
+        this->trip->moveOneStep();
+        this->driver->updateLocation(this->trip->getCurrentPoint());
+    }
 }
 
 //constructor
-Ride::Ride(Trip *trip, Driver* driver) : start(trip->getStartPoint()), end(trip->getEndPoint()){
+Ride::Ride(Trip *trip, Driver *driver, Clock *clock) : start(trip->getStartPoint()), end(trip->getEndPoint()) {
     this->driver = driver;
     this->trip = trip;
+    this->clock = clock;
 }
 
 //getters and setters

@@ -33,7 +33,7 @@ int TaxiCenter::insertTrip(Trip t) {
             busyDrivers.push_back(freeDrivers[index]);
             freeDrivers.erase(it);
             busyTrips.push_back(t);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back());
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
             rides.push_back(r);
             return 1;
         }
@@ -100,7 +100,7 @@ void TaxiCenter::createRides() {
         busyDrivers.push_back(freeDrivers[0]);
         it = freeDrivers.erase(freeDrivers.begin());
 
-        Ride r = Ride(&busyTrips.front(), &busyDrivers.front());
+        Ride r = Ride(&busyTrips.front(), &busyDrivers.front(), clock);
         rides.push_back(r);
 
     }
@@ -157,13 +157,17 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
             busyDrivers.push_back(driver);
             busyTrips.push_back(freeTrips[index]);
             freeTrips.erase(it);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back());
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
             rides.push_back(r);
             return &busyTrips.back();
         }
     }
     freeDrivers.push_back(driver);
     return NULL;
+}
+
+TaxiCenter::TaxiCenter(Clock *clock) {
+    this->clock = clock;
 }
 
 
