@@ -28,7 +28,5 @@ add_executable(client client.cpp)
 target_link_libraries(server sockets core)
 target_link_libraries(client sockets core)
 
-add_executable(source ${SOURCE_FILES} main.cpp)
-target_link_libraries(source ${Boost_LIBRARIES})
 target_link_libraries(server ${Boost_LIBRARIES})
 target_link_libraries(client ${Boost_LIBRARIES})

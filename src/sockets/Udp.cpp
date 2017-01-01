@@ -92,7 +92,7 @@ int Udp::sendData(string data) {
 * The Function operation: getting data from the other socket check if  *
 *  there were no error receiving and print							   *
 ***********************************************************************/
-int Udp::receiveData(char *buffer, int size) {
+unsigned long Udp::receiveData(char *buffer, unsigned long size) {
     struct sockaddr_in to;
     unsigned int to_len = sizeof(struct sockaddr_in);
     //receive
@@ -102,12 +102,11 @@ int Udp::receiveData(char *buffer, int size) {
     this->port_number = ntohs(to.sin_port);
     //check if receive successfully
 
-    cout << bytes << endl;
     if (bytes < 0) {
         return ERROR_RECIVE;
     }
     //print the data
     cout << buffer << endl;
     //return correct if there were no error
-    return CORRECT;
+    return (unsigned long) bytes;
 }

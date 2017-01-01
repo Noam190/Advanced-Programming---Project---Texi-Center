@@ -3,7 +3,7 @@
 //
 
 #include "core_classes/Point.h"
-#include <boost/serialization/list.hpp>
+#include <boost/serialization/vector.hpp>
 
 #ifndef EX2AP_TRIP_H
 #define EX2AP_TRIP_H
@@ -25,7 +25,7 @@ private:
         archive & timeOfStart;
     }
 
-    list<Point> path;
+    vector<Point> path;
     unsigned long length;
     int id;
     int totalMeters;
@@ -41,7 +41,7 @@ public:
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,
-         double tariff, Point start, Point end, list<Point> path , int timeOfStart);
+         double tariff, Point start, Point end, vector<Point> path, int timeOfStart);
 
     //move the one step - to the next point.
     void moveOneStep();

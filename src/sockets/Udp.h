@@ -52,7 +52,7 @@ public:
     * The Function operation: getting data from the other socket and print *
     * the data															   *
     ***********************************************************************/
-    int receiveData(char *buffer, int size);
+    unsigned long receiveData(char *buffer, unsigned long size);
 };
 
 #endif /* UDP_H_ */

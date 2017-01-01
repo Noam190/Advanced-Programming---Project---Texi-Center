@@ -84,7 +84,7 @@ public:
     * The Function operation: getting data from the other socket and print *
     * the data															   *
     ***********************************************************************/
-    virtual int receiveData(char *buffer, int size) = 0;
+    virtual unsigned long receiveData(char *buffer, unsigned long size) = 0;
 
 
 };
