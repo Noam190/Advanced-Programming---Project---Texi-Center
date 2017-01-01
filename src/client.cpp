@@ -56,12 +56,12 @@ int main(int argc, char *argv[]) {
 
     udp.receiveData(buffer, sizeof(buffer));
     char option = buffer[0];
-
+    std::string data;
     while (option != 'E') {
         switch (option) {
             case 'T':
                 readBytes = udp.receiveData(buffer, sizeof(buffer));
-                std::string data(buffer, readBytes);
+                data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
                     ride = new Ride(t, &driver, c);
@@ -85,6 +85,7 @@ int main(int argc, char *argv[]) {
         udp.receiveData(buffer, sizeof(buffer));
         option = buffer[0];
     }
+    return 0;
 }
 
 //while (1) {
