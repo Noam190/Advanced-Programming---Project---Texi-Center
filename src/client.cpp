@@ -23,11 +23,14 @@ Driver insertDriver() {
 
 int main(int argc, char *argv[]) {
     char buffer[1024];
-
-    string advance("advance\0", 8);
-    cout << advance.size() << std::endl;
-    string exit("exit\0", 5);
+    Ride *ride = NULL;
+    Trip *t = NULL;
     unsigned long readBytes;
+
+//    string advance("advance\0", 8);
+//    cout << advance.size() << std::endl;
+//    string exit("exit\0", 5);
+
     std::cout << "Hello, from client" << std::endl;
     cout << argv[1] << endl;
     Udp udp(false, atoi(argv[1]));
@@ -51,37 +54,68 @@ int main(int argc, char *argv[]) {
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
     driver.setTaxiCab(taxiCab);
 
+    udp.receiveData(buffer, sizeof(buffer));
+    char option = buffer[0];
 
-    while (1) {
+    while (option != 'E') {
+        switch (option) {
+            case 'T':
+                readBytes = udp.receiveData(buffer, sizeof(buffer));
+                std::string data(buffer, readBytes);
+                if (ride == NULL) {
+                    t = deserialize<Trip>(data);
+                    ride = new Ride(t, &driver, c);
+                }
+                break;
 
-        readBytes = udp.receiveData(buffer, sizeof(buffer));
-        std::string data(buffer, readBytes);
-        cout << "size" << data.size() << std::endl;
-        if (data == exit) {
-            cout << "1e" << std::endl;
-            return 0;
+            case 'G':
+                if (ride != NULL) {
+                    c->addToCurrentTime(1);
+                    ride->moveOneStep();
+                    if (ride->isDone()) {
+                        delete ride;
+                        ride = NULL;
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
-
-        if (data == advance) {
-            cout << "stay" << std::endl;
-            continue;
-        }
-
-        //deserialize receive vehicle
-        Trip *t = deserialize<Trip>(data);
-        Ride ride = Ride(t, &driver, c);
-
-        while (!ride.isDone()) {
-            readBytes = udp.receiveData(buffer, sizeof(buffer));
-            std::string operation(buffer, readBytes);
-            if (operation == advance) {
-                cout << "go" << std::endl;
-                c->addToCurrentTime(1);
-                ride.moveOneStep();
-            } else if (operation == exit) {
-                cout << "2e" << std::endl;
-                return 0;
-            }
-        }
+        udp.receiveData(buffer, sizeof(buffer));
+        option = buffer[0];
     }
 }
+
+//while (1) {
+//
+//        readBytes = udp.receiveData(buffer, sizeof(buffer));
+//        std::string data(buffer, readBytes);
+//        cout << "size" << data.size() << std::endl;
+//        if (data == exit) {
+//            cout << "1e" << std::endl;
+//            return 0;
+//        }
+//
+//        if (data == advance) {
+//            cout << "stay" << std::endl;
+//            continue;
+//        }
+//
+//        //deserialize receive vehicle
+//        Trip *t = deserialize<Trip>(data);
+//        Ride ride = Ride(t, &driver, c);
+//
+//        while (!ride.isDone()) {
+//            readBytes = udp.receiveData(buffer, sizeof(buffer));
+//            std::string operation(buffer, readBytes);
+//            if (operation == advance) {
+//                cout << "go" << std::endl;
+//                c->addToCurrentTime(1);
+//                ride.moveOneStep();
+//            } else if (operation == exit) {
+//                cout << "2e" << std::endl;
+//                return 0;
+//            }
+//        }
+//    }

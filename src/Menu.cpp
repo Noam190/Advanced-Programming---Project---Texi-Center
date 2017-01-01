@@ -81,6 +81,7 @@ void Menu::updatesFromClient() {
     //serialize trip
     Trip *trip = this->taxiCenter.insertNewDriver(*d);
     if (trip != NULL) {
+        this->udp.sendData("T");
         string serial_str_trip = serialize(trip);
         this->udp.sendData(serial_str_trip);
     }
@@ -157,6 +158,7 @@ Menu::Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp)
 
 void Menu::advance() {
     this->clock.addToCurrentTime(1);
+
     //go to the drivers
     this->udp.sendData("G");
 
