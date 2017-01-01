@@ -7,7 +7,7 @@
 
 //send a taxi
 TaxiCab TaxiCenter::sendTaxi() {
-    return TaxiCab(HONDA, RED, 0,0,0);
+    return TaxiCab(HONDA, RED, 0,0,0, 0);
 }
 
 //answer call
@@ -33,7 +33,7 @@ int TaxiCenter::insertTrip(Trip t) {
             busyDrivers.push_back(freeDrivers[index]);
             freeDrivers.erase(it);
             busyTrips.push_back(t);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock,busyDrivers.back().getTaxiType());
             rides.push_back(r);
             return 1;
         }
@@ -100,7 +100,7 @@ void TaxiCenter::createRides() {
         busyDrivers.push_back(freeDrivers[0]);
         it = freeDrivers.erase(freeDrivers.begin());
 
-        Ride r = Ride(&busyTrips.front(), &busyDrivers.front(), clock);
+        Ride r = Ride(&busyTrips.front(), &busyDrivers.front(), clock,busyDrivers.front().getTaxiType());
         rides.push_back(r);
 
     }
@@ -109,9 +109,14 @@ void TaxiCenter::createRides() {
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
     for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it) {
-        it->moveOneStep();
-        if (it->isDone()) {
-            it = rides.erase(it);
+        int indexloop=0;
+        int rideIsEnd =0;//0 the ride continue, 1 the ride is end
+        while((indexloop<it->getTaxiType())&&(rideIsEnd ==0)) {
+            it->moveOneStep();
+            if (it->isDone()) {
+                it = rides.erase(it);
+                rideIsEnd=1;
+            }
         }
     }
 }
@@ -157,7 +162,7 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
             busyDrivers.push_back(driver);
             busyTrips.push_back(freeTrips[index]);
             freeTrips.erase(it);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock, busyDrivers.back().getTaxiType());
             rides.push_back(r);
             return &busyTrips.back();
         }
@@ -165,6 +170,7 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
     freeDrivers.push_back(driver);
     return NULL;
 }
+
 
 TaxiCenter::TaxiCenter(Clock *clock) {
     this->clock = clock;

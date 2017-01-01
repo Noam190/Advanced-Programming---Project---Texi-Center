@@ -51,10 +51,10 @@ TaxiCab createTaxi(int id, int taxiType, char manufacturer, char color){
 
     switch (taxiType) {
         case 1:
-            return StandardCab(id, 0, 1, carManufacturer, c);
+            return StandardCab(id, 0, 1, carManufacturer, c, 1);
         case 2:
-            return LuxuryCab(id, 0, 2, carManufacturer, c);
+            return LuxuryCab(id, 0, 2, carManufacturer, c, 2);
         default:
-            return LuxuryCab(id, 0, 2, carManufacturer, c);
+            return LuxuryCab(id, 0, 2, carManufacturer, c, 2);
     }
 }

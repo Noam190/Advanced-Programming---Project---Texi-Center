@@ -27,6 +27,7 @@ private:
         archive & averageSatisfaction;
         archive & totalPoints;
         archive & numberOfVotes;
+        archive & taxiType;
     }
 
     unsigned int yearsOfExperience;
@@ -35,13 +36,16 @@ private:
     unsigned int numberOfVotes;
     int vehicleId;
     TaxiCab *taxiCab;
+    int taxiType;//0 there is no taxi,1 standart,2luxury
 
 public:
 
-    Driver() : taxiCab(NULL), averageSatisfaction(0), totalPoints(0), numberOfVotes(0) {};
+    Driver() : taxiCab(NULL), averageSatisfaction(0), totalPoints(0),
+               numberOfVotes(0),taxiType(0) {};
 
     // Constructor all the members
-    Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience, int vehicleId, STATUS status);
+    Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
+           int vehicleId, STATUS status,int taxiType );
 
     //getters and setters
     int getYearsOfExperience();
@@ -61,6 +65,10 @@ public:
     TaxiCab *getTaxiCab();
 
     void rateDriver(unsigned int points);
+
+    int getTaxiType();
+
+    void  setGetTaxiType(int newType);
 
 };
 

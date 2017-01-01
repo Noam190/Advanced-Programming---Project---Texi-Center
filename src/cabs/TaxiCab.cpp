@@ -5,11 +5,13 @@
 #include "TaxiCab.h"
 
 //constructor
-TaxiCab::TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId, int numOfKilometers, int tariff)
+TaxiCab::TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId,
+                 int numOfKilometers, int tariff, int taxiType)
         : Vehicle(carManufacturer, color) {
     this->cabId = cabId;
     this->numberOfKilometers = numOfKilometers;
     this->tariff = tariff;
+    this->taxiType=taxiType;
 }
 
 //getters and setters
@@ -38,4 +40,9 @@ int TaxiCab::getTariff(){
 //getters and setters
 void TaxiCab::setTariff(int tariff){
     this->tariff = tariff;
+}
+
+//get type of taxi - 1  standart, 2 luxury
+int TaxiCab::getTaxiType(){
+    return  this->taxiType;
 }

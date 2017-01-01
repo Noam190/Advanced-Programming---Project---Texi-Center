@@ -21,10 +21,12 @@ void Ride::moveOneStep() {
 }
 
 //constructor
-Ride::Ride(Trip *trip, Driver *driver, Clock *clock) : start(trip->getStartPoint()), end(trip->getEndPoint()) {
+Ride::Ride(Trip *trip, Driver *driver, Clock *clock, int taxiType)
+        : start(trip->getStartPoint()), end(trip->getEndPoint()) ,taxiType(0){
     this->driver = driver;
     this->trip = trip;
     this->clock = clock;
+    this->taxiType=taxiType;
 }
 
 //getters and setters
@@ -49,5 +51,10 @@ Driver *Ride::getDriver() {
 
 bool Ride::isDone() {
     return this->end == this->trip->getCurrentPoint();
+}
+
+//get type of taxi - 1  standart, 2 luxury
+int Ride::getTaxiType(){
+    return this->taxiType;
 }
 

@@ -35,6 +35,7 @@ void Menu::run() {
                 advance();
                 break;
             case 7: //exit
+
                 this->udp->sendData("exit");
                 return;
             default:

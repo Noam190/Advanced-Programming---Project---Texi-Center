@@ -5,7 +5,8 @@
 
 #include "Person.h"
 //constructor
-Person::Person(int id, unsigned int age, STATUS status, Point location) : location(location) {
+Person::Person(int id, unsigned int age, STATUS status, Point location)
+        : location(location) {
     this->id = id;
     this->age = age;
     this->status = status;
