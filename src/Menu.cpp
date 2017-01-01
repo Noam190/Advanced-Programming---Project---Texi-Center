@@ -162,4 +162,11 @@ void Menu::advance() {
     this->udp.sendData("G");
 
     this->taxiCenter.moveAllRidesOneStep();
+
+    Trip *trip = this->taxiCenter.createRides();
+    if (trip != NULL) {
+        this->udp.sendData("T");
+        string serial_str_trip = serialize(trip);
+        this->udp.sendData(serial_str_trip);
+    }
 }

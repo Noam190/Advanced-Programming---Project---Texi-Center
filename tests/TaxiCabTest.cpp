@@ -11,7 +11,8 @@ namespace {
     class  TaxiCabTest : public testing::Test {
     public:
         TaxiCab taxi;
-        TaxiCabTest() : taxi(HONDA, RED,0,0,0){
+
+        TaxiCabTest() : taxi(HONDA, RED, 0, 0, 0, 1) {
         }
     };
 }

@@ -8,8 +8,8 @@
 namespace {
     class  TaxiCenterTest : public testing::Test {
     protected:
-        TaxiCenter taxiCenter;
-        TaxiCenterTest(): taxiCenter(){}
+//        TaxiCenter taxiCenter;
+        TaxiCenterTest() {}
     };
 }
 

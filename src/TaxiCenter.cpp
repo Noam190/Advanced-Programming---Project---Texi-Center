@@ -118,7 +118,6 @@ void TaxiCenter::addTaxiToDriver(Driver *driver) {
 }
 
 Trip *TaxiCenter::insertNewDriver(Driver driver) {
-    Trip *trip;
     int index = 0;
     Point startPoint = driver.getCurrentLocation();
     addTaxiToDriver(&driver);
@@ -136,13 +135,11 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
     return NULL;
 }
 
-TaxiCenter::TaxiCenter(Clock &clock) : clock(clock) {}
+TaxiCenter::TaxiCenter(Clock clock) : clock(clock) {}
 
 
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
-
-
     for (int i = 0; i < rides.size(); ++i) {
         rides[i].moveOneStep();
         if (rides[i].isDone()) {
@@ -156,6 +153,28 @@ void TaxiCenter::moveAllRidesOneStep() {
 }
 
 
+//create a new ride
+Trip * TaxiCenter::createRides() {
+    Trip *trip = NULL;
+    for (int i = 0; i < freeDrivers.size(); ++i) {
+        for (int j = 0; j < freeTrips.size(); ++j) {
+            if (freeDrivers[i].getCurrentLocation() == freeTrips[j].getStartPoint()) {
+                busyDrivers.push_back(freeDrivers[i]);
+                freeDrivers.erase(freeDrivers.begin() + i);
+                busyTrips.push_back(freeTrips[j]);
+                freeTrips.erase(freeTrips.begin() + j);
+                Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), &clock);
+                rides.push_back(r);
+                --i;
+                --j;
+
+                trip = &busyTrips.back();
+            }
+        }
+    }
+    return trip;
+}
+
 //    int index = 0;
 //    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it, ++index) {
 //        it->moveOneStep();
@@ -166,24 +185,3 @@ void TaxiCenter::moveAllRidesOneStep() {
 //            it = rides.erase(it);
 //        }
 //    }
-
-////create a new ride
-//void TaxiCenter::createRides() {
-//    unsigned long index = 0;
-//    for (vector<Driver>::iterator it = freeDrivers.begin();
-//                        it != freeDrivers.end(); ++it, ++index) {
-//        if(freeTrips.size() < 1 ) {
-//            return;
-//        }
-//
-//        busyTrips.push_back(freeTrips[0]);
-//        freeTrips.erase(freeTrips.begin());
-//
-//        busyDrivers.push_back(freeDrivers[0]);
-//        it = freeDrivers.erase(freeDrivers.begin());
-//
-//        Ride r = Ride(busyTrips.front(), busyDrivers.front(), clock);
-//        rides.push_back(r);
-//
-//    }
-//}

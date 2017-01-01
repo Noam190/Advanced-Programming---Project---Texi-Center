@@ -24,7 +24,7 @@ private:
 
     void addTaxiToDriver(Driver *driver);
 public:
-    TaxiCenter(Clock &clock);
+    TaxiCenter(Clock clock);
 
     //answer call
     void answerCall();
@@ -53,8 +53,8 @@ public:
     //remove a trip to the center
     void removeTrip(int id);
 
-////create a new ride
-//    void createRides();
+    //create a new ride
+    Trip * createRides();
 
     //move all the rides one step forward
     void moveAllRidesOneStep();
