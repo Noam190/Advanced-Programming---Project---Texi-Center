@@ -6,5 +6,5 @@
 
 //create a new luxury cab
 LuxuryCab::LuxuryCab(int cabId, int numOfKilometers,
-                     int tariff,MANUFACTURER carManufacturer, COLOR color) :
-        TaxiCab(carManufacturer, color, cabId, numOfKilometers, tariff) {}
+                     int tariff,MANUFACTURER carManufacturer, COLOR color, int taxiType) :
+        TaxiCab(carManufacturer, color, cabId, numOfKilometers, tariff, 2) {}

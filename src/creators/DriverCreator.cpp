@@ -25,5 +25,5 @@ Driver createDriver(int id, int age, char status, int experience, int vehicleId)
     }
 
 //return the new driver
-    return Driver(Point(0, 0), id, age, experience, vehicleId, st);
+    return Driver(Point(0, 0), id, age, experience, vehicleId, st, 0);
 }

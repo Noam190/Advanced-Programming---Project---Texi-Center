@@ -7,7 +7,7 @@
 
 //send a taxi
 TaxiCab TaxiCenter::sendTaxi() {
-    return TaxiCab(HONDA, RED, 0,0,0);
+    return TaxiCab(HONDA, RED, 0,0,0, 0);
 }
 
 //answer call
@@ -129,7 +129,6 @@ void TaxiCenter::moveAllRidesOneStep() {
             --i;
         }
     }
-
 }
 
 //move all the rides to the end point

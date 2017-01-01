@@ -17,7 +17,8 @@ private:
 public:
     LuxuryCab() {};
     //create a new luxury cab
-    LuxuryCab(int cabId, int numOfKilometers, int tariff, MANUFACTURER carManufacturer, COLOR color);
+    LuxuryCab(int cabId, int numOfKilometers, int tariff,
+              MANUFACTURER carManufacturer, COLOR color, int taxiType);
 
 };
 

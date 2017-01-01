@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
         //deserialize receive vehicle
         Trip *t = deserialize<Trip>(data);
-        Ride ride = Ride(t, &driver, c);
+        Ride ride = Ride(t, &driver, c, driver.getTaxiType());
 
         while (!ride.isDone()) {
             readBytes = udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));

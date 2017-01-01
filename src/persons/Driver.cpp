@@ -3,14 +3,16 @@
 //
 
 #include "Driver.h"
-//constructor
+// constructor
 Driver::Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
-               int vehicleId, STATUS status) : Person(id, age, status, location), taxiCab(NULL) {
+               int vehicleId, STATUS status, int taxiType)
+        : Person(id, age, status, location), taxiCab(NULL) , taxiType(0){
     this->yearsOfExperience = yearsOfExperience;
     this->vehicleId = vehicleId;
     this->averageSatisfaction = 0;
     this->numberOfVotes = 0;
     this->totalPoints = 0;
+    this->taxiType=0;
 }
 
 //getters and setters
@@ -27,10 +29,18 @@ unsigned int Driver::getAverageSatisfaction() {
 }
 
 void Driver::setTaxiCab(TaxiCab *taxi) {
+    if(this->taxiCab->getTaxiType()==1)
+        this->taxiType=1;
+    if(this->taxiCab->getTaxiType()==2)
+        this->taxiType=2;
     this->taxiCab = taxi;
 }
 
 TaxiCab *Driver::getTaxiCab() {
+    if(this->taxiCab->getTaxiType()==1)
+        setGetTaxiType(1);
+    if(this->taxiCab->getTaxiType()==2)
+        setGetTaxiType(2);
     return this->taxiCab;
 }
 
@@ -47,3 +57,11 @@ void Driver::rateDriver(unsigned int points) {
     this->numberOfVotes++;
     this->averageSatisfaction = totalPoints / numberOfVotes;
 }
+
+int Driver::getTaxiType(){
+    return this->taxiType;
+}
+void  Driver::setGetTaxiType(int newType){
+    this->taxiType=newType;
+}
+
