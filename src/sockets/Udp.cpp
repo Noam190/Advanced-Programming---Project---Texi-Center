@@ -96,11 +96,8 @@ unsigned long Udp::receiveData(char *buffer, unsigned long size) {
     struct sockaddr_in to;
     unsigned int to_len = sizeof(struct sockaddr_in);
     //receive
-    cout << "in" << endl;
-
     ssize_t bytes = recvfrom(this->socketDescriptor,
                              buffer, (size_t) size, 0, (struct sockaddr *) &to, &to_len);
-    cout << "out" << endl;
     //set the port number to the new one which we get with the data
     this->port_number = ntohs(to.sin_port);
     //check if receive successfully

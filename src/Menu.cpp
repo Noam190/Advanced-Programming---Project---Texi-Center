@@ -34,14 +34,13 @@ void Menu::run() {
             case 9: //update clock time
                 advance();
                 break;
-            case 7: //exit
-                this->udp.sendData("E");
-                return;
             default:
                 break;
         }
         cin >> option;
     }
+    this->udp.sendData("E");
+    return;
 }
 
 //insert a new taxi from the input arguments
