@@ -33,7 +33,7 @@ int TaxiCenter::insertTrip(Trip t) {
             busyDrivers.push_back(freeDrivers[index]);
             freeDrivers.erase(it);
             busyTrips.push_back(t);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), &clock);
             rides.push_back(r);
             return 1;
         }
@@ -85,35 +85,51 @@ Point TaxiCenter::getDriverLocation(int id) {
     return Point(-8,-8);
 }
 
-//create a new ride
-void TaxiCenter::createRides() {
-    unsigned long index = 0;
-    for (vector<Driver>::iterator it = freeDrivers.begin();
-                        it != freeDrivers.end(); ++it, ++index) {
-        if(freeTrips.size() < 1 ) {
-            return;
-        }
-
-        busyTrips.push_back(freeTrips[0]);
-        freeTrips.erase(freeTrips.begin());
-
-        busyDrivers.push_back(freeDrivers[0]);
-        it = freeDrivers.erase(freeDrivers.begin());
-
-        Ride r = Ride(&busyTrips.front(), &busyDrivers.front(), clock);
-        rides.push_back(r);
-
-    }
-}
+////create a new ride
+//void TaxiCenter::createRides() {
+//    unsigned long index = 0;
+//    for (vector<Driver>::iterator it = freeDrivers.begin();
+//                        it != freeDrivers.end(); ++it, ++index) {
+//        if(freeTrips.size() < 1 ) {
+//            return;
+//        }
+//
+//        busyTrips.push_back(freeTrips[0]);
+//        freeTrips.erase(freeTrips.begin());
+//
+//        busyDrivers.push_back(freeDrivers[0]);
+//        it = freeDrivers.erase(freeDrivers.begin());
+//
+//        Ride r = Ride(busyTrips.front(), busyDrivers.front(), clock);
+//        rides.push_back(r);
+//
+//    }
+//}
 
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
-    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it) {
-        it->moveOneStep();
-        if (it->isDone()) {
-            it = rides.erase(it);
+//    int index = 0;
+//    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it, ++index) {
+//        it->moveOneStep();
+//        if (it->isDone()) {
+//            busyTrips.erase(busyTrips.begin() + index);
+//            freeDrivers.push_back(busyDrivers[index]);
+//            busyDrivers.erase(busyDrivers.begin() + index);
+//            it = rides.erase(it);
+//        }
+//    }
+
+    for (int i = 0; i < rides.size(); ++i) {
+        rides[i].moveOneStep();
+        if (rides[i].isDone()) {
+            busyTrips.erase(busyTrips.begin() + i);
+            freeDrivers.push_back(busyDrivers[i]);
+            busyDrivers.erase(busyDrivers.begin() + i);
+            rides.erase(rides.begin() + i);
+            --i;
         }
     }
+
 }
 
 //move all the rides to the end point
@@ -157,7 +173,7 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
             busyDrivers.push_back(driver);
             busyTrips.push_back(freeTrips[index]);
             freeTrips.erase(it);
-            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
+            Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), &clock);
             rides.push_back(r);
             return &busyTrips.back();
         }
@@ -166,8 +182,6 @@ Trip *TaxiCenter::insertNewDriver(Driver driver) {
     return NULL;
 }
 
-TaxiCenter::TaxiCenter(Clock *clock) {
-    this->clock = clock;
-}
+TaxiCenter::TaxiCenter(Clock &clock) : clock(clock) {}
 
 

@@ -14,6 +14,7 @@
 
 class TaxiCenter {
 private:
+    Clock &clock;
     std::vector<Ride> rides;
     std::vector<Driver> freeDrivers;
     std::vector<TaxiCab> freeCabs;
@@ -23,7 +24,7 @@ private:
 
     void addTaxiToDriver(Driver *driver);
 public:
-    TaxiCenter(Clock *clock);
+    TaxiCenter(Clock &clock);
 
     //answer call
     void answerCall();
@@ -52,8 +53,8 @@ public:
     //remove a trip to the center
     void removeTrip(int id);
 
-    //create a new ride
-    void createRides();
+////create a new ride
+//    void createRides();
 
     //move all the rides one step forward
     void moveAllRidesOneStep();
@@ -64,7 +65,6 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
-    Clock *clock;
 };
 
 #endif //EX2AP_TAXICENTER_H

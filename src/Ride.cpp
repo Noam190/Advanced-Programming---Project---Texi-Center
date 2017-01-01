@@ -21,11 +21,8 @@ void Ride::moveOneStep() {
 }
 
 //constructor
-Ride::Ride(Trip *trip, Driver *driver, Clock *clock) : start(trip->getStartPoint()), end(trip->getEndPoint()) {
-    this->driver = driver;
-    this->trip = trip;
-    this->clock = clock;
-}
+Ride::Ride(Trip *trip, Driver *driver, Clock *clock) : trip(trip), clock(clock), driver(driver),
+                                                       start(trip->getStartPoint()), end(trip->getEndPoint()) {}
 
 //getters and setters
 Point Ride::getEndPoint() {
