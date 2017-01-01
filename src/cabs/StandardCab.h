@@ -21,7 +21,7 @@ public:
     StandardCab() {};
     //constructor
     StandardCab(int cabId, int numOfKilometers, int tariff,
-                MANUFACTURER carManufacturer, COLOR color, int taxiType);
+                MANUFACTURER carManufacturer, COLOR color);
 };
 
 #endif //EX2AP_STANDARTCAB_H

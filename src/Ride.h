@@ -18,11 +18,10 @@ private:
     Trip* trip;
     Driver* driver;
     Clock *clock;
-    int taxiType; //1 is standart,2 is luxury
 public:
 
     //constructor
-    Ride(Trip *trip, Driver *driver, Clock *clock, int taxiType);
+    Ride(Trip *trip, Driver *driver, Clock *clock);
 
     bool isDone();
 
@@ -43,9 +42,6 @@ public:
 
     //getters and setters
     Driver* getDriver();
-
-    //get type of taxi - 1  standart, 2 luxury
-    int getTaxiType();
 };
 
 

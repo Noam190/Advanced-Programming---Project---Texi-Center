@@ -6,12 +6,12 @@
 
 //constructor
 TaxiCab::TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId,
-                 int numOfKilometers, int tariff, int taxiType)
+                 int numOfKilometers, int tariff, int velocity)
         : Vehicle(carManufacturer, color) {
     this->cabId = cabId;
     this->numberOfKilometers = numOfKilometers;
     this->tariff = tariff;
-    this->taxiType=taxiType;
+    this->velocity = velocity;
 }
 
 //getters and setters
@@ -42,7 +42,7 @@ void TaxiCab::setTariff(int tariff){
     this->tariff = tariff;
 }
 
-//get type of taxi - 1  standart, 2 luxury
-int TaxiCab::getTaxiType(){
-    return  this->taxiType;
+
+int TaxiCab::getVelocity() {
+    return this->velocity;
 }

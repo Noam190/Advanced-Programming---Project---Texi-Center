@@ -19,12 +19,12 @@ private:
         archive & cabId;
         archive & numberOfKilometers;
         archive & tariff;
-        archive & taxiType;
+        archive & velocity;
     }
     int cabId;
     int numberOfKilometers;
     int tariff;
-    int taxiType;
+    int velocity;
 
 public:
 
@@ -32,7 +32,7 @@ public:
 
     //constructor
     TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId,
-            int numOfKilometers, int tariff, int taxiType);
+            int numOfKilometers, int tariff, int velocity);
 
     //getters and setters
     int getId();
@@ -55,6 +55,7 @@ public:
     //get type of taxi - 1  standart, 2 luxury
     int getTaxiType();
 
+    int getVelocity();
 };
 
 
