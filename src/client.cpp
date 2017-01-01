@@ -45,7 +45,8 @@ int main(int argc, char *argv[]) {
     readBytes = udp.receiveData(buffer_receive_vehicle, sizeof(buffer_receive_vehicle));
     std::string vehicleStr(buffer_receive_vehicle, readBytes);
     //deserialize receive vehicle
-    TaxiCab *v = deserialize<TaxiCab>(vehicleStr);
+    TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
+    driver.setTaxiCab(taxiCab);
 
     char buffer_receive_data[1024];
     while (1) {
