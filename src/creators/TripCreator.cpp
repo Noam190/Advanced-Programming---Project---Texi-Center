@@ -16,7 +16,7 @@ Trip createTrip(Matrix grid, int id, int xStart, int yStart,
     // Mark all the vertices as not visit
     grid.initDistanceForAll(-1);
     std::list<Node *> pathNodes = BFS(startNode, endNode);
-    std::list<Point> pathPoints;
+    std::vector<Point> pathPoints;
     length = pathNodes.size();
     for (int i = 0; i < length; ++i) {
         Node *n = pathNodes.front();

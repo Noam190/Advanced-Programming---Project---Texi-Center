@@ -5,7 +5,7 @@
 #include "Trip.h"
 // Constructor all the members
 Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-           double tariff, Point start, Point end, list <Point> path, int timeOfStart) :
+           double tariff, Point start, Point end, vector<Point> path, int timeOfStart) :
         currentLocation(start), startPoint(start), endPoint(end), path(path) {
 
     this->length = length;
@@ -97,6 +97,6 @@ void Trip::setTimeOfStart(int newTimeOfStart){
 }
 
 void Trip::moveOneStep() {
-    this->path.pop_front();
+    this->path.erase(this->path.begin());
     this->updateLocation(this->path.front());
 }

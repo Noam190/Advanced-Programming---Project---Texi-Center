@@ -58,16 +58,17 @@ void Menu::insertTaxi() {
 
 //pass date from server<->client
 void Menu::updatesFromClient() {
+    unsigned long readBytes;
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
-    this->udp->receiveData(buffer, sizeof(buffer));
+    readBytes = this->udp->receiveData(buffer, sizeof(buffer));
     cout << "BUFFER:" << buffer;
 
     string serial_str_clock = serialize(this->clock);
     this->udp->sendData(serial_str_clock);
 
     // deserialize driver
-    string serial_str_driver(buffer);
+    string serial_str_driver(buffer, readBytes);
     std::cout << serial_str_driver;
     Driver *d = deserialize<Driver>(serial_str_driver);
 

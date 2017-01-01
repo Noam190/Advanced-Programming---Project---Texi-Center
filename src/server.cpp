@@ -9,7 +9,7 @@ int main() {
     std::cout << "standard menu" << std::endl;
 
     Udp udp(true, 5555);
-    udp.initialize();
+    //udp.initialize();
 
     Clock clock = Clock();
     TaxiCenter taxiCenter = TaxiCenter(&clock);
