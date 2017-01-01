@@ -17,6 +17,7 @@ private:
         archive & startPoint;
         archive & endPoint;
         archive & currentLocation;
+        archive & path;
         archive & length;
         archive & id;
         archive & totalMeters;

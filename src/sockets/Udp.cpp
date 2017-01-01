@@ -11,7 +11,7 @@
 * function name: Udp												   *
 * The Input: Boolean, true - if server, false if client and port number*
 * The output: none										               *
-* The Function operation: creating new Udp socket						       *
+* The Function operation: creating new Udp socket					   *
 ***********************************************************************/
 Udp::Udp(bool isServers, int port_num) {
     this->port_number = port_num;
@@ -63,7 +63,7 @@ int Udp::initialize() {
 * The Input: string representing the data to send		               *
 * The output: int number representing the return status		           *
 * The Function operation: sending the input data to the socket         *
-* who connect to this socket. check if send successfully				   *
+* who connect to this socket. check if send successfully			   *
 ***********************************************************************/
 int Udp::sendData(string data) {
     //initialize the struct
@@ -105,8 +105,6 @@ unsigned long Udp::receiveData(char *buffer, unsigned long size) {
     if (bytes < 0) {
         return ERROR_RECIVE;
     }
-    //print the data
-    cout << buffer << endl;
     //return correct if there were no error
     return (unsigned long) bytes;
 }

@@ -22,6 +22,9 @@ Driver insertDriver() {
 
 
 int main(int argc, char *argv[]) {
+    string advance("advance\0", 8);
+    cout << advance.size();
+    string exit("exit\0", 5);
     unsigned long readBytes;
     std::cout << "Hello, from client" << std::endl;
     cout << argv[1] << endl;
@@ -53,11 +56,14 @@ int main(int argc, char *argv[]) {
 
         readBytes = udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
         std::string data(buffer_receive_data, readBytes);
-        if (data == "exit") {
+        cout << "size" << data.size();
+        if (data == exit) {
+            cout << "1e";
             return 0;
         }
 
-        if (data == "advance") {
+        if (data == advance) {
+            cout << "stay";
             continue;
         }
 
@@ -68,10 +74,12 @@ int main(int argc, char *argv[]) {
         while (!ride.isDone()) {
             readBytes = udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
             std::string operation(buffer_receive_data, readBytes);
-            if (operation == "advance") {
+            if (operation == advance) {
+                cout << "go";
                 c->addToCurrentTime(1);
                 ride.moveOneStep();
-            } else if (operation == "exit") {
+            } else if (operation == exit) {
+                cout << "1e";
                 return 0;
             }
         }

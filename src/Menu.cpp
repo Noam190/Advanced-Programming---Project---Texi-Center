@@ -35,6 +35,7 @@ void Menu::run() {
                 advance();
                 break;
             case 7: //exit
+
                 this->udp.sendData("exit");
                 return;
             default:
@@ -62,14 +63,12 @@ void Menu::updatesFromClient() {
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
     readBytes = this->udp.receiveData(buffer, sizeof(buffer));
-    cout << "BUFFER:" << buffer;
 
     string serial_str_clock = serialize(&this->clock);
     this->udp.sendData(serial_str_clock);
 
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
-    std::cout << serial_str_driver;
     Driver *d = deserialize<Driver>(serial_str_driver);
 
     TaxiCab taxiCab = this->taxiCenter.getTaxi(d->getVehicleId());
