@@ -70,8 +70,17 @@ Point Matrix::getPoint(Node *n) {
     for (int i = 0; i < width; ++i) {
         for (int j = 0; j < height; ++j) {
             if (arr[i][j] == *n) {
-                return arr[i][j].getPoint();
+                Point p = arr[i][j].getPoint();
+                return p;
             }
         }
     }
 }
+
+//Matrix::~Matrix() {
+//    for (int i = 0; i < width ; ++i) {
+//        for (int j = 0; j < height; ++j) {
+//            delete arr[i][j];
+//        }
+//    }
+//}

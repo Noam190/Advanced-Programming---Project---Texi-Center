@@ -35,7 +35,7 @@ void Menu::run() {
                 advance();
                 break;
             case 7: //exit
-                this->udp->sendData("exit");
+                this->udp.sendData("exit");
                 return;
             default:
                 break;
@@ -61,11 +61,11 @@ void Menu::updatesFromClient() {
     unsigned long readBytes;
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
-    readBytes = this->udp->receiveData(buffer, sizeof(buffer));
+    readBytes = this->udp.receiveData(buffer, sizeof(buffer));
     cout << "BUFFER:" << buffer;
 
-    string serial_str_clock = serialize(this->clock);
-    this->udp->sendData(serial_str_clock);
+    string serial_str_clock = serialize(&this->clock);
+    this->udp.sendData(serial_str_clock);
 
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
@@ -77,14 +77,14 @@ void Menu::updatesFromClient() {
     //serialize taxi
     string serial_str_taxi = serialize(&taxiCab);
     //sent back the taxi
-    this->udp->sendData(serial_str_taxi);
+    this->udp.sendData(serial_str_taxi);
 
 
     //serialize trip
     Trip *trip = this->taxiCenter.insertNewDriver(*d);
     if (trip != NULL) {
         string serial_str_trip = serialize(trip);
-        this->udp->sendData(serial_str_trip);
+        this->udp.sendData(serial_str_trip);
     }
 }
 
@@ -115,7 +115,7 @@ void Menu::insertTrip() {
     int port = taxiCenter.insertTrip(newTrip);
     if (port == 1) {
         string serial_str_trip = serialize(&newTrip);
-        this->udp->sendData(serial_str_trip);
+        this->udp.sendData(serial_str_trip);
     }
 }
 
@@ -151,15 +151,15 @@ void Menu::moveAllDriversToTheEnd() {
 
 
 //constructor to a new
-Menu::Menu(TaxiCenter taxiCenter, Matrix grid, Clock *clock, Udp *udp)
+Menu::Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp)
         : grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
-    udp->initialize();
+    udp.initialize();
 }
 
 void Menu::advance() {
-    this->clock->addToCurrentTime(1);
+    this->clock.addToCurrentTime(1);
 
-    this->udp->sendData("advance");
+    this->udp.sendData("advance");
 
     this->taxiCenter.moveAllRidesOneStep();
 }

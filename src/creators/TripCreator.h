@@ -10,7 +10,7 @@
 #include "../core_classes/Matrix.h"
 
 //help to create a trip
-Trip createTrip(Matrix grid, int id, int xStart, int yStart,
+Trip createTrip(Matrix &grid, int id, int xStart, int yStart,
                 int xEnd, int yEnd, int numOfPass, double tariff, int timeOfStart);
 
 

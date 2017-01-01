@@ -18,7 +18,18 @@ int main() {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix grid = Matrix(width, height);
-    Menu menu = Menu(taxiCenter, grid, &clock, &udp);
+//    grid.initDistanceForAll(-1);
+//    Node* start = grid.getNode(0,0);
+//    Node* end = grid.getNode(2,2);
+//
+//    // Mark all the vertices as not visit
+//    std::list<Node *> pathNodes = BFS(start, end);
+//    for (list<Node *>::iterator it = pathNodes.begin(); it != pathNodes.end() ; ++it) {
+//        Node* n = *(it);
+//        cout << *n;
+//    }
+
+    Menu menu = Menu(taxiCenter, grid, clock, udp);
     //run all the other inputs
     menu.run();
 

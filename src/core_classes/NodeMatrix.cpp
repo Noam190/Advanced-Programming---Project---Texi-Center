@@ -34,7 +34,7 @@ bool NodeMatrix::operator== (const Node &n) const {
 
 // return the point of node.
 Point NodeMatrix::getPoint()const {
-    return this->point;
+    return Point(this->point.x(), this->point.y());
 }
 
 void NodeMatrix::setIsObstacle(bool x) {
