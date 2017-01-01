@@ -22,8 +22,10 @@ Driver insertDriver() {
 
 
 int main(int argc, char *argv[]) {
+    char buffer[1024];
+
     string advance("advance\0", 8);
-    cout << advance.size();
+    cout << advance.size() << std::endl;
     string exit("exit\0", 5);
     unsigned long readBytes;
     std::cout << "Hello, from client" << std::endl;
@@ -39,31 +41,29 @@ int main(int argc, char *argv[]) {
 
 
     //deserialize receive clock
-    char buffer_receive_clock[1024];
-    readBytes = udp.receiveData(buffer_receive_clock, sizeof(buffer_receive_clock));
-    std::string clockStr(buffer_receive_clock, readBytes);
+    readBytes = udp.receiveData(buffer, sizeof(buffer));
+    std::string clockStr(buffer, readBytes);
     Clock *c = deserialize<Clock>(clockStr);
 
-    char buffer_receive_vehicle[1024];
-    readBytes = udp.receiveData(buffer_receive_vehicle, sizeof(buffer_receive_vehicle));
-    std::string vehicleStr(buffer_receive_vehicle, readBytes);
+    readBytes = udp.receiveData(buffer, sizeof(buffer));
+    std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
     driver.setTaxiCab(taxiCab);
 
-    char buffer_receive_data[1024];
+
     while (1) {
 
-        readBytes = udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
-        std::string data(buffer_receive_data, readBytes);
-        cout << "size" << data.size();
+        readBytes = udp.receiveData(buffer, sizeof(buffer));
+        std::string data(buffer, readBytes);
+        cout << "size" << data.size() << std::endl;
         if (data == exit) {
-            cout << "1e";
+            cout << "1e" << std::endl;
             return 0;
         }
 
         if (data == advance) {
-            cout << "stay";
+            cout << "stay" << std::endl;
             continue;
         }
 
@@ -72,14 +72,14 @@ int main(int argc, char *argv[]) {
         Ride ride = Ride(t, &driver, c);
 
         while (!ride.isDone()) {
-            readBytes = udp.receiveData(buffer_receive_data, sizeof(buffer_receive_data));
-            std::string operation(buffer_receive_data, readBytes);
+            readBytes = udp.receiveData(buffer, sizeof(buffer));
+            std::string operation(buffer, readBytes);
             if (operation == advance) {
-                cout << "go";
+                cout << "go" << std::endl;
                 c->addToCurrentTime(1);
                 ride.moveOneStep();
             } else if (operation == exit) {
-                cout << "1e";
+                cout << "2e" << std::endl;
                 return 0;
             }
         }
