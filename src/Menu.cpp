@@ -35,7 +35,7 @@ void Menu::run() {
                 advance();
                 break;
             case 7: //exit
-                this->udp.sendData("exit");
+                this->udp.sendData("E");
                 return;
             default:
                 break;
@@ -113,6 +113,7 @@ void Menu::insertTrip() {
     int port = taxiCenter.insertTrip(newTrip);
     if (port == 1) {
         string serial_str_trip = serialize(&newTrip);
+        this->udp.sendData("T");
         this->udp.sendData(serial_str_trip);
     }
 }
@@ -156,8 +157,8 @@ Menu::Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp)
 
 void Menu::advance() {
     this->clock.addToCurrentTime(1);
-
-    this->udp.sendData("advance");
+    //go to the drivers
+    this->udp.sendData("G");
 
     this->taxiCenter.moveAllRidesOneStep();
 }

@@ -24,6 +24,7 @@ private:
         archive & numOfPassengers;
         archive & tariff;
         archive & timeOfStart;
+        archive & path;
     }
 
     vector<Point> path;
