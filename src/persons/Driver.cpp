@@ -3,7 +3,7 @@
 //
 
 #include "Driver.h"
-//constructor
+// constructor
 Driver::Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
                int vehicleId, STATUS status, int taxiType)
         : Person(id, age, status, location), taxiCab(NULL) , taxiType(0){
