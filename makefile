@@ -1,87 +1,92 @@
 ##########################
 # 311124283   208388850  #
-# birkame     simonoa    #
+# birkame     simonno    #
 ##########################
 
 all: Server.out Client.out
 
-Server.out: server.o Serialization.o Point.o Node.o Matrix.o Grid.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o
-	g++ -g -o Server.out server.o Serialization.o Point.o Node.o Matrix.o Grid.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o -lboost_serialization
+Server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o Tax$
+    g++ -g -o Server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statisti$
 
-Client.out: client.o Serialization.o Point.o Node.o Matrix.o Grid.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o
-	g++ -g -o client.out server.o Serialization.o Point.o Node.o Matrix.o Grid.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o -lboost_serialization
+Client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o Tax$
+    g++ -g -o client.out Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Pers$
+
+client.o: src/client.cpp
+    g++ -g -c src/client.cpp
 
 server.o: src/server.cpp
-	g++ -g -c src/server.cpp
+    g++ -g -c src/server.cpp
 
-clock.o: src/clock.cpp src/clock.h
-    g++ -g -c -std=c++0x src/clock.cpp
+
+Clock.o: src/Clock.cpp src/Clock.h
+    g++ -g -c -std=c++0x src/Clock.cpp
 
 BFS.o: src/core/BFS.cpp src/core/BFS.h src/core/Grid.h src/core/Node.h
-	g++ -g -c -std=c++0x src/core/BFS.cpp
+    g++ -g -c -std=c++0x src/core/BFS.cpp
 
 Driver.o: src/persons/Driver.cpp src/persons/Driver.h src/persons/Person.h src/Trip.h
-	g++ -g -c -std=c++0x src/persons/Driver.cpp
+    g++ -g -c -std=c++0x src/persons/Driver.cpp
 
-DriverCreator.o: src/creators/DriverCreator.cpp src/creators/Driver.h
-	g++ -g -c -std=c++0x src/creators/DriverCreator.cpp
+DriverCreator.o: src/creators/DriverCreator.cpp src/persons/Driver.h
+    g++ -g -c -std=c++0x src/creators/DriverCreator.cpp
 
 LuxuryCab.o: src/cabs/LuxuryCab.cpp src/cabs/LuxuryCab.h src/cabs/TaxiCab.h
-	g++ -g -c -std=c++0x src/cabs/LuxuryCab.cpp
+    g++ -g -c -std=c++0x src/cabs/LuxuryCab.cpp
 
 Matrix.o: src/core/Matrix.cpp src/core/Matrix.h src/core/Grid.h src/core/NodeMatrix.h
-	g++ -g -c -std=c++0x src/core/Matrix.cpp
+    g++ -g -c -std=c++0x src/core/Matrix.cpp
 
 Menu.o: src/Menu.cpp src/Menu.h src/creators/DriverCreator.h src/creators/TripCreator.h src/TaxiCenter.h src/core/Grid.h
-	g++ -g -c -std=c++0x src/Menu.cpp
+    g++ -g -c -std=c++0x src/Menu.cpp
 
 Node.o: src/core/Node.cpp src/core/Node.h
-	g++ -g -c -std=c++0x src/core/Node.cpp
+    g++ -g -c -std=c++0x src/core/Node.cpp
 
 NodeMatrix.o: src/core/NodeMatrix.cpp src/core/NodeMatrix.h src/core/Node.h src/core/Point.h
-	g++ -g -c -std=c++0x src/core/NodeMatrix.cpp
+    g++ -g -c -std=c++0x src/core/NodeMatrix.cpp
 
-Passenger.o: src/persons/Passenger.cpp src/persons/Passenger.h src/Point.h src/persons/Person.h
-	g++ -g -c -std=c++0x src/persons/Passenger.cpp
+Passenger.o: src/persons/Passenger.cpp src/persons/Passenger.h src/core/Point.h src/persons/Person.h
+    g++ -g -c -std=c++0x src/persons/Passenger.cpp
 
-Person.o: src/persons/Person.cpp src/persons/Person.h src/Point.h
-	g++ -g -c -std=c++0x src/persons/Person.cpp
+Person.o: src/persons/Person.cpp src/persons/Person.h src/core/Point.h
+    g++ -g -c -std=c++0x src/persons/Person.cpp
 
 Point.o: src/core/Point.cpp src/core/Point.h src/core/Node.h
-	g++ -g -c -std=c++0x src/core/Point.cpp
+    g++ -g -c -std=c++0x src/core/Point.cpp
 
 Ride.o: src/Ride.cpp src/Ride.h src/Trip.h src/persons/Driver.h src/cabs/TaxiCab.h
-	g++ -g -c -std=c++0x src/Ride.cpp
+    g++ -g -c -std=c++0x src/Ride.cpp
 
 StandardCab.o: src/cabs/StandardCab.cpp src/cabs/StandardCab.h src/cabs/TaxiCab.h
-	g++ -g -c -std=c++0x src/cabs/StandardCab.cpp
+    g++ -g -c -std=c++0x src/cabs/StandardCab.cpp
 
 Statistics.o: src/Statistics.cpp src/Statistics.h src/persons/Person.h
-	g++ -g -c -std=c++0x src/Statistics.cpp
+    g++ -g -c -std=c++0x src/Statistics.cpp
 
 TaxiCab.o: src/cabs/TaxiCab.cpp src/cabs/TaxiCab.h src/cabs/Vehicle.h
-	g++ -g -c -std=c++0x src/cabs/TaxiCab.cpp
+    g++ -g -c -std=c++0x src/cabs/TaxiCab.cpp
 
 TaxiCenter.o: src/TaxiCenter.cpp src/TaxiCenter.h src/persons/Driver.h src/cabs/TaxiCab.h src/Trip.h src/Ride.h
-	g++ -g -c -std=c++0x src/TaxiCenter.cpp
+    g++ -g -c -std=c++0x src/TaxiCenter.cpp
 
 TaxiCreator.o: src/creators/TaxiCreator.cpp src/creators/TaxiCreator.h src/cabs/TaxiCab.h
-	g++ -g -c -std=c++0x src/creators/TaxiCreator.cpp
+    g++ -g -c -std=c++0x src/creators/TaxiCreator.cpp
 
-Trip.o: src/Trip.cpp Trip.h src/core/Point.h
-	g++ -g -c -std=c++0x src/Trip.cpp
+Trip.o: src/Trip.cpp src/Trip.h src/core/Point.h
+    g++ -g -c -std=c++0x src/Trip.cpp
 
-TripCreator.o: src/creators/TripCreator.cpp src/creators/TripCreator.h src/creators/Trip.h src/core/Matrix.h
-	g++ -g -c -std=c++0x src/creators/TripCreator.cpp
+TripCreator.o: src/creators/TripCreator.cpp src/creators/TripCreator.h src/Trip.h src/core/Matrix.h
+    g++ -g -c -std=c++0x src/creators/TripCreator.cpp
 
 Vehicle.o: src/cabs/Vehicle.cpp src/cabs/Vehicle.h
-	g++ -g -c -std=c++0x src/cabs/Vehicle.cpp
+    g++ -g -c -std=c++0x src/cabs/Vehicle.cpp
 
-Socket.o: Sockets/Socket.h Sockets/Socket.cpp
-	g++ -g -c -std=c++0x Sockets/Socket.cpp
+Socket.o: src/sockets/Socket.h src/sockets/Socket.cpp
+    g++ -g -c -std=c++0x src/sockets/Socket.cpp
 
-Udp.o: Sockets/Udp.h Sockets/Udp.cpp Sockets/Socket.h Sockets/Socket.cpp
-	g++ -g -c -std=c++0x Sockets/Udp.cpp
+Udp.o: src/sockets/Udp.h src/sockets/Udp.cpp src/sockets/Socket.h src/sockets/Socket.cpp
+    g++ -g -c -std=c++0x src/sockets/Udp.cpp
 
 clean:
-	rm -f *.o a.out
+    rm -f *.o a.out
+
