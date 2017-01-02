@@ -4,11 +4,12 @@
 #include "Menu.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
     std::cout << "Hello, from server" << std::endl;
     std::cout << "standard menu" << std::endl;
 
-    Udp udp(true, 5555);
+    int portNum = atoi(argv[1]);
+    Udp udp(true, portNum);
     //udp.initialize();
 
     Clock clock = Clock();

@@ -108,3 +108,9 @@ unsigned long Udp::receiveData(char *buffer, unsigned long size) {
     //return correct if there were no error
     return (unsigned long) bytes;
 }
+
+Udp::Udp(bool isServers, string ip, int port_num) {
+    this->port_number = port_num;
+    this->ip_address = ip;
+    this->isServer = isServers;
+}

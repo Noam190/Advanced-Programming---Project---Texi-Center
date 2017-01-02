@@ -44,15 +44,15 @@ protected:
     int port_number;
 public:
     /***********************************************************************
-    * function name: Socket												   *
+    * Function name: Socket												   *
     * The Input: none													   *
-    * The output: none										               *
+    * The Output: none										               *
     * The Function operation: creating new Socket object			       *
     ***********************************************************************/
     Socket();
 
     /***********************************************************************
-    * function name: ~Socket											   *
+    * Function name: ~Socket											   *
     * The Input: none													   *
     * The output: none										               *
     * The Function operation: default destructor					       *
@@ -60,18 +60,18 @@ public:
     virtual ~Socket();
 
     /***********************************************************************
-    * function name: initialize											   *
+    * Function name: initialize											   *
     * The Input: none              										   *
-    * The output: int number representing the return status		           *
+    * The Output: int number representing the return status		           *
     * The Function operation: initialize the Socket object and getting a   *
     * socket descriptor. pure virtual method							   *
     ***********************************************************************/
     virtual int initialize() = 0;
 
     /***********************************************************************
-    * function name: sendData											   *
+    * Function name: sendData											   *
     * The Input: string representing the data to send		               *
-    * The output: int number representing the return status		           *
+    * The Output: int number representing the return status		           *
     * The Function operation: sending the input data to the socket         *
     * who connect to this socket. pure virtual method					   *
     ***********************************************************************/
@@ -80,7 +80,7 @@ public:
     /***********************************************************************
     * function name: receive											   *
     * The Input: none										               *
-    * The output: int number representing the return status	               *
+    * The Output: int number representing the return status	               *
     * The Function operation: getting data from the other socket and print *
     * the data															   *
     ***********************************************************************/

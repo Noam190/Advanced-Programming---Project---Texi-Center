@@ -27,13 +27,8 @@ int main(int argc, char *argv[]) {
     Trip *t = NULL;
     unsigned long readBytes;
 
-//    string advance("advance\0", 8);
-//    cout << advance.size() << std::endl;
-//    string exit("exit\0", 5);
-
     std::cout << "Hello, from client" << std::endl;
-    cout << argv[1] << endl;
-    Udp udp(false, atoi(argv[1]));
+    Udp udp(false, argv[1], atoi(argv[2]));
     udp.initialize();
 
     //create a driver
@@ -52,7 +47,7 @@ int main(int argc, char *argv[]) {
     std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
-    driver.setTaxiCab(taxiCab);
+    driver.setTaxiCab(*taxiCab);
 
     udp.receiveData(buffer, sizeof(buffer));
     char option = buffer[0];

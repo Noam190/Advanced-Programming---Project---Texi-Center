@@ -20,6 +20,14 @@ public:
     Udp(bool isServers, int port_num);
 
     /***********************************************************************
+    * function name: Udp												   *
+    * The Input: Boolean, true - if server, false if client,IP, port number*
+    * The output: none										               *
+    * The Function operation: creating new Udp						       *
+    ***********************************************************************/
+    Udp(bool isServers, string ip, int port_num);
+
+    /***********************************************************************
     * function name: ~Udp												   *
     * The Input: none													   *
     * The output: none										               *

@@ -6,7 +6,7 @@
 // constructor
 Driver::Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
                int vehicleId, STATUS status)
-        : Person(id, age, status, location), taxiCab(NULL) {
+        : Person(id, age, status, location), taxiCab() {
     this->yearsOfExperience = yearsOfExperience;
     this->vehicleId = vehicleId;
     this->averageSatisfaction = 0;
@@ -27,11 +27,11 @@ unsigned int Driver::getAverageSatisfaction() {
     return this->averageSatisfaction;
 }
 
-void Driver::setTaxiCab(TaxiCab *taxi) {
+void Driver::setTaxiCab(TaxiCab taxi) {
     this->taxiCab = taxi;
 }
 
-TaxiCab *Driver::getTaxiCab() {
+TaxiCab Driver::getTaxiCab() {
     return this->taxiCab;
 }
 
@@ -50,10 +50,7 @@ void Driver::rateDriver(unsigned int points) {
 }
 
 int Driver::getVelocity() {
-    if (this->taxiCab != NULL) {
-        return this->taxiCab->getVelocity();
-    }
-    return 0;
+    return this->taxiCab.getVelocity();
 }
 
 

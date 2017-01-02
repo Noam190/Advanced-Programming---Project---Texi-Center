@@ -28,7 +28,7 @@ private:
 
 public:
 
-    TaxiCab() : cabId(0), numberOfKilometers(0), tariff(3) {};
+    TaxiCab() : cabId(0), numberOfKilometers(0), tariff(3), velocity(0) {};
 
     //constructor
     TaxiCab(MANUFACTURER carManufacturer, COLOR color, int cabId,
@@ -51,9 +51,6 @@ public:
 
     //getters and setters
     void setTariff(int tariff);
-
-    //get type of taxi - 1  standart, 2 luxury
-    int getTaxiType();
 
     int getVelocity();
 };

@@ -30,7 +30,6 @@ int TaxiCenter::insertTrip(Trip t) {
     int index = 0;
     for (vector<Driver>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it, ++index) {
         if (it->getCurrentLocation() == t.getStartPoint()) {
-            busyDrivers.push_back(freeDrivers[index]);
             freeDrivers.erase(it);
             busyTrips.push_back(t);
             Ride r = Ride(&busyTrips.back(), &busyDrivers.back(), clock);
@@ -112,7 +111,7 @@ void TaxiCenter::addTaxiToDriver(Driver *driver) {
     int index = 0;
     for (vector<TaxiCab>::iterator it = freeCabs.begin(); it != freeCabs.end(); ++it, ++index) {
         if (it->getId() == driver->getId()) {
-            driver->setTaxiCab(&freeCabs[index]);
+            driver->setTaxiCab(freeCabs[index]);
         }
     }
 }
@@ -174,14 +173,3 @@ Trip * TaxiCenter::createRides() {
     }
     return trip;
 }
-
-//    int index = 0;
-//    for (vector<Ride>::iterator it = rides.begin(); it != rides.end(); ++it, ++index) {
-//        it->moveOneStep();
-//        if (it->isDone()) {
-//            busyTrips.erase(busyTrips.begin() + index);
-//            freeDrivers.push_back(busyDrivers[index]);
-//            busyDrivers.erase(busyDrivers.begin() + index);
-//            it = rides.erase(it);
-//        }
-//    }
