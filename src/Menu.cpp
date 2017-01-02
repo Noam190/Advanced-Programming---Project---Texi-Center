@@ -155,6 +155,7 @@ Menu::Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp)
     udp.initialize();
 }
 
+// move the drivers to the next point.
 void Menu::advance() {
     this->clock.addToCurrentTime(1);
 
