@@ -52,3 +52,7 @@ bool Ride::isDone() {
     return this->end == this->trip.getCurrentPoint();
 }
 
+Point Ride::getDriverLocation() {
+    return this->driver.getCurrentLocation();
+}
+

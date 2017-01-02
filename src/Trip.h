@@ -38,7 +38,7 @@ private:
     int timeOfStart;
 
 public:
-    Trip() {};
+    Trip() : timeOfStart(-1) {};
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,

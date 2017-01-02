@@ -78,10 +78,10 @@ void Menu::updatesFromClient() {
 
 
     //serialize trip
-    Trip *trip = this->taxiCenter.insertNewDriver(*d);
-    if (trip != NULL) {
+    Trip trip = this->taxiCenter.insertNewDriver(*d);
+    if (trip.getTimeOfStart() > 0) {
         this->udp.sendData("T");
-        string serial_str_trip = serialize(trip);
+        string serial_str_trip = serialize(&trip);
         this->udp.sendData(serial_str_trip);
     }
 }
@@ -164,10 +164,10 @@ void Menu::advance() {
 
     this->taxiCenter.moveAllRidesOneStep();
 
-    Trip *trip = this->taxiCenter.createRides();
-    if (trip != NULL) {
+    Trip trip = this->taxiCenter.createRides();
+    if (trip.getTimeOfStart() > 0) {
         this->udp.sendData("T");
-        string serial_str_trip = serialize(trip);
+        string serial_str_trip = serialize(&trip);
         this->udp.sendData(serial_str_trip);
     }
 }

@@ -42,6 +42,8 @@ public:
 
     //getters and setters
     Driver getDriver();
+
+    Point getDriverLocation();
 };
 
 

@@ -19,8 +19,6 @@ private:
     std::vector<Driver> freeDrivers;
     std::vector<TaxiCab> freeCabs;
     std::vector<Trip> freeTrips;
-    std::vector<Driver> busyDrivers;
-    std::vector<Trip> busyTrips;
 
     void addTaxiToDriver(Driver *driver);
 public:
@@ -42,7 +40,7 @@ public:
     TaxiCab getTaxi(int idVehicle);
 
     //get a trip
-    Trip *insertNewDriver(Driver driver);
+    Trip insertNewDriver(Driver driver);
 
     //add a trip to the center
     int insertTrip(Trip t);
@@ -54,7 +52,7 @@ public:
     void removeTrip(int id);
 
     //create a new ride
-    Trip * createRides();
+    Trip createRides();
 
     //move all the rides one step forward
     void moveAllRidesOneStep();

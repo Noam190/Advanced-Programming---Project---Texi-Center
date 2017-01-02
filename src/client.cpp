@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
                 data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
-                    ride = new Ride(t, &driver, c);
+                    ride = new Ride(*t, driver, c);
                 }
                 break;
 
