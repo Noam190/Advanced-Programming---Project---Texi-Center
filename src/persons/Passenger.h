@@ -1,7 +1,7 @@
 //
 // Created by mei on 29/11/16.
 //
-#include "../core_classes/Point.h"
+#include "../core/Point.h"
 #include "Person.h"
 
 #ifndef EX2AP_PASSANGER_H

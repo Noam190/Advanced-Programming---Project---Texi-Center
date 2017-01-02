@@ -7,7 +7,7 @@
 
 
 #include "../Trip.h"
-#include "../core_classes/Matrix.h"
+#include "../core/Matrix.h"
 
 //help to create a trip
 Trip createTrip(Matrix &grid, int id, int xStart, int yStart,

@@ -7,9 +7,9 @@ set(BOOST_ROOT CACHE PATH "/usr/include/boost/")
 find_package(Boost 1.58.0 COMPONENTS serialization system)
 include_directories(${Boost_INCLUDE_DIR})
 
-set(SOURCE_FILES Serialization.h core_classes/Point.cpp core_classes/Point.h core_classes/Node.cpp
-        core_classes/Node.h core_classes/Matrix.cpp core_classes/Matrix.h core_classes/Grid.h core_classes/BFS.cpp
-        core_classes/BFS.h core_classes/NodeMatrix.cpp core_classes/NodeMatrix.h persons/Driver.cpp persons/Driver.h
+set(SOURCE_FILES Serialization.h core/Point.cpp core/Point.h core/Node.cpp
+        core/Node.h core/Matrix.cpp core/Matrix.h core/Grid.h core/BFS.cpp
+        core/BFS.h core/NodeMatrix.cpp core/NodeMatrix.h persons/Driver.cpp persons/Driver.h
         persons/Passenger.h persons/Passenger.cpp cabs/TaxiCab.cpp cabs/TaxiCab.h Trip.h Trip.cpp cabs/LuxuryCab.cpp
         cabs/LuxuryCab.h cabs/StandardCab.cpp cabs/StandardCab.h Statistics.cpp Statistics.h persons/Person.cpp
         persons/Person.h TaxiCenter.cpp TaxiCenter.h cabs/Vehicle.cpp cabs/Vehicle.h creators/TripCreator.cpp

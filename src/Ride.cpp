@@ -3,6 +3,7 @@
 //
 
 #include "Ride.h"
+#include "core/Point.h"
 
 //move the ride to the end
 void Ride::moveToTheEnd() {

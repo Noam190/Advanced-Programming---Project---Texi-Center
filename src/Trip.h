@@ -2,7 +2,7 @@
 // Created by mei on 29/11/16.
 //
 
-#include "core_classes/Point.h"
+#include "core/Point.h"
 #include <boost/serialization/vector.hpp>
 
 #ifndef EX2AP_TRIP_H

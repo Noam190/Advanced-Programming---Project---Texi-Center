@@ -7,7 +7,7 @@
 
 #include <string>
 #include <boost/serialization/access.hpp>
-#include "../core_classes/Point.h"
+#include "../core/Point.h"
 
 enum STATUS {
     SINGLE, MARRIED, DIVORCED, WIDOWED

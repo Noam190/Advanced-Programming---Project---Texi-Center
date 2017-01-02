@@ -10,9 +10,10 @@
 #include "creators/TripCreator.h"
 #include "creators/TaxiCreator.h"
 #include "TaxiCenter.h"
-#include "core_classes/Grid.h"
+#include "core/Grid.h"
 #include "Clock.h"
 #include "sockets/Udp.h"
+#include "core/Matrix.h"
 
 class Menu {
 private:
