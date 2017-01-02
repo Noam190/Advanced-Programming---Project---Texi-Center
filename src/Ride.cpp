@@ -16,7 +16,7 @@ void Ride::moveToTheEnd() {
 //move the ride one step
 void Ride::moveOneStep() {
     for (int i = 0; i < this->driver.getVelocity(); ++i) {
-        if (clock->getCurrentTime() >= trip.getTimeOfStart() && !isDone()) {
+        if (clock->getCurrentTime() > trip.getTimeOfStart() && !isDone()) {
             this->trip.moveOneStep();
             this->driver.updateLocation(this->trip.getCurrentPoint());
         }
