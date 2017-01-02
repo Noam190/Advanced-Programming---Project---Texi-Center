@@ -17,7 +17,6 @@ server.o: src/server.cpp
 clock.o: src/clock.cpp src/clock.h
     g++ -g -c -std=c++0x src/clock.cpp
 
-
 BFS.o: src/core/BFS.cpp src/core/BFS.h src/core/Grid.h src/core/Node.h
 	g++ -g -c -std=c++0x src/core/BFS.cpp
 
@@ -33,7 +32,7 @@ LuxuryCab.o: src/cabs/LuxuryCab.cpp src/cabs/LuxuryCab.h src/cabs/TaxiCab.h
 Matrix.o: src/core/Matrix.cpp src/core/Matrix.h src/core/Grid.h src/core/NodeMatrix.h
 	g++ -g -c -std=c++0x src/core/Matrix.cpp
 
-Menu.o: src/Menu.cpp src/Menu.h DriverCreator.h TripCreator.h TaxiCenter.h src/core/Grid.h
+Menu.o: src/Menu.cpp src/Menu.h src/creators/DriverCreator.h src/creators/TripCreator.h src/TaxiCenter.h src/core/Grid.h
 	g++ -g -c -std=c++0x src/Menu.cpp
 
 Node.o: src/core/Node.cpp src/core/Node.h
@@ -42,10 +41,10 @@ Node.o: src/core/Node.cpp src/core/Node.h
 NodeMatrix.o: src/core/NodeMatrix.cpp src/core/NodeMatrix.h src/core/Node.h src/core/Point.h
 	g++ -g -c -std=c++0x src/core/NodeMatrix.cpp
 
-Passenger.o: src/persons/Passenger.cpp src/persons/Passenger.h Point.h src/persons/Person.h
+Passenger.o: src/persons/Passenger.cpp src/persons/Passenger.h src/Point.h src/persons/Person.h
 	g++ -g -c -std=c++0x src/persons/Passenger.cpp
 
-Person.o: src/persons/Person.cpp src/persons/Person.h Point.h
+Person.o: src/persons/Person.cpp src/persons/Person.h src/Point.h
 	g++ -g -c -std=c++0x src/persons/Person.cpp
 
 Point.o: src/core/Point.cpp src/core/Point.h src/core/Node.h
@@ -63,17 +62,17 @@ Statistics.o: src/Statistics.cpp src/Statistics.h src/persons/Person.h
 TaxiCab.o: src/cabs/TaxiCab.cpp src/cabs/TaxiCab.h src/cabs/Vehicle.h
 	g++ -g -c -std=c++0x src/cabs/TaxiCab.cpp
 
-TaxiCenter.o: TaxiCenter.cpp TaxiCenter.h src/persons/Driver.h TaxiCab.h Trip.h Ride.h
-	g++ -g -c -std=c++0x TaxiCenter.cpp
+TaxiCenter.o: src/TaxiCenter.cpp src/TaxiCenter.h src/persons/Driver.h src/cabs/TaxiCab.h src/Trip.h src/Ride.h
+	g++ -g -c -std=c++0x src/TaxiCenter.cpp
 
-TaxiCreator.o: TaxiCreator.cpp TaxiCreator.h src/cabs/TaxiCab.h
-	g++ -g -c -std=c++0x TaxiCreator.cpp
+TaxiCreator.o: src/creators/TaxiCreator.cpp src/creators/TaxiCreator.h src/cabs/TaxiCab.h
+	g++ -g -c -std=c++0x src/creators/TaxiCreator.cpp
 
-Trip.o: Trip.cpp Trip.h src/core/Point.h
-	g++ -g -c -std=c++0x Trip.cpp
+Trip.o: src/Trip.cpp Trip.h src/core/Point.h
+	g++ -g -c -std=c++0x src/Trip.cpp
 
-TripCreator.o: TripCreator.cpp TripCreator.h Trip.h src/core/Matrix.h
-	g++ -g -c -std=c++0x TripCreator.cpp
+TripCreator.o: src/creators/TripCreator.cpp src/creators/TripCreator.h src/creators/Trip.h src/core/Matrix.h
+	g++ -g -c -std=c++0x src/creators/TripCreator.cpp
 
 Vehicle.o: src/cabs/Vehicle.cpp src/cabs/Vehicle.h
 	g++ -g -c -std=c++0x src/cabs/Vehicle.cpp
