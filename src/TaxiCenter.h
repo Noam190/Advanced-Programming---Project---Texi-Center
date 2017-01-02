@@ -14,7 +14,7 @@
 
 class TaxiCenter {
 private:
-    Clock &clock;
+    Clock *clock;
     std::vector<Ride> rides;
     std::vector<Driver> freeDrivers;
     std::vector<TaxiCab> freeCabs;
@@ -24,7 +24,7 @@ private:
 
     void addTaxiToDriver(Driver *driver);
 public:
-    TaxiCenter(Clock clock);
+    TaxiCenter(Clock *clock);
 
     //answer call
     void answerCall();

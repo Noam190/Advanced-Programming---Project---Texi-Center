@@ -12,7 +12,7 @@ int main() {
     //udp.initialize();
 
     Clock clock = Clock();
-    TaxiCenter taxiCenter = TaxiCenter(clock);
+    TaxiCenter taxiCenter = TaxiCenter(&clock);
     int width, height;
 
     //grid initialize grid and add obstacles if there are any.
