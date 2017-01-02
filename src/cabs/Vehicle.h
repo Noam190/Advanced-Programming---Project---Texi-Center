@@ -13,7 +13,7 @@ enum COLOR {RED, GREEN, BLUE, PINK, WHITE};
 
 class Vehicle {
 private:
-    friend boost::serialization::access;
+    friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive& archive, const unsigned int version)
     {

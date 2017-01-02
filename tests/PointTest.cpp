@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "../src/core_classes/Point.h"
+#include "../src/core/Point.h"
 
 using  testing::Eq;
 namespace {
