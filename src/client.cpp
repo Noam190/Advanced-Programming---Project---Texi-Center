@@ -7,9 +7,9 @@
 #include "persons/Driver.h"
 #include "creators/DriverCreator.h"
 #include "Serialization.h"
-
+//insert a driver as a client
 Driver insertDriver() {
-    std::cout << "input driver" << std::endl;
+
     char dummy;
     int id, age;
     char status;
@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     Trip *t = NULL;
     unsigned long readBytes;
 
-    std::cout << "Hello, from client" << std::endl;
+
     Udp udp(false, argv[1], atoi(argv[2]));
     udp.initialize();
 
@@ -83,35 +83,3 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-//while (1) {
-//
-//        readBytes = udp.receiveData(buffer, sizeof(buffer));
-//        std::string data(buffer, readBytes);
-//        cout << "size" << data.size() << std::endl;
-//        if (data == exit) {
-//            cout << "1e" << std::endl;
-//            return 0;
-//        }
-//
-//        if (data == advance) {
-//            cout << "stay" << std::endl;
-//            continue;
-//        }
-//
-//        //deserialize receive vehicle
-//        Trip *t = deserialize<Trip>(data);
-//        Ride ride = Ride(t, &driver, c);
-//
-//        while (!ride.isDone()) {
-//            readBytes = udp.receiveData(buffer, sizeof(buffer));
-//            std::string operation(buffer, readBytes);
-//            if (operation == advance) {
-//                cout << "go" << std::endl;
-//                c->addToCurrentTime(1);
-//                ride.moveOneStep();
-//            } else if (operation == exit) {
-//                cout << "2e" << std::endl;
-//                return 0;
-//            }
-//        }
-//    }

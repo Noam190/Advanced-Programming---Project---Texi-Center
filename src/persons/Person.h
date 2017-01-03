@@ -29,6 +29,7 @@ private:
     STATUS status;
     Point location;
 public:
+    //constructor
     Person() : id(0), age(0), status(SINGLE), location(0, 0) {};
     //constructor
     Person(int id, unsigned int age, STATUS status, Point location);

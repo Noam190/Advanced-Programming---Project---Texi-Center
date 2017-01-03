@@ -48,11 +48,11 @@ Trip Ride::getTrip() {
 Driver Ride::getDriver() {
     return this->driver;
 }
-
+// check if the ride is done , if yes-return true, else false
 bool Ride::isDone() {
     return this->end == this->trip.getCurrentPoint();
 }
-
+//getters and setters
 Point Ride::getDriverLocation() {
     return this->driver.getCurrentLocation();
 }

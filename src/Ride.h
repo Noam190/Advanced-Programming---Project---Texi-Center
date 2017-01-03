@@ -23,6 +23,7 @@ public:
     //constructor
     Ride(Trip trip, Driver driver, Clock *clock);
 
+    // check if the ride is done , if yes-return true, else false
     bool isDone();
 
     //move the ride one step
@@ -43,6 +44,7 @@ public:
     //getters and setters
     Driver getDriver();
 
+    //getters and setters
     Point getDriverLocation();
 };
 

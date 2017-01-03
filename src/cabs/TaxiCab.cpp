@@ -42,7 +42,7 @@ void TaxiCab::setTariff(int tariff){
     this->tariff = tariff;
 }
 
-
+//getters and setters
 int TaxiCab::getVelocity() {
     return this->velocity;
 }

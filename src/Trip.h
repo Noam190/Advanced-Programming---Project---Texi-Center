@@ -38,6 +38,7 @@ private:
     int timeOfStart;
 
 public:
+    // Constructor
     Trip() : timeOfStart(-1) {};
 
     // Constructor all the members

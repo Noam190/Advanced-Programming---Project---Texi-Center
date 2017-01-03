@@ -24,7 +24,7 @@
 using namespace std;
 using namespace boost::archive;
 using namespace boost::iostreams;
-
+//deserialize an object
 template<class T>
 T *deserialize(string serial_str) {
     T *p;
@@ -36,7 +36,7 @@ T *deserialize(string serial_str) {
 
     return p;
 }
-
+// serialize an object
 template<class T>
 string serialize(T *object) {
     std::string serial_str;

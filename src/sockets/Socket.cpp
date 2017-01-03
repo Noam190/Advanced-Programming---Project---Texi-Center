@@ -22,7 +22,7 @@ Socket::Socket() {
     this->socketDescriptor = NONE;
     this->isServer = true;
     this->port_number = NONE;
-}
+    }
 
 /***********************************************************************
 * function name: ~Socket											   *

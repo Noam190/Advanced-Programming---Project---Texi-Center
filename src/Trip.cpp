@@ -95,7 +95,7 @@ int Trip::getTimeOfStart(){
 void Trip::setTimeOfStart(int newTimeOfStart){
     this->timeOfStart = newTimeOfStart;
 }
-
+//move one step forward
 void Trip::moveOneStep() {
     this->path.erase(this->path.begin());
     this->updateLocation(this->path.front());

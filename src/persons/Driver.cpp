@@ -26,29 +26,29 @@ void Driver::setYearsOfExperience(unsigned yearsOfExperience) {
 unsigned int Driver::getAverageSatisfaction() {
     return this->averageSatisfaction;
 }
-
+//getters and setters
 void Driver::setTaxiCab(TaxiCab taxi) {
     this->taxiCab = taxi;
 }
-
+//getters and setters
 TaxiCab Driver::getTaxiCab() {
     return this->taxiCab;
 }
-
+//getters and setters
 void Driver::setVehicleId(int vehicleId) {
     this->vehicleId = vehicleId;
 }
-
+//getters and setters
 int Driver::getVehicleId() {
     return  this->vehicleId;
 }
-
+//update points of driver and average of votes to the driver
 void Driver::rateDriver(unsigned int points) {
     this->totalPoints += points;
     this->numberOfVotes++;
     this->averageSatisfaction = totalPoints / numberOfVotes;
 }
-
+//getters and setters
 int Driver::getVelocity() {
     return this->taxiCab.getVelocity();
 }

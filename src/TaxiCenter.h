@@ -19,9 +19,10 @@ private:
     std::vector<Driver> freeDrivers;
     std::vector<TaxiCab> freeCabs;
     std::vector<Trip> freeTrips;
-
+    //add a taxi cab to the driver
     void addTaxiToDriver(Driver *driver);
 public:
+    //constructor
     TaxiCenter(Clock *clock);
 
     //answer call

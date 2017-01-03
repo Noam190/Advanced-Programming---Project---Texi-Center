@@ -27,7 +27,7 @@ private:
     int velocity;
 
 public:
-
+    //constructor
     TaxiCab() : cabId(0), numberOfKilometers(0), tariff(3), velocity(0) {};
 
     //constructor
@@ -52,6 +52,7 @@ public:
     //getters and setters
     void setTariff(int tariff);
 
+    //getters and setters
     int getVelocity();
 };
 

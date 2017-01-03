@@ -37,7 +37,7 @@ private:
     TaxiCab taxiCab;
 
 public:
-
+    // Constructor
     Driver() : taxiCab(), averageSatisfaction(0), totalPoints(0),
                numberOfVotes(0) {};
 
@@ -54,16 +54,22 @@ public:
     //getters and setters
     unsigned int getAverageSatisfaction();
 
+    //getters and setters
     void setVehicleId(int vehicleId);
 
+    //getters and setters
     int getVehicleId();
 
+    //getters and setters
     void setTaxiCab(TaxiCab taxi);
 
+    //getters and setters
     TaxiCab getTaxiCab();
 
+    //update points of driver and average of votes to the driver
     void rateDriver(unsigned int points);
 
+    //getters and setters
     int getVelocity();
 };
 
