@@ -14,6 +14,7 @@
 #include "Clock.h"
 #include "sockets/Udp.h"
 #include "core/Matrix.h"
+#include "Serialization.h"
 
 class Menu {
 private:

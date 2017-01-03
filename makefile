@@ -11,10 +11,10 @@ server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passeng
 client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o
 	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Udp.o -lboost_serialization
 
-client.o: src/client.cpp
+client.o: src/client.cpp src/Clock.h src/persons/Driver.h src/creators/DriverCreator.h src/sockets/Udp.h src/Serialization.h
 	g++ -g -c src/client.cpp
 
-server.o: src/server.cpp
+server.o: src/server.cpp src/TaxiCenter.h src/sockets/Udp.h src/core/Matrix.h
 	g++ -g -c src/server.cpp
 
 Clock.o: src/Clock.cpp src/Clock.h
@@ -35,7 +35,7 @@ LuxuryCab.o: src/cabs/LuxuryCab.cpp src/cabs/LuxuryCab.h src/cabs/TaxiCab.h
 Matrix.o: src/core/Matrix.cpp src/core/Matrix.h src/core/Grid.h src/core/NodeMatrix.h
 	g++ -g -c -std=c++0x src/core/Matrix.cpp
 
-Menu.o: src/Menu.cpp src/Menu.h src/creators/DriverCreator.h src/creators/TripCreator.h src/TaxiCenter.h src/core/Grid.h
+Menu.o: src/Menu.cpp src/Menu.h src/creators/DriverCreator.h src/creators/TripCreator.h src/TaxiCenter.h src/core/Grid.h src/Clock.h src/sockets/Udp.h src/Serialization.h
 	g++ -g -c -std=c++0x src/Menu.cpp
 
 Node.o: src/core/Node.cpp src/core/Node.h
