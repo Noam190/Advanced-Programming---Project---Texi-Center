@@ -27,11 +27,11 @@ unsigned int Driver::getAverageSatisfaction() {
     return this->averageSatisfaction;
 }
 //getters and setters
-void Driver::setTaxiCab(TaxiCab taxi) {
+void Driver::setTaxiCab(TaxiCab* taxi) {
     this->taxiCab = taxi;
 }
 //getters and setters
-TaxiCab Driver::getTaxiCab() {
+TaxiCab* Driver::getTaxiCab() {
     return this->taxiCab;
 }
 //getters and setters
@@ -50,7 +50,14 @@ void Driver::rateDriver(unsigned int points) {
 }
 //getters and setters
 int Driver::getVelocity() {
-    return this->taxiCab.getVelocity();
+    if (taxiCab != NULL){
+        return this->taxiCab->getVelocity();
+    }
+    return 0;
+}
+
+Driver::~Driver() {
+    delete taxiCab;
 }
 
 

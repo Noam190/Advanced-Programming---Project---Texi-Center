@@ -34,16 +34,18 @@ private:
     unsigned int totalPoints;
     unsigned int numberOfVotes;
     int vehicleId;
-    TaxiCab taxiCab;
+    TaxiCab* taxiCab;
 
 public:
     // Constructor
-    Driver() : taxiCab(), averageSatisfaction(0), totalPoints(0),
+    Driver() : taxiCab(NULL), averageSatisfaction(0), totalPoints(0),
                numberOfVotes(0) {};
 
     // Constructor all the members
     Driver(Point location, int id, unsigned int age, unsigned int yearsOfExperience,
            int vehicleId, STATUS status);
+
+    ~Driver();
 
     //getters and setters
     int getYearsOfExperience();
@@ -61,10 +63,10 @@ public:
     int getVehicleId();
 
     //getters and setters
-    void setTaxiCab(TaxiCab taxi);
+    void setTaxiCab(TaxiCab* taxi);
 
     //getters and setters
-    TaxiCab getTaxiCab();
+    TaxiCab* getTaxiCab();
 
     //update points of driver and average of votes to the driver
     void rateDriver(unsigned int points);

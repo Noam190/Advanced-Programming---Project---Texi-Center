@@ -15,15 +15,15 @@
 class TaxiCenter {
 private:
     Clock *clock;
-    std::vector<Ride> rides;
-    std::vector<Driver> freeDrivers;
-    std::vector<TaxiCab> freeCabs;
-    std::vector<Trip> freeTrips;
-    //add a taxi cab to the driver
-    void addTaxiToDriver(Driver *driver);
+    std::vector<Ride*> rides;
+    std::vector<Driver*> freeDrivers;
+    std::vector<TaxiCab*> freeCabs;
+    std::vector<Trip*> freeTrips;
 public:
     //constructor
     TaxiCenter(Clock *clock);
+
+    ~TaxiCenter();
 
     //answer call
     void answerCall();
@@ -32,19 +32,16 @@ public:
     TaxiCab sendTaxi();
 
     //add a driver to the center
-    void addDriver(Driver d);
+    void addDriver(Driver* d);
 
     //add a taxi cab to the center
-    void addTaxiCab(TaxiCab taxi);
+    void addTaxiCab(TaxiCab* taxi);
 
     //get a taxi from the list by vehicle id
-    TaxiCab getTaxi(int idVehicle);
-
-    //get a trip
-    Trip insertNewDriver(Driver driver);
+    TaxiCab * getTaxi(int idVehicle);
 
     //add a trip to the center
-    int insertTrip(Trip t);
+    void insertTrip(Trip* t);
 
     //remove a driver to the center
     void removeDriver(int id);
@@ -52,8 +49,10 @@ public:
     //remove a trip to the center
     void removeTrip(int id);
 
+    void removeTaxi(int idVehicle);
+
     //create a new ride
-    Trip createRides();
+    Trip* createRides();
 
     //move all the rides one step forward
     void moveAllRidesOneStep();

@@ -37,17 +37,11 @@ int main(int argc, char *argv[]) {
     std::string serial_str_driver = serialize<Driver>(&driver);
     udp.sendData(serial_str_driver);
 
-
-    //deserialize receive clock
-    readBytes = udp.receiveData(buffer, sizeof(buffer));
-    std::string clockStr(buffer, readBytes);
-    Clock *c = deserialize<Clock>(clockStr);
-
     readBytes = udp.receiveData(buffer, sizeof(buffer));
     std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
-    driver.setTaxiCab(*taxiCab);
+    driver.setTaxiCab(taxiCab);
 
     udp.receiveData(buffer, sizeof(buffer));
     char option = buffer[0];
@@ -59,13 +53,12 @@ int main(int argc, char *argv[]) {
                 data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
-                    ride = new Ride(*t, driver, c);
+                    ride = new Ride(t, &driver);
                 }
                 break;
 
             case 'G':
                 if (ride != NULL) {
-                    c->addToCurrentTime(1);
                     ride->moveOneStep();
                     if (ride->isDone()) {
                         delete ride;
@@ -80,6 +73,8 @@ int main(int argc, char *argv[]) {
         udp.receiveData(buffer, sizeof(buffer));
         option = buffer[0];
     }
+
+    delete taxiCab;
     return 0;
 }
 

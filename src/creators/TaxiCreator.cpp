@@ -6,7 +6,7 @@
 #include "../cabs/StandardCab.h"
 #include "../cabs/LuxuryCab.h"
 //help to create a taxi with macro of MANUFACTURER and COLOR
-TaxiCab createTaxi(int id, int taxiType, char manufacturer, char color){
+TaxiCab * createTaxi(int id, int taxiType, char manufacturer, char color){
     COLOR c;
     MANUFACTURER carManufacturer;
 
@@ -51,10 +51,10 @@ TaxiCab createTaxi(int id, int taxiType, char manufacturer, char color){
 
     switch (taxiType) {
         case 1:
-            return StandardCab(id, 0, 1, carManufacturer, c);
+            return new StandardCab(id, 0, 1, carManufacturer, c);
         case 2:
-            return LuxuryCab(id, 0, 2, carManufacturer, c);
+            return new LuxuryCab(id, 0, 2, carManufacturer, c);
         default:
-            return LuxuryCab(id, 0, 2, carManufacturer, c);
+            return new LuxuryCab(id, 0, 2, carManufacturer, c);
     }
 }

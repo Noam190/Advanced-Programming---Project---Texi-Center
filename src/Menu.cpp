@@ -40,6 +40,7 @@ void Menu::run() {
         cin >> option;
     }
     this->udp.sendData("E");
+    taxiCenter.~TaxiCenter();
     return;
 }
 
@@ -50,7 +51,7 @@ void Menu::insertTaxi() {
     char manufacturer, color;
     std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
     //create the taxi
-    TaxiCab cab = createTaxi(id, taxiType, manufacturer, color);
+    TaxiCab* cab = createTaxi(id, taxiType, manufacturer, color);
     this->taxiCenter.addTaxiCab(cab);
 
 }
@@ -62,28 +63,20 @@ void Menu::updatesFromClient() {
     std::fill_n(buffer, 1024, 0);
     readBytes = this->udp.receiveData(buffer, sizeof(buffer));
 
-    string serial_str_clock = serialize(&this->clock);
-    this->udp.sendData(serial_str_clock);
-
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
     Driver *d = deserialize<Driver>(serial_str_driver);
 
-    TaxiCab taxiCab = this->taxiCenter.getTaxi(d->getVehicleId());
+    TaxiCab* taxiCab = this->taxiCenter.getTaxi(d->getVehicleId());
 
     //serialize taxi
-    string serial_str_taxi = serialize(&taxiCab);
+    string serial_str_taxi = serialize(taxiCab);
     //sent back the taxi
     this->udp.sendData(serial_str_taxi);
 
+    //add driver to the taxi-center.
+    this->taxiCenter.addDriver(d);
 
-    //serialize trip
-    Trip trip = this->taxiCenter.insertNewDriver(*d);
-    if (trip.getTimeOfStart() > 0) {
-        this->udp.sendData("T");
-        string serial_str_trip = serialize(&trip);
-        this->udp.sendData(serial_str_trip);
-    }
 }
 
 //expecting a new driver from the client
@@ -107,15 +100,10 @@ void Menu::insertTrip() {
              >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
              >> dummy >>timeOfStart;
     //create the trip
-    Trip newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
+    Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
-    int port = taxiCenter.insertTrip(newTrip);
-    if (port == 1) {
-        string serial_str_trip = serialize(&newTrip);
-        this->udp.sendData("T");
-        this->udp.sendData(serial_str_trip);
-    }
+    taxiCenter.insertTrip(newTrip);
 }
 
 //create obstacles from the input arguments
@@ -164,10 +152,10 @@ void Menu::advance() {
 
     this->taxiCenter.moveAllRidesOneStep();
 
-    Trip trip = this->taxiCenter.createRides();
-    if (trip.getTimeOfStart() > 0) {
+    Trip* trip = this->taxiCenter.createRides();
+    if (trip != NULL ) {
         this->udp.sendData("T");
-        string serial_str_trip = serialize(&trip);
+        string serial_str_trip = serialize(trip);
         this->udp.sendData(serial_str_trip);
     }
 }

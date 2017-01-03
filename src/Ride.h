@@ -15,13 +15,15 @@ class Ride {
 private:
     Point start;
     Point end;
-    Trip trip;
-    Driver driver;
+    Trip* trip;
+    Driver* driver;
     Clock *clock;
 public:
 
     //constructor
-    Ride(Trip trip, Driver driver, Clock *clock);
+    Ride(Trip* trip, Driver* driver);
+
+    ~Ride();
 
     // check if the ride is done , if yes-return true, else false
     bool isDone();
@@ -39,10 +41,10 @@ public:
     Point getStartPoint();
 
     //getters and setters
-    Trip getTrip();
+    Trip* getTrip();
 
     //getters and setters
-    Driver getDriver();
+    Driver* getDriver();
 
     //getters and setters
     Point getDriverLocation();
