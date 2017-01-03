@@ -4,7 +4,7 @@
 
 #include "DriverCreator.h"
 //create a driver
-Driver createDriver(int id, int age, char status, int experience, int vehicleId) {
+Driver * createDriver(int id, int age, char status, int experience, int vehicleId) {
     STATUS st;
     switch(status){
         case 'S':
@@ -25,5 +25,5 @@ Driver createDriver(int id, int age, char status, int experience, int vehicleId)
     }
 
 //return the new driver
-    return Driver(Point(0, 0), id, age, experience, vehicleId, st);
+    return new Driver(Point(0, 0), id, age, experience, vehicleId, st);
 }

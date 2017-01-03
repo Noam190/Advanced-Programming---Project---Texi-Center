@@ -18,14 +18,14 @@
 
 class Menu {
 private:
-    Matrix &grid;
-    TaxiCenter &taxiCenter;
-    Clock &clock;
-    Udp &udp;
+    Matrix *grid;
+    TaxiCenter *taxiCenter;
+    Clock *clock;
+    Udp *udp;
 public:
 
     //constructor to a new
-    Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp);
+    Menu(TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, Udp* udp);
 
     //run the funcs with input
     void run();

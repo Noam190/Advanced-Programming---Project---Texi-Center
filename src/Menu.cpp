@@ -39,7 +39,7 @@ void Menu::run() {
         }
         cin >> option;
     }
-    this->udp.sendData("E");
+    this->udp->sendData("E");
  //   taxiCenter.~TaxiCenter();
     return;
 }
@@ -52,7 +52,7 @@ void Menu::insertTaxi() {
     std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
     //create the taxi
     TaxiCab* cab = createTaxi(id, taxiType, manufacturer, color);
-    this->taxiCenter.addTaxiCab(cab);
+    this->taxiCenter->addTaxiCab(cab);
 
 }
 
@@ -61,21 +61,21 @@ void Menu::updatesFromClient() {
     unsigned long readBytes;
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
-    readBytes = this->udp.receiveData(buffer, sizeof(buffer));
+    readBytes = this->udp->receiveData(buffer, sizeof(buffer));
 
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
     Driver *d = deserialize<Driver>(serial_str_driver);
 
-    TaxiCab* taxiCab = this->taxiCenter.getTaxi(d->getVehicleId());
+    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
 
     //serialize taxi
     string serial_str_taxi = serialize(taxiCab);
     //sent back the taxi
-    this->udp.sendData(serial_str_taxi);
+    this->udp->sendData(serial_str_taxi);
 
     //add driver to the taxi-center.
-    this->taxiCenter.addDriver(d);
+    this->taxiCenter->addDriver(d);
 
 }
 
@@ -103,7 +103,7 @@ void Menu::insertTrip() {
     Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
-    taxiCenter.insertTrip(newTrip);
+    taxiCenter->insertTrip(newTrip);
 }
 
 //create obstacles from the input arguments
@@ -117,7 +117,7 @@ void Menu::getObstacles() {
     while (numOfObstacles > 0) {
         std::cin >> x >> dummy  >> y;
         Node* n = new NodeMatrix(x, y);
-        this->grid.addObstacle(n);
+        this->grid->addObstacle(n);
         delete n;
         numOfObstacles--;
     }
@@ -128,34 +128,34 @@ void Menu::getObstacles() {
 void Menu::getDriverLocation() {
     int idDriver;
     std::cin >> idDriver;
-    std::cout << this->taxiCenter.getDriverLocation(idDriver);
+    std::cout << this->taxiCenter->getDriverLocation(idDriver);
 }
 
 // move all the drivers to the next node in the trip
 void Menu::moveAllDriversToTheEnd() {
-    this->taxiCenter.moveAllRidesToTheEnd();
+    this->taxiCenter->moveAllRidesToTheEnd();
 }
 
 
 //constructor to a new
-Menu::Menu(TaxiCenter &taxiCenter, Matrix &grid, Clock &clock, Udp &udp)
+Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Udp *udp)
         : grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
-    udp.initialize();
+    udp->initialize();
 }
 
 // move the drivers to the next point.
 void Menu::advance() {
-    this->clock.addToCurrentTime(1);
+    this->clock->addToCurrentTime(1);
 
     //go to the drivers
-    this->udp.sendData("G");
+    this->udp->sendData("G");
 
-    this->taxiCenter.moveAllRidesOneStep();
+    this->taxiCenter->moveAllRidesOneStep();
 
-    Trip* trip = this->taxiCenter.createRides();
+    Trip* trip = this->taxiCenter->createRides();
     if (trip != NULL ) {
-        this->udp.sendData("T");
+        this->udp->sendData("T");
         string serial_str_trip = serialize(trip);
-        this->udp.sendData(serial_str_trip);
+        this->udp->sendData(serial_str_trip);
     }
 }

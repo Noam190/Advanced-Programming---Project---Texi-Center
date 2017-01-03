@@ -8,14 +8,14 @@
 #include "creators/DriverCreator.h"
 #include "Serialization.h"
 //insert a driver as a client
-Driver insertDriver() {
+Driver* insertDriver() {
 
     char dummy;
     int id, age;
     char status;
     int experience, vehicleId;
     std::cin >> id >> dummy >> age >> dummy >> status >> dummy >> experience >> dummy >> vehicleId;
-    Driver d = createDriver(id, age, status, experience, vehicleId);
+    Driver* d = createDriver(id, age, status, experience, vehicleId);
     return d;
 
 }
@@ -28,32 +28,32 @@ int main(int argc, char *argv[]) {
     unsigned long readBytes;
 
 
-    Udp udp(false, argv[1], atoi(argv[2]));
-    udp.initialize();
+    Udp* udp = new Udp(false, argv[1], atoi(argv[2]));
+    udp->initialize();
 
     //create a driver
-    Driver driver = insertDriver();
+    Driver* driver = insertDriver();
     //serialize driver
-    std::string serial_str_driver = serialize<Driver>(&driver);
-    udp.sendData(serial_str_driver);
+    std::string serial_str_driver = serialize<Driver>(driver);
+    udp->sendData(serial_str_driver);
 
-    readBytes = udp.receiveData(buffer, sizeof(buffer));
+    readBytes = udp->receiveData(buffer, sizeof(buffer));
     std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
-    driver.setTaxiCab(taxiCab);
+    driver->setTaxiCab(taxiCab);
 
-    udp.receiveData(buffer, sizeof(buffer));
+    udp->receiveData(buffer, sizeof(buffer));
     char option = buffer[0];
     std::string data;
     while (option != 'E') {
         switch (option) {
             case 'T':
-                readBytes = udp.receiveData(buffer, sizeof(buffer));
+                readBytes = udp->receiveData(buffer, sizeof(buffer));
                 data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
-                    ride = new Ride(t, &driver);
+                    ride = new Ride(t, driver);
                 }
                 break;
 
@@ -70,11 +70,12 @@ int main(int argc, char *argv[]) {
             default:
                 break;
         }
-        udp.receiveData(buffer, sizeof(buffer));
+        udp->receiveData(buffer, sizeof(buffer));
         option = buffer[0];
     }
 
-    delete taxiCab;
+    delete udp;
+    delete driver;
     return 0;
 }
 
