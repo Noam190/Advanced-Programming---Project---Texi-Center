@@ -15,6 +15,7 @@
 #include "sockets/Udp.h"
 #include "core/Matrix.h"
 #include "Serialization.h"
+#include "ThreadPool.h"
 
 class Menu {
 private:
@@ -22,10 +23,12 @@ private:
     TaxiCenter *taxiCenter;
     Clock *clock;
     Udp *udp;
+    ThreadPool threadPool;
+
 public:
 
     //constructor to a new
-    Menu(TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, Udp* udp);
+    Menu(ThreadPool threadPool,TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, Udp* udp);
 
     //run the funcs with input
     void run();

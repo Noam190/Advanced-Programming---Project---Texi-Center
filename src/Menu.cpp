@@ -3,13 +3,13 @@
 //
 
 #include "Menu.h"
+#include "ThreadPool.h"
 #include <pthread.h>
 
 //  run the input to the program
 void Menu::run() {
     getObstacles();
     cin.ignore();
-
     int option;
     cin >> option;
     while (option != 7) {
@@ -101,7 +101,7 @@ void Menu::insertTrip() {
              >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
              >> dummy >>timeOfStart;
     //create the trip
-    Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
+    Trip* newTrip = createTrip(threadPool,grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
     taxiCenter->insertTrip(newTrip);
@@ -139,8 +139,8 @@ void Menu::moveAllDriversToTheEnd() {
 
 
 //constructor to a new
-Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Udp *udp)
-        : grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
+Menu::Menu(ThreadPool threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Udp *udp)
+        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
     udp->initialize();
 }
 

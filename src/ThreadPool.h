@@ -4,6 +4,7 @@
 #include <pthread.h>
 #include <vector>
 #include <thread_db.h>
+#include "core/Matrix.h"
 
 #ifndef TAXI_CENTER_THREADPOOL_H
 #define TAXI_CENTER_THREADPOOL_H
@@ -16,9 +17,9 @@ private:
 public:
     ThreadPool(int pool_size);
     ~ThreadPool();
-    void  add_trip_thread(thread_t threadNew);
+    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
     void* start_thread(void* arg);
-    void* calculatePath();
+    void* calculatePath(Matrix *grid, Point start,  Point end);
 
     // std::deque<Task*> m_tasks;
     //int add_task(Task* task);
