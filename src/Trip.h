@@ -26,7 +26,7 @@ private:
         archive & timeOfStart;
     }
 
-    vector<Point> path;
+    vector<Point>* path;
     unsigned long length;
     int id;
     int totalMeters;
@@ -42,8 +42,13 @@ public:
     Trip() : timeOfStart(-1) {};
 
     // Constructor all the members
-    Trip(unsigned long length, int id, int totalMeters, int numberOfPassenger,
-         double tariff, Point start, Point end, vector<Point> path, int timeOfStart);
+    Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
+         double tariff, Point start, Point end, vector<Point>* path, int timeOfStart);
+
+    // Constructor all the members
+    Trip(int id, int totalMeters, int numberOfPassengers,
+         double tariff, Point start, Point end, int timeOfStart);
+
 
     //move the one step - to the next point.
     void moveOneStep();
@@ -103,11 +108,12 @@ public:
     void setCurrentPoint(Point p);
 
     //getters ang setters
-    void setPath(std::vector<Point> pathPoints);
+    void setPath(std::vector<Point>* pathPoints);
 
     //update the trip location
-   void updateLocation(Point p);
+    void updateLocation(Point p);
 
+    ~Trip();
 };
 
 

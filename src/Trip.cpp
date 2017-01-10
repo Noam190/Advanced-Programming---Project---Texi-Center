@@ -3,12 +3,9 @@
 //
 
 #include "Trip.h"
-// Constructor all the members
-Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-           double tariff, Point start, Point end, vector<Point> path, int timeOfStart) :
-        currentLocation(start), startPoint(start), endPoint(end), path(path) {
 
-    this->length = length;
+Trip::Trip(int id, int totalMeters, int numberOfPassengers, double tariff, Point start, Point end,
+           int timeOfStart) : currentLocation(start), startPoint(start), endPoint(end){
     this->id = id;
     this->totalMeters = totalMeters;
     this->numOfPassengers = numberOfPassengers;
@@ -16,6 +13,12 @@ Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers
     this->timeOfStart = timeOfStart;
 }
 
+// Constructor all the members
+Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
+           double tariff, Point start, Point end, vector<Point>* path, int timeOfStart) : path(path) {
+    Trip(id ,totalMeters, numberOfPassengers, tariff, start, end, timeOfStart);
+    this->length = length;
+}
 //getters ang setters
 unsigned long Trip::getLength(){
     return this->length;
@@ -40,11 +43,11 @@ int Trip::getTotalMeters(){
 void Trip::setTotalMeters(int totalMeters){
     this->totalMeters = totalMeters;
 }
+
 //getters ang setters
 int Trip::getNumberOfPassengers(){
     return this->numOfPassengers;
 }
-
 //getters ang setters
 double Trip::getTariff(){
     return this->tariff;
@@ -81,29 +84,34 @@ void Trip::setCurrentPoint(Point p){
 void Trip::updateLocation(Point p){
     this->currentLocation = p;
 }
+
 //getters and setters
 void Trip::setNumberOfPassengers(int numberOfPassengers) {
     this->numOfPassengers = numberOfPassengers;
 }
 
+
 //getters and setters
 int Trip::getTimeOfStart(){
     return  this->timeOfStart;
 }
-
-
 //getters and setters
 void Trip::setTimeOfStart(int newTimeOfStart){
     this->timeOfStart = newTimeOfStart;
 }
+
 //move one step forward
 void Trip::moveOneStep() {
-    this->path.erase(this->path.begin());
-    this->updateLocation(this->path.front());
+    this->path->erase(this->path->begin());
+    this->updateLocation(this->path->front());
 }
 
 //getters ang setters
-void Trip::setPath(std::vector<Point> pathPoints){
-    this->path=pathPoints;
-    setLength(this->path.size());
+void Trip::setPath(std::vector<Point>* pathPoints){
+    this->path = pathPoints;
+    setLength(this->path->size());
+}
+
+Trip::~Trip() {
+    delete this->path;
 }

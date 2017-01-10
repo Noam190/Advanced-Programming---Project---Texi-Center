@@ -118,10 +118,15 @@ void TaxiCenter::moveAllRidesOneStep() {
 
 //create a new ride
 Trip* TaxiCenter::createRides() {
+    void *status;
+
     for (int j = 0; j < freeTrips.size(); ++j) {
         if (freeTrips[j]->getTimeOfStart() == clock->getCurrentTime()){
             for (int i = 0; i < freeDrivers.size(); ++i) {
                 if (freeDrivers[i]->getCurrentLocation() == freeTrips[j]->getStartPoint()) {
+                    pthread_join((pthread_t) freeTrips[j]->getId(), &status);
+                    std::vector<Point>* pathPoints = (vector<Point> *) status;
+                    freeTrips[j]->setPath(pathPoints);
                     Ride* r = new Ride(freeTrips[j], freeDrivers[i]);
                     rides.push_back(r);
                     freeTrips.erase(freeTrips.begin() + j);

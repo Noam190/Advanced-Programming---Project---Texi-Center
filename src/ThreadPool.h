@@ -19,7 +19,7 @@ public:
     ~ThreadPool();
     void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
     void* start_thread(void* arg);
-    void* calculatePath(Matrix *grid, Point start,  Point end);
+    void * calculatePath(void *pathArgs);
 
     // std::deque<Task*> m_tasks;
     //int add_task(Task* task);

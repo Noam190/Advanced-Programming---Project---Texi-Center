@@ -9,10 +9,8 @@ Trip* createTrip(ThreadPool threadPool,Matrix *grid, int id, int xStart, int ySt
 
     Point start = Point(xStart, yStart);
     Point end = Point(xEnd, yEnd);
-    pthread_t t1;
+    pthread_t t1 = (pthread_t) id;
     threadPool.add_trip_thread(t1,grid,start,end);
 
-
-
-    return new Trip(-1, id, 0, numOfPass, tariff, start, end, NULL, timeOfStart);
+    return new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
 }
