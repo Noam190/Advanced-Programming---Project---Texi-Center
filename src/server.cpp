@@ -25,8 +25,8 @@ int main(int argc, char *argv[]) {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix* grid = new Matrix(width, height);
-
-    Menu menu = Menu(taxiCenter, grid, clock, udp);
+    ThreadPool threadPool=ThreadPool(0);
+    Menu menu = Menu(threadPool,taxiCenter, grid, clock, udp);
 
     //thread
     pthread_t t1;

@@ -102,6 +102,9 @@ public:
     //getters ang setters
     void setCurrentPoint(Point p);
 
+    //getters ang setters
+    void setPath(std::vector<Point> pathPoints);
+
     //update the trip location
    void updateLocation(Point p);
 

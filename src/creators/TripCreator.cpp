@@ -14,5 +14,5 @@ Trip* createTrip(ThreadPool threadPool,Matrix *grid, int id, int xStart, int ySt
 
 
 
-    return new Trip(-1, id, 0, numOfPass, tariff, start, end, pathPoints, timeOfStart);
+    return new Trip(-1, id, 0, numOfPass, tariff, start, end, NULL, timeOfStart);
 }

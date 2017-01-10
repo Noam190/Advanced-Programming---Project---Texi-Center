@@ -91,6 +91,7 @@ int Trip::getTimeOfStart(){
     return  this->timeOfStart;
 }
 
+
 //getters and setters
 void Trip::setTimeOfStart(int newTimeOfStart){
     this->timeOfStart = newTimeOfStart;
@@ -99,4 +100,10 @@ void Trip::setTimeOfStart(int newTimeOfStart){
 void Trip::moveOneStep() {
     this->path.erase(this->path.begin());
     this->updateLocation(this->path.front());
+}
+
+//getters ang setters
+void Trip::setPath(std::vector<Point> pathPoints){
+    this->path=pathPoints;
+    setLength(this->path.size());
 }
