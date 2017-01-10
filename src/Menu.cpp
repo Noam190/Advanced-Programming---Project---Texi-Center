@@ -3,6 +3,7 @@
 //
 
 #include "Menu.h"
+#include <pthread.h>
 
 //  run the input to the program
 void Menu::run() {

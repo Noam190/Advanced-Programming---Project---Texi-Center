@@ -2,6 +2,13 @@
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
 #include "Menu.h"
+#include <pthread.h>
+
+void *printTry( void *ptr )
+{
+    int message = *((int*) ptr);
+    cout << "test seoond thread" << message << "\n";
+}
 
 
 int main(int argc, char *argv[]) {
@@ -20,6 +27,18 @@ int main(int argc, char *argv[]) {
     Matrix* grid = new Matrix(width, height);
 
     Menu menu = Menu(taxiCenter, grid, clock, udp);
+
+    //thread
+    pthread_t t1;
+    int * data = new int;
+    *data = 2;
+    int status = pthread_create(&t1, NULL, printTry, (void*) data);
+    if (status)
+    {
+        std::cout<<" error";
+    }
+
+
     //run all the other inputs
     menu.run();
 
