@@ -3,4 +3,4 @@
 Project of the Advanced Programming course. 
 Bar Ilan university 2016.
 
-(c) Meital & Noam Simon
+(c) Meital Birka & Noam Simon

@@ -18,7 +18,7 @@ public:
     ~ThreadPool();
     void  add_trip_thread(thread_t threadNew);
     void* start_thread(void* arg);
-    void* calculatePath(){
+    void* calculatePath();
 
     // std::deque<Task*> m_tasks;
     //int add_task(Task* task);

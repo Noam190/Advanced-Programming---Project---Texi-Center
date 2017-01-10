@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     Clock* clock = new Clock();
     TaxiCenter* taxiCenter = new TaxiCenter( clock);
-    int width, height;
+    unsigned long width, height;
 
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
@@ -49,3 +49,9 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+//Node* n  = grid->getNode(4, 34);
+//std::list<Node*> l = n->getNeighbors();
+//while (!l.empty()){
+//std::cout << *(l.front()) << std::endl;
+//l.pop_front();
+//}

@@ -6,20 +6,20 @@
 #include "iostream"
 #include "Grid.h"
 #include "NodeMatrix.h"
-
-
+#include "boost/multi_array.hpp"
 
 class Matrix : public Grid {
 private:
-    int width, height;
-    NodeMatrix arr[10][10];
-
+    unsigned long width, height;
+    vector<vector<NodeMatrix *>> arr;
     //update neighbors
-    void neighbors(Node& n, int x, int y);
+    void neighbors(Node* n, int x, int y);
 
 public:
     // Constructor  init the matrix.
-    Matrix(int width , int height);
+    Matrix(unsigned long width , unsigned long height);
+
+    ~Matrix();
 
     //get a Node
     Node* getNode(int x, int y);
@@ -34,10 +34,10 @@ public:
     void removeObstacle(Node* n);
 
     //get width
-    int getWidth() { return width; }
+    unsigned long getWidth() { return width; }
 
     //get height
-    int getHeight() { return height; }
+    unsigned long getHeight() { return height; }
 };
 
 
