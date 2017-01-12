@@ -19,12 +19,26 @@ public:
     ~ThreadPool();
     void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
     void* start_thread(void* arg);
-    void * calculatePath(void *pathArgs);
+    static void * calculatePath(void *pathArgs);
 
     // std::deque<Task*> m_tasks;
     //int add_task(Task* task);
     //  void* execute_thread();
 };
 
+class PathAgrs{
+public:
+    Matrix* grid;
+    Point* start;
+    Point* end;
+    PathAgrs(Matrix *grid, Point start,  Point end) : grid(grid) {
+        this->start = new Point(start.x(), start.y());
+        this->end = new Point(end.x(), end.y());
+    }
 
+    ~PathAgrs(){
+        delete start;
+        delete end;
+    }
+};
 #endif //TAXI_CENTER_THREADPOOL_H
