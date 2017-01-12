@@ -11,7 +11,7 @@
 #include "../ThreadPool.h"
 
 //help to create a trip
-Trip* createTrip(ThreadPool threadPool,Matrix *grid, int id, int xStart, int yStart,
+Trip* createTrip(ThreadPool* threadPool,Matrix *grid, int id, int xStart, int yStart,
                 int xEnd, int yEnd, int numOfPass, double tariff, int timeOfStart);
 
 

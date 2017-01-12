@@ -40,7 +40,7 @@ void Menu::run() {
         }
         cin >> option;
     }
-    this->udp->sendData("E");
+    this->tcp->sendData("E");
  //   taxiCenter.~TaxiCenter();
     return;
 }
@@ -62,7 +62,7 @@ void Menu::updatesFromClient() {
     unsigned long readBytes;
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
-    readBytes = this->udp->receiveData(buffer, sizeof(buffer));
+    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
 
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
@@ -73,7 +73,7 @@ void Menu::updatesFromClient() {
     //serialize taxi
     string serial_str_taxi = serialize(taxiCab);
     //sent back the taxi
-    this->udp->sendData(serial_str_taxi);
+    this->tcp->sendData(serial_str_taxi);
 
     //add driver to the taxi-center.
     this->taxiCenter->addDriver(d);
@@ -139,9 +139,9 @@ void Menu::moveAllDriversToTheEnd() {
 
 
 //constructor to a new
-Menu::Menu(ThreadPool threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Udp *udp)
-        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter), clock(clock), udp(udp) {
-    udp->initialize();
+Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Tcp *tcp)
+        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter), clock(clock), tcp(tcp) {
+    tcp->initialize();
 }
 
 // move the drivers to the next point.
@@ -149,14 +149,14 @@ void Menu::advance() {
     this->clock->addToCurrentTime(1);
 
     //go to the drivers
-    this->udp->sendData("G");
+    this->tcp->sendData("G");
 
     this->taxiCenter->moveAllRidesOneStep();
 
     Trip* trip = this->taxiCenter->createRides();
     if (trip != NULL ) {
-        this->udp->sendData("T");
+        this->tcp->sendData("T");
         string serial_str_trip = serialize(trip);
-        this->udp->sendData(serial_str_trip);
+        this->tcp->sendData(serial_str_trip);
     }
 }

@@ -116,9 +116,9 @@ int Tcp::sendData(string data) {
 * The Function operation: getting data from the other socket to,	   *
 * enter it to the buffer and print the data							   *
 ***********************************************************************/
-int Tcp::reciveData(char* buffer, int size) {
+unsigned long Tcp::receiveData(char *buffer, unsigned long size){
 	int read_bytes = recv(this->isServer ? this->descriptorCommunicateClient
-			: this->socketDescriptor, buffer, size, 0);
+			: this->socketDescriptor, buffer,size, 0);
 	//checking the errors
 	if (read_bytes == 0) {
 		return CONNECTION_CLOSED;

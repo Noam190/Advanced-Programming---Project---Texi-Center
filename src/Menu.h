@@ -16,19 +16,20 @@
 #include "core/Matrix.h"
 #include "Serialization.h"
 #include "ThreadPool.h"
+#include "sockets/Tcp.h"
 
 class Menu {
 private:
     Matrix *grid;
     TaxiCenter *taxiCenter;
     Clock *clock;
-    Udp *udp;
-    ThreadPool threadPool;
+    Tcp *tcp;
+    ThreadPool* threadPool;
 
 public:
 
     //constructor to a new
-    Menu(ThreadPool threadPool,TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, Udp* udp);
+    Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, Tcp* tcp);
 
     //run the funcs with input
     void run();

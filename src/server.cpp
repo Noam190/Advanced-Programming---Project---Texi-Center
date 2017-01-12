@@ -2,6 +2,7 @@
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
 #include "Menu.h"
+#include "sockets/Tcp.h"
 #include <pthread.h>
 
 void *printTry( void *ptr )
@@ -15,7 +16,7 @@ int main(int argc, char *argv[]) {
 
 
     int portNum = atoi(argv[1]);
-    Udp* udp = new Udp(true, portNum);
+    Tcp* tcp = new Tcp(true, portNum);
     //udp.initialize();
 
     Clock* clock = new Clock();
@@ -25,25 +26,25 @@ int main(int argc, char *argv[]) {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix* grid = new Matrix(width, height);
-    ThreadPool threadPool = ThreadPool(0);
-    Menu menu = Menu(threadPool,taxiCenter, grid, clock, udp);
+    ThreadPool* threadPool =new ThreadPool(0);
+    Menu menu = Menu(threadPool,taxiCenter, grid, clock, tcp);
 
-    //thread
-    pthread_t t1;
-    int * data = new int;
-    *data = 2;
-    int status = pthread_create(&t1, NULL, printTry, (void*) data);
-    if (status)
-    {
-        std::cout<<" error";
-    }
+//    //thread
+//    pthread_t t1;
+//    int * data = new int;
+//    *data = 2;
+//    int status = pthread_create(&t1, NULL, printTry, (void*) data);
+//    if (status)
+//    {
+//        std::cout<<" error";
+//    }
 
 
     //run all the other inputs
     menu.run();
 
     delete grid;
-    delete udp;
+    delete tcp;
     delete clock;
     delete taxiCenter;
     return 0;

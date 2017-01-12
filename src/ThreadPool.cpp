@@ -27,8 +27,12 @@ ThreadPool::~ThreadPool()
 void  ThreadPool::add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end){
     PathAgrs* args = new PathAgrs(grid, start, end);
     int ret = pthread_create(&threadNew, NULL, ThreadPool::calculatePath, args);
-    if (ret != 0) { /* error handling */ }
+    if (ret != 0) {
+        std::cout <<  " error in trip thread! exited from the thread pool" << std::endl;
+    }
     m_threads.push_back(threadNew);
+    std::cout <<  " finish add trip thread! exited from the thread pool" << std::endl;
+
 }
 
 void * ThreadPool::calculatePath ( void *pathArgs) {
