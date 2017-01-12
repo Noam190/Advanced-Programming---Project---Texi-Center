@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
 
     int portNum = atoi(argv[1]);
-    Tcp* tcp = new Tcp(true, portNum);
+    TcpServer* tcp = new TcpServer(portNum);
     //udp.initialize();
 
     Clock* clock = new Clock();
@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     //grid initialize grid and add obstacles if there are any.
     std::cin >> width >> height;
     Matrix* grid = new Matrix(width, height);
-    ThreadPool* threadPool =new ThreadPool(0);
+    ThreadPool* threadPool = new ThreadPool(0);
     Menu menu = Menu(threadPool,taxiCenter, grid, clock, tcp);
 
 //    //thread

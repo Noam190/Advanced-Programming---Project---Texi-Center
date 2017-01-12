@@ -141,7 +141,7 @@ void Menu::moveAllDriversToTheEnd() {
 
 
 //constructor to a new
-Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, Tcp *tcp)
+Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, TcpServer *tcp)
         : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter), clock(clock), tcp(tcp) {
     tcp->initialize();
 }

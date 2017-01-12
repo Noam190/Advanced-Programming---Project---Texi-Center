@@ -16,7 +16,7 @@ set(SOURCE_FILES Serialization.h core/Point.cpp core/Point.h core/Node.cpp
         creators/TripCreator.h creators/TaxiCreator.cpp creators/TaxiCreator.h creators/DriverCreator.cpp
         creators/DriverCreator.h Menu.cpp Menu.h Ride.cpp Ride.h Clock.cpp Clock.h ThreadPool.cpp ThreadPool.h)
 
-set(SOCKETS_FILES sockets/Socket.cpp  sockets/Tcp.cpp sockets/Socket.h  sockets/Tcp.h )
+set(SOCKETS_FILES sockets/Socket.cpp  sockets/Tcp.cpp sockets/Socket.h  sockets/Tcp.h sockets/TcpServer.cpp sockets/TcpServer.h sockets/TcpClient.cpp sockets/TcpClient.h)
 
 add_library(sockets ${SOCKETS_FILES})
 add_library(core ${SOURCE_FILES})
