@@ -16,14 +16,14 @@ public:
     * The output: none										               *
     * The Function operation: creating new Tcp						       *
     ***********************************************************************/
-    TcpClient(int port_num);
+    TcpClient(string ip,int port_num);
     /***********************************************************************
     * function name: ~Tcp												   *
     * The Input: none													   *
     * The output: none										               *
     * The Function operation: default destructor					       *
     ***********************************************************************/
-    virtual ~TcpServer();
+    virtual ~TcpClient();
     /***********************************************************************
 	* function name: initialize											   *
 	* The Input: none              										   *

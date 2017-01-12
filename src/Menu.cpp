@@ -40,7 +40,7 @@ void Menu::run() {
         }
         cin >> option;
     }
-    this->tcp->sendData("E");
+    this->tcp->sendData("E",);
  //   taxiCenter.~TaxiCenter();
     return;
 }

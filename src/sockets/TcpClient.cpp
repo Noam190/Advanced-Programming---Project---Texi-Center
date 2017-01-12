@@ -4,7 +4,8 @@
 
 #include "TcpClient.h"
 
-TcpClient::TcpClient(int port_num) {
+TcpClient::TcpClient(string ip,int port_num){
+    this->ip_address=ip;
     this->port_number = port_num;
     this->isServer = false;
 }

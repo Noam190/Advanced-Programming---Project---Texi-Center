@@ -8,6 +8,7 @@
 #include "creators/DriverCreator.h"
 #include "Serialization.h"
 #include "sockets/Tcp.h"
+#include "sockets/TcpClient.h"
 
 //insert a driver as a client
 Driver* insertDriver() {
@@ -30,28 +31,28 @@ int main(int argc, char *argv[]) {
     unsigned long readBytes;
 
 
-    Tcp* tcp = new Tcp(false, argv[1], atoi(argv[2]));
-    tcp->initialize();
+    TcpClient* tcpClient = new TcpClient( argv[1], atoi(argv[2]));
+    tcpClient->initialize();
 
     //create a driver
     Driver* driver = insertDriver();
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(driver);
-    tcp->sendData(serial_str_driver);
+    tcpClient->sendData(serial_str_driver);
 
-    readBytes = tcp->receiveData(buffer, sizeof(buffer));
+    readBytes = tcpClient->receiveData(buffer, sizeof(buffer));
     std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
     driver->setTaxiCab(taxiCab);
 
-    tcp->receiveData(buffer, sizeof(buffer));
+    tcpClient->receiveData(buffer, sizeof(buffer));
     char option = buffer[0];
     std::string data;
     while (option != 'E') {
         switch (option) {
             case 'T':
-                readBytes = tcp->receiveData(buffer, sizeof(buffer));
+                readBytes = tcpClient->receiveData(buffer, sizeof(buffer));
                 data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
@@ -72,11 +73,11 @@ int main(int argc, char *argv[]) {
             default:
                 break;
         }
-        tcp->receiveData(buffer, sizeof(buffer));
+        tcpClient->receiveData(buffer, sizeof(buffer));
         option = buffer[0];
     }
 
-    delete tcp;
+    delete tcpClient;
     delete driver;
     return 0;
 }
