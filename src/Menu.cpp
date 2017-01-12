@@ -59,24 +59,24 @@ void Menu::insertTaxi() {
 
 //pass date from server<->client
 void Menu::updatesFromClient() {
-    unsigned long readBytes;
-    char buffer[1024];
-    std::fill_n(buffer, 1024, 0);
-    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
-
-    // deserialize driver
-    string serial_str_driver(buffer, readBytes);
-    Driver *d = deserialize<Driver>(serial_str_driver);
-
-    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
-
-    //serialize taxi
-    string serial_str_taxi = serialize(taxiCab);
-    //sent back the taxi
-    this->tcp->sendData(serial_str_taxi);
-
-    //add driver to the taxi-center.
-    this->taxiCenter->addDriver(d);
+//    unsigned long readBytes;
+//    char buffer[1024];
+//    std::fill_n(buffer, 1024, 0);
+//    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
+//
+//    // deserialize driver
+//    string serial_str_driver(buffer, readBytes);
+//    Driver *d = deserialize<Driver>(serial_str_driver);
+//
+//    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
+//
+//    //serialize taxi
+//    string serial_str_taxi = serialize(taxiCab);
+//    //sent back the taxi
+//    this->tcp->sendData(serial_str_taxi);
+//
+//    //add driver to the taxi-center.
+//    this->taxiCenter->addDriver(d);
 
 }
 
@@ -85,7 +85,9 @@ void Menu::expectingDriver() {
     int numOfDrivers;
     std::cin >> numOfDrivers;
     for (int i = 0; i < numOfDrivers; ++i) {
-        updatesFromClient();
+        //updatesFromClient();
+        pthread_t t1 = (pthread_t) i;
+        threadPool->add_driver_thread(t1,this->taxiCenter);
     }
 }
 

@@ -7,6 +7,7 @@
 #include "core/Matrix.h"
 
 
+
 ThreadPool::ThreadPool(int pool_size) : m_pool_size(pool_size)
 {
     for (int i = 0; i < m_pool_size; i++) {
@@ -57,10 +58,38 @@ void * ThreadPool::calculatePath ( void *pathArgs) {
     delete args;
     return  pathPoints;
 }
-void* ThreadPool::start_thread(void* arg)
-{
+void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) {
+    int ret = pthread_create(&threadNew, NULL, ThreadPool::addDriver, taxiCenter);
+    if (ret != 0) {
+        std::cout << " error in driver thread! exited from the thread pool" << std::endl;
+    }
+    m_threads.push_back(threadNew);
+    std::cout << " finish add driver thread! exited from the thread pool" << std::endl;
 
 }
+
+void * ThreadPool:: addDriver(void* taxiCenter){
+    TaxiCenter* taxiCenterNew =(TaxiCenter*)taxiCenter;
+    unsigned long readBytes;
+    char buffer[1024];
+    std::fill_n(buffer, 1024, 0);
+ //   readBytes = this->tcp->receiveData(buffer, sizeof(buffer)); TODO
+
+    // deserialize driver
+    string serial_str_driver(buffer, readBytes);
+    Driver *d = deserialize<Driver>(serial_str_driver);
+
+    TaxiCab* taxiCab = taxiCenterNew->getTaxi(d->getVehicleId());
+
+    //serialize taxi
+    string serial_str_taxi = serialize(taxiCab);
+    //sent back the taxi
+  //  this->tcp->sendData(serial_str_taxi); TODO
+
+    //add driver to the taxi-center.
+    taxiCenterNew->addDriver(d);
+}
+
 
 //int ThreadPool::add_task(Task* task)
 //{

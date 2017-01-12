@@ -5,6 +5,9 @@
 #include <vector>
 #include <thread_db.h>
 #include "core/Matrix.h"
+#include "persons/Driver.h"
+#include "Serialization.h"
+#include "TaxiCenter.h"
 
 #ifndef TAXI_CENTER_THREADPOOL_H
 #define TAXI_CENTER_THREADPOOL_H
@@ -18,8 +21,10 @@ public:
     ThreadPool(int pool_size);
     ~ThreadPool();
     void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
-    void* start_thread(void* arg);
     static void * calculatePath(void *pathArgs);
+    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) ;
+    static void *  addDriver(void* taxiCenter);
+
 
     // std::deque<Task*> m_tasks;
     //int add_task(Task* task);

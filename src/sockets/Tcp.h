@@ -25,7 +25,9 @@ public:
 	* The output: none										               *
 	* The Function operation: default destructor					       *
 	***********************************************************************/
-	virtual ~Tcp();
+    Tcp(bool isServers, string ip, int port_num);
+
+    virtual ~Tcp();
 /***********************************************************************
 	* function name: initialize											   *
 	* The Input: none              										   *

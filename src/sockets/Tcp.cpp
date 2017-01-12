@@ -19,7 +19,11 @@ Tcp::Tcp(bool isServers, int port_num) {
 	this->isServer = isServers;
 
 }
-
+Tcp::Tcp(bool isServers, string ip, int port_num) {
+    this->port_number = port_num;
+    this->ip_address = ip;
+    this->isServer = isServers;
+}
 /***********************************************************************
 * function name: ~Tcp												   *
 * The Input: none													   *

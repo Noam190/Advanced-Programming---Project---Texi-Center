@@ -7,6 +7,8 @@
 #include "Clock.h"
 #include "creators/DriverCreator.h"
 #include "Serialization.h"
+#include "sockets/Tcp.h"
+
 //insert a driver as a client
 Driver* insertDriver() {
 
@@ -28,28 +30,28 @@ int main(int argc, char *argv[]) {
     unsigned long readBytes;
 
 
-    Udp* udp = new Udp(false, argv[1], atoi(argv[2]));
-    udp->initialize();
+    Tcp* tcp = new Tcp(false, argv[1], atoi(argv[2]));
+    tcp->initialize();
 
     //create a driver
     Driver* driver = insertDriver();
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(driver);
-    udp->sendData(serial_str_driver);
+    tcp->sendData(serial_str_driver);
 
-    readBytes = udp->receiveData(buffer, sizeof(buffer));
+    readBytes = tcp->receiveData(buffer, sizeof(buffer));
     std::string vehicleStr(buffer, readBytes);
     //deserialize receive vehicle
     TaxiCab *taxiCab = deserialize<TaxiCab>(vehicleStr);
     driver->setTaxiCab(taxiCab);
 
-    udp->receiveData(buffer, sizeof(buffer));
+    tcp->receiveData(buffer, sizeof(buffer));
     char option = buffer[0];
     std::string data;
     while (option != 'E') {
         switch (option) {
             case 'T':
-                readBytes = udp->receiveData(buffer, sizeof(buffer));
+                readBytes = tcp->receiveData(buffer, sizeof(buffer));
                 data = string(buffer, readBytes);
                 if (ride == NULL) {
                     t = deserialize<Trip>(data);
@@ -70,11 +72,11 @@ int main(int argc, char *argv[]) {
             default:
                 break;
         }
-        udp->receiveData(buffer, sizeof(buffer));
+        tcp->receiveData(buffer, sizeof(buffer));
         option = buffer[0];
     }
 
-    delete udp;
+    delete tcp;
     delete driver;
     return 0;
 }
