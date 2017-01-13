@@ -18,12 +18,13 @@ private:
     int m_pool_size;
     std::vector<pthread_t> m_threads;
 public:
-    ThreadPool(int pool_size);
+//    ThreadPool(int pool_size);
     ~ThreadPool();
-    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
-    static void * calculatePath(void *pathArgs);
-    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) ;
+    void  ThreadPool::addThread(thread_t threadNew, void * pFunc(void*), void* args);
     static void *  addDriver(void* taxiCenter);
+    static void * calculatePath(void *pathArgs);
+//    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
+//    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) ;
 
 
     // std::deque<Task*> m_tasks;

@@ -41,7 +41,6 @@ void Menu::run() {
         cin >> option;
     }
     this->tcp->sendData("E",);
- //   taxiCenter.~TaxiCenter();
     return;
 }
 
