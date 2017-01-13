@@ -36,15 +36,15 @@ ThreadPool::~ThreadPool()
 //
 //}
 
-void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter, int connectNum) {
-    DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum);
-    int ret = pthread_create(&threadNew, NULL, ThreadPool::addClient, args);
-    if (ret != 0) {
-        std::cout << " error in driver thread! exited from the thread pool" << std::endl;
-    }
-    m_threads.push_back(threadNew);
-    std::cout << " finish add driver thread! exited from the thread pool" << std::endl;
-}
+//void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter, int connectNum) {
+//    DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum);
+//    int ret = pthread_create(&threadNew, NULL, ThreadPool::addClient, args);
+//    if (ret != 0) {
+//        std::cout << " error in driver thread! exited from the thread pool" << std::endl;
+//    }
+//    m_threads.push_back(threadNew);
+//    std::cout << " finish add driver thread! exited from the thread pool" << std::endl;
+//}
 
 void ThreadPool::createThread(thread_t threadNew, void* pFunc(void*), void* args) {
     int ret = pthread_create(&threadNew, NULL, pFunc, args);

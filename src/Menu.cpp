@@ -44,7 +44,17 @@ void Menu::run() {
  //   taxiCenter.~TaxiCenter();
     return;
 }
-
+class DriverAgrs{
+public:
+    TaxiCenter* taxiCenter;
+    TcpServer* tcp;
+    bool stop;
+    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum, TcpServer* tcp, bool stop) {
+        this->taxiCenter = taxiCenter;
+        this->tcp = tcp;
+        this->stop = stop;
+    }
+};
 //insert a new taxi from the input arguments
 void Menu::insertTaxi() {
     char dummy;
@@ -83,12 +93,13 @@ void Menu::updatesFromClient() {
 //expecting a new driver from the client
 void Menu::expectingDriver() {
     int numOfDrivers;
-    this->numOfDrivers = numOfDrivers;
-    int connectNum;
+    int connectNum ;
     std::cin >> numOfDrivers;
+    this->numOfDrivers = numOfDrivers;
+
     for (int i = 0; i < numOfDrivers; ++i) {
         pthread_t t1 = (pthread_t) i;
-        DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum);
+        DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum,tcp, false);
         threadPool->createThread(t1,addClient,args);
     }
 }
@@ -160,19 +171,9 @@ void Menu::advance() {
     this->taxiCenter->createRides();
 }
 
-class DriverAgrs{
-public:
-    TaxiCenter* taxiCenter;
-    TcpServer* tcp;
-    bool stop;
-    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum, TcpServer* tcp, bool stop) {
-        this->taxiCenter = taxiCenter;
-        this->tcp = tcp;
-        this->stop = stop;
-    }
-};
 
-void * addClient(void *args){
+
+void * Menu::addClient(void *args){
     DriverAgrs* argsD =(DriverAgrs*) args;
     bool stop = argsD->stop;
     TcpServer* tcp = argsD->tcp;
@@ -205,6 +206,8 @@ void * addClient(void *args){
             tcp->sendData("T", connectNum);
             string serial_str_trip = serialize(trip);
             tcp->sendData(serial_str_trip, connectNum);
+        } else{
+            stop= true;
         }
     }
 }

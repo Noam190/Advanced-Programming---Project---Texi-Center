@@ -35,7 +35,8 @@ int TcpServer::sendData(string data, int descriptorCommunicateClient) {
     return Tcp::sendData(data,descriptorCommunicateClient);
 }
 
-unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int descriptorCommunicateClient) {
+unsigned long TcpServer::receiveData(char *buffer, unsigned long size,
+                                     int descriptorCommunicateClient) {
     return Tcp::receiveData(buffer,size,descriptorCommunicateClient);
 }
 

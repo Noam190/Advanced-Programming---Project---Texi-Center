@@ -60,6 +60,8 @@ public:
     void moveAllDriversToTheEnd();
 
     void sendDataToAllClient(string data);
+
+    static void * addClient(void *args);
 };
 
 
