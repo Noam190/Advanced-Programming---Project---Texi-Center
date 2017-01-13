@@ -58,8 +58,9 @@ void * ThreadPool::calculatePath ( void *pathArgs) {
     delete args;
     return  pathPoints;
 }
-void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) {
-    int ret = pthread_create(&threadNew, NULL, ThreadPool::addDriver, taxiCenter);
+void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter, int connectNum) {
+    DriverAgrs* args =new DriverAgrs(taxiCenter,connectNum);
+    int ret = pthread_create(&threadNew, NULL, ThreadPool::addDriver, args);
     if (ret != 0) {
         std::cout << " error in driver thread! exited from the thread pool" << std::endl;
     }
@@ -68,8 +69,9 @@ void ThreadPool::add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) {
 
 }
 
-void * ThreadPool:: addDriver(void* taxiCenter){
-    TaxiCenter* taxiCenterNew =(TaxiCenter*)taxiCenter;
+void * ThreadPool:: addDriver(void* args){
+    DriverAgrs* argsD =(DriverAgrs*) args;
+
     unsigned long readBytes;
     char buffer[1024];
     std::fill_n(buffer, 1024, 0);
@@ -79,7 +81,7 @@ void * ThreadPool:: addDriver(void* taxiCenter){
     string serial_str_driver(buffer, readBytes);
     Driver *d = deserialize<Driver>(serial_str_driver);
 
-    TaxiCab* taxiCab = taxiCenterNew->getTaxi(d->getVehicleId());
+    TaxiCab* taxiCab = argsD->taxiCenter->getTaxi(d->getVehicleId());
 
     //serialize taxi
     string serial_str_taxi = serialize(taxiCab);
@@ -87,7 +89,9 @@ void * ThreadPool:: addDriver(void* taxiCenter){
   //  this->tcp->sendData(serial_str_taxi); TODO
 
     //add driver to the taxi-center.
-    taxiCenterNew->addDriver(d);
+    argsD->taxiCenter->addDriver(d);
+    argsD->taxiCenter->addnumToConnectServer(argsD->connectNum,d->getId());
+
 }
 
 

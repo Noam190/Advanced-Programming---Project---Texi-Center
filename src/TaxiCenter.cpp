@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "TaxiCenter.h"
+#include "sockets/TcpServer.h"
 
 //send a taxi
 TaxiCab TaxiCenter::sendTaxi() {
@@ -158,5 +159,30 @@ TaxiCenter::~TaxiCenter() {
     for (int j = 0; j < rides.size() ; ++j) {
         delete rides[j]->getDriver();
         delete rides[j];
+    }
+    for (int j = 0; j < numToConnectServer.size() ; ++j) {
+  //      delete numToConnectServer[j].pair(); TODO
+    }
+}
+
+void TaxiCenter::addnumToConnectServer(int num, int driverId){
+    this->numToConnectServer.push_back(std::make_pair(num,driverId));
+}
+int TaxiCenter::findNumToClient(int driverId) {
+    int index = 0;
+
+    for (vector<pair<int, int>>::iterator it = this->numToConnectServer.begin();
+         it != this->numToConnectServer.end(); ++it, ++index) {
+        if ((it)->second == driverId) {
+            return (it)->first;
+        }
+    }
+}
+
+void TaxiCenter::sendMessageToAllClients(TcpServer* tcp,string data) {
+    int tempNum;
+    for (vector<Driver *>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it) {
+    tempNum=(*it)->getId();
+        tcp->sendData(data,findNumToClient(tempNum));
     }
 }

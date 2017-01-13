@@ -22,8 +22,8 @@ public:
     ~ThreadPool();
     void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
     static void * calculatePath(void *pathArgs);
-    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter) ;
-    static void *  addDriver(void* taxiCenter);
+    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
+    static void *  addDriver(void* args);
 
 
     // std::deque<Task*> m_tasks;
@@ -44,6 +44,19 @@ public:
     ~PathAgrs(){
         delete start;
         delete end;
+    }
+};
+class DriverAgrs{
+public:
+    TaxiCenter* taxiCenter;
+     int  connectNum;
+    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum) : taxiCenter(taxiCenter),connectNum(connectNum) {
+
+    }
+
+    ~DriverAgrs(){
+        delete taxiCenter;
+
     }
 };
 #endif //TAXI_CENTER_THREADPOOL_H

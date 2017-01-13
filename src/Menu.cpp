@@ -40,7 +40,7 @@ void Menu::run() {
         }
         cin >> option;
     }
-    this->tcp->sendData("E",);
+    sendDataToAllClient("E");
  //   taxiCenter.~TaxiCenter();
     return;
 }
@@ -83,11 +83,14 @@ void Menu::updatesFromClient() {
 //expecting a new driver from the client
 void Menu::expectingDriver() {
     int numOfDrivers;
+    this->numOfDrivers=numOfDrivers;
+    int connectNum;
     std::cin >> numOfDrivers;
     for (int i = 0; i < numOfDrivers; ++i) {
         //updatesFromClient();
+        connectNum=tcp->connectClient();
         pthread_t t1 = (pthread_t) i;
-        threadPool->add_driver_thread(t1,this->taxiCenter);
+        threadPool->add_driver_thread(t1,this->taxiCenter,connectNum);
     }
 }
 
@@ -141,8 +144,10 @@ void Menu::moveAllDriversToTheEnd() {
 
 
 //constructor to a new
-Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, TcpServer *tcp)
-        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter), clock(clock), tcp(tcp) {
+Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
+           Clock *clock, TcpServer *tcp,int numOfDrivers)
+        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
+          clock(clock), tcp(tcp), numOfDrivers(0) {
     tcp->initialize();
 }
 
@@ -151,7 +156,7 @@ void Menu::advance() {
     this->clock->addToCurrentTime(1);
 
     //go to the drivers
-    this->tcp->sendData("G");
+    sendDataToAllClient("G");
 
     this->taxiCenter->moveAllRidesOneStep();
 
@@ -162,3 +167,8 @@ void Menu::advance() {
         this->tcp->sendData(serial_str_trip);
     }
 }
+
+void Menu::sendDataToAllClient(string data){
+    this->taxiCenter->sendMessageToAllClients(this->tcp,data);
+}
+

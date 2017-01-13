@@ -11,14 +11,16 @@
 #include "cabs/TaxiCab.h"
 #include "Trip.h"
 #include "Ride.h"
+#include "sockets/TcpServer.h"
 
 class TaxiCenter {
 private:
     Clock *clock;
-    std::vector<Ride*> rides;
+    static std::vector<Ride*> rides;
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
+    std::vector<pair<int,int>> numToConnectServer;
 public:
     //constructor
     TaxiCenter(Clock *clock);
@@ -63,6 +65,11 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
+    void addnumToConnectServer(int num, int driverId);
+
+    int findNumToClient(int driverId);
+
+    void sendMessageToAllClients(TcpServer *tcp,string data) ;
 };
 
 #endif //EX2AP_TAXICENTER_H

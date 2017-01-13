@@ -25,11 +25,13 @@ private:
     Clock *clock;
     TcpServer *tcp;
     ThreadPool* threadPool;
+    int numOfDrivers;
 
 public:
 
     //constructor to a new
-    Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, TcpServer* tcp);
+    Menu(ThreadPool* threadPool,
+         TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, TcpServer* tcp, int numOfDrivers);
 
     //run the funcs with input
     void run();
@@ -56,6 +58,8 @@ public:
 
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
+
+    void sendDataToAllClient(string data);
 };
 
 
