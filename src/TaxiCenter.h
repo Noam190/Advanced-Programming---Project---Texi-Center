@@ -20,7 +20,7 @@ private:
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
-    std::vector<pair<int,int>> numToConnectServer;
+    std::vector<pair<int,Trip*>> numToConnectServer;
 public:
     //constructor
     TaxiCenter(Clock *clock);
@@ -67,8 +67,7 @@ public:
 
     void addnumToConnectServer(int num, int driverId);
 
-    int findNumToClient(int driverId);
-
+    Trip* TaxiCenter::getTripById(int driverId);
     void sendMessageToAllClients(TcpServer *tcp,string data) ;
 };
 

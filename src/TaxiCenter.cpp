@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <boost/tuple/tuple.hpp>
 #include "TaxiCenter.h"
 #include "sockets/TcpServer.h"
 
@@ -165,24 +166,25 @@ TaxiCenter::~TaxiCenter() {
     }
 }
 
-void TaxiCenter::addnumToConnectServer(int num, int driverId){
-    this->numToConnectServer.push_back(std::make_pair(num,driverId));
-}
-int TaxiCenter::findNumToClient(int driverId) {
+//void TaxiCenter::addnumToConnectServer(int num, int driverId){
+//    this->numToConnectServer.push_back(tuple(num,driverId,(Trip*)NULL));
+//}
+Trip* TaxiCenter::getTripById(int driverId) {
     int index = 0;
 
-    for (vector<pair<int, int>>::iterator it = this->numToConnectServer.begin();
+    for (vector<pair<int, Trip*>>::iterator it = this->numToConnectServer.begin();
          it != this->numToConnectServer.end(); ++it, ++index) {
-        if ((it)->second == driverId) {
-            return (it)->first;
+
+        if ( (*it).first== driverId) {
+            return (*it).second;
         }
     }
 }
 
 void TaxiCenter::sendMessageToAllClients(TcpServer* tcp,string data) {
-    int tempNum;
-    for (vector<Driver *>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it) {
-    tempNum=(*it)->getId();
-        tcp->sendData(data,findNumToClient(tempNum));
-    }
+//    int tempNum;
+//    for (vector<Driver *>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it) {
+//    tempNum=(*it)->getId();
+//        tcp->sendData(data,findNumToClient(tempNum));
+//    }
 }
