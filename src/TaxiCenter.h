@@ -68,8 +68,6 @@ public:
     Point getDriverLocation(int id);
 
     Trip* getTripById(int driverId);
-
-    void sendMessageToAllClients(TcpServer *tcp,string data) ;
 };
 
 #endif //EX2AP_TAXICENTER_H

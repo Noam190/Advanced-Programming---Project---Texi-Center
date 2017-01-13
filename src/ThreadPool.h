@@ -21,10 +21,9 @@ public:
     ThreadPool(int pool_size);
     ~ThreadPool();
     void createThread(thread_t threadNew, void* pFunc(void*), void* args);
-    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
-    static void * calculatePath(void *pathArgs);
-    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
-    static void *  addClient(void *args);
+//    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
+//    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
+//    static void *  addClient(void *args);
 
 
     // std::deque<Task*> m_tasks;
@@ -32,31 +31,5 @@ public:
     //  void* execute_thread();
 };
 
-class PathAgrs{
-public:
-    Matrix* grid;
-    Point* start;
-    Point* end;
-    PathAgrs(Matrix *grid, Point start,  Point end) : grid(grid) {
-        this->start = new Point(start.x(), start.y());
-        this->end = new Point(end.x(), end.y());
-    }
 
-    ~PathAgrs(){
-        delete start;
-        delete end;
-    }
-};
-
-class DriverAgrs{
-public:
-    TaxiCenter* taxiCenter;
-    TcpServer* tcp;
-    bool stop;
-    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum, TcpServer* tcp, bool stop) {
-        this->taxiCenter = taxiCenter;
-        this->tcp = tcp;
-        this->stop = stop;
-    }
-};
 #endif //TAXI_CENTER_THREADPOOL_H

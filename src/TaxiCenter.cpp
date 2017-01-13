@@ -163,17 +163,6 @@ TaxiCenter::~TaxiCenter() {
     }
 }
 
-//void TaxiCenter::addnumToConnectServer(int num, int driverId){
-//    this->drivers_trips.push_back(tuple(num,driverId,(Trip*)NULL));
-//}
 Trip* TaxiCenter::getTripById(int driverId) {
     return this->drivers_trips.at(driverId);
-}
-
-void TaxiCenter::sendMessageToAllClients(TcpServer* tcp,string data) {
-//    int tempNum;
-//    for (vector<Driver *>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it) {
-//    tempNum=(*it)->getId();
-//        tcp->sendData(data,findNumToClient(tempNum));
-//    }
 }

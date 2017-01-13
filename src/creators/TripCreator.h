@@ -14,5 +14,22 @@
 Trip* createTrip(ThreadPool* threadPool,Matrix *grid, int id, int xStart, int yStart,
                 int xEnd, int yEnd, int numOfPass, double tariff, int timeOfStart);
 
+static void * calculatePath(void *pathArgs);
+
+class PathAgrs{
+public:
+    Matrix* grid;
+    Point* start;
+    Point* end;
+    PathAgrs(Matrix *grid, Point start,  Point end) : grid(grid) {
+        this->start = new Point(start.x(), start.y());
+        this->end = new Point(end.x(), end.y());
+    }
+
+    ~PathAgrs(){
+        delete start;
+        delete end;
+    }
+};
 
 #endif //EX2AP_TRIPCREATOR_H

@@ -87,10 +87,9 @@ void Menu::expectingDriver() {
     int connectNum;
     std::cin >> numOfDrivers;
     for (int i = 0; i < numOfDrivers; ++i) {
-        //updatesFromClient();
-        connectNum=tcp->connectClient();
         pthread_t t1 = (pthread_t) i;
-        threadPool->add_driver_thread(t1,this->taxiCenter,connectNum);
+        DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum);
+        threadPool->createThread(t1,addClient,args);
     }
 }
 
@@ -106,7 +105,7 @@ void Menu::insertTrip() {
              >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
              >> dummy >>timeOfStart;
     //create the trip
-    Trip* newTrip = createTrip(threadPool,grid, id, xStart, yStart, xEnd, yEnd,
+    Trip* newTrip = createTrip(threadPool, grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
     taxiCenter->insertTrip(newTrip);
@@ -145,25 +144,67 @@ void Menu::moveAllDriversToTheEnd() {
 
 //constructor to a new
 Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
-           Clock *clock, TcpServer *tcp,int numOfDrivers)
+           Clock *clock, TcpServer *tcp, int numOfDrivers)
         : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
           clock(clock), tcp(tcp), numOfDrivers(0) {
     tcp->initialize();
+    this->numOfDrivers = numOfDrivers;
 }
 
 // move the drivers to the next point.
 void Menu::advance() {
     this->clock->addToCurrentTime(1);
 
-    // go to the drivers
-    sendDataToAllClient("G");
-
     this->taxiCenter->moveAllRidesOneStep();
 
     this->taxiCenter->createRides();
 }
 
-void Menu::sendDataToAllClient(string data){
-    this->taxiCenter->sendMessageToAllClients(this->tcp,data);
-}
+class DriverAgrs{
+public:
+    TaxiCenter* taxiCenter;
+    TcpServer* tcp;
+    bool stop;
+    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum, TcpServer* tcp, bool stop) {
+        this->taxiCenter = taxiCenter;
+        this->tcp = tcp;
+        this->stop = stop;
+    }
+};
 
+void * addClient(void *args){
+    DriverAgrs* argsD =(DriverAgrs*) args;
+    bool stop = argsD->stop;
+    TcpServer* tcp = argsD->tcp;
+    TaxiCenter* taxiCenter = argsD->taxiCenter;
+    int connectNum = tcp->connectClient();
+
+    unsigned long readBytes;
+    char buffer[1024];
+    std::fill_n(buffer, 1024, 0);
+    readBytes = tcp->receiveData(buffer, sizeof(buffer), connectNum);
+
+    // deserialize driver
+    string serial_str_driver(buffer, readBytes);
+    Driver *d = deserialize<Driver>(serial_str_driver);
+
+    TaxiCab* taxiCab = taxiCenter->getTaxi(d->getVehicleId());
+
+    //serialize taxi
+    string serial_str_taxi = serialize(taxiCab);
+    //sent back the taxi
+    tcp->sendData(serial_str_taxi, connectNum);
+
+    //add driver to the taxi-center.
+    taxiCenter->addDriver(d);
+
+    Trip* trip;
+    while (!stop) {
+        trip = taxiCenter->getTripById(d->getId());
+        if (trip != NULL ) {
+            tcp->sendData("T", connectNum);
+            string serial_str_trip = serialize(trip);
+            tcp->sendData(serial_str_trip, connectNum);
+        }
+    }
+}
