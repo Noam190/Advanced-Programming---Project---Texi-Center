@@ -76,14 +76,14 @@ void Menu::updatesFromClient() {
 //    this->tcp->sendData(serial_str_taxi);
 //
 //    //add driver to the taxi-center.
-//    this->taxiCenter->addDriver(d);
+//    this->taxiCenter->addClient(d);
 
 }
 
 //expecting a new driver from the client
 void Menu::expectingDriver() {
     int numOfDrivers;
-    this->numOfDrivers=numOfDrivers;
+    this->numOfDrivers = numOfDrivers;
     int connectNum;
     std::cin >> numOfDrivers;
     for (int i = 0; i < numOfDrivers; ++i) {
@@ -160,12 +160,7 @@ void Menu::advance() {
 
     this->taxiCenter->moveAllRidesOneStep();
 
-    Trip* trip = this->taxiCenter->createRides();
-    if (trip != NULL ) {
-        this->tcp->sendData("T");
-        string serial_str_trip = serialize(trip);
-        this->tcp->sendData(serial_str_trip);
-    }
+    this->taxiCenter->createRides();
 }
 
 void Menu::sendDataToAllClient(string data){

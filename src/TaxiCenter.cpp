@@ -26,6 +26,8 @@ void TaxiCenter::addDriver(Driver* d) {
     }
 
     this->freeDrivers.push_back(d);
+    drivers_trips.insert(pair<int, Trip*>(d->getId(), NULL));
+
 }
 
 //add a taxi cab to the center
@@ -119,13 +121,14 @@ void TaxiCenter::moveAllRidesOneStep() {
 
 
 //create a new ride
-Trip* TaxiCenter::createRides() {
+void TaxiCenter::createRides() {
     void *status;
 
     for (int j = 0; j < freeTrips.size(); ++j) {
         if (freeTrips[j]->getTimeOfStart() == clock->getCurrentTime()){
             for (int i = 0; i < freeDrivers.size(); ++i) {
                 if (freeDrivers[i]->getCurrentLocation() == freeTrips[j]->getStartPoint()) {
+                    drivers_trips.[freeDrivers[i]->getId()].(freeTrips[j]);
                     pthread_join((pthread_t) freeTrips[j]->getId(), &status);
                     std::vector<Point>* pathPoints = (vector<Point> *) status;
                     freeTrips[j]->setPath(pathPoints);
@@ -135,13 +138,10 @@ Trip* TaxiCenter::createRides() {
                     freeDrivers.erase(freeDrivers.begin() + i);
                     --i;//because we erased one free driver.
                     --j;//because we erased one free trip.
-
-                    return rides.back()->getTrip();
                 }
             }
         }
     }
-    return NULL;
 }
 
 TaxiCenter::~TaxiCenter() {
@@ -161,24 +161,13 @@ TaxiCenter::~TaxiCenter() {
         delete rides[j]->getDriver();
         delete rides[j];
     }
-    for (int j = 0; j < numToConnectServer.size() ; ++j) {
-  //      delete numToConnectServer[j].pair(); TODO
-    }
 }
 
 //void TaxiCenter::addnumToConnectServer(int num, int driverId){
-//    this->numToConnectServer.push_back(tuple(num,driverId,(Trip*)NULL));
+//    this->drivers_trips.push_back(tuple(num,driverId,(Trip*)NULL));
 //}
 Trip* TaxiCenter::getTripById(int driverId) {
-    int index = 0;
-
-    for (vector<pair<int, Trip*>>::iterator it = this->numToConnectServer.begin();
-         it != this->numToConnectServer.end(); ++it, ++index) {
-
-        if ( (*it).first== driverId) {
-            return (*it).second;
-        }
-    }
+    return this->drivers_trips.at(driverId);
 }
 
 void TaxiCenter::sendMessageToAllClients(TcpServer* tcp,string data) {

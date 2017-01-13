@@ -7,6 +7,8 @@
 
 
 #include <vector>
+#include <boost/tuple/tuple.hpp>
+#include <map>
 #include "persons/Driver.h"
 #include "cabs/TaxiCab.h"
 #include "Trip.h"
@@ -20,7 +22,7 @@ private:
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
-    std::vector<pair<int,Trip*>> numToConnectServer;
+    std::map<int,Trip*> drivers_trips;
 public:
     //constructor
     TaxiCenter(Clock *clock);
@@ -54,7 +56,7 @@ public:
     void removeTaxi(int idVehicle);
 
     //create a new ride
-    Trip* createRides();
+    void createRides();
 
     //move all the rides one step forward
     void moveAllRidesOneStep();
@@ -65,9 +67,8 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
-    void addnumToConnectServer(int num, int driverId);
+    Trip* getTripById(int driverId);
 
-    Trip* TaxiCenter::getTripById(int driverId);
     void sendMessageToAllClients(TcpServer *tcp,string data) ;
 };
 
