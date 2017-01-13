@@ -4,7 +4,34 @@
 * methods of tcp socket type								*
 ************************************************************/
 
+#include <boost/iostreams/close.hpp>
 #include "Tcp.h"
+
+/***********************************************************************
+* function name: Tcp												   *
+* The Input: none													   *
+* The output: none										               *
+* The Function operation: creating new Socket object, with the computer*
+* ip, and no port number and socket descriptor, 0 backlogs.			   *
+***********************************************************************/
+Tcp::Tcp() {
+    this->ip_address = IP;
+    this->backLog = NONE;
+    this->socketDescriptor = NONE;
+    this->isServer = true;
+    this->port_number = NONE;
+}
+
+/***********************************************************************
+* function name: ~Tcp											       *
+* The Input: none													   *
+* The output: none										               *
+* The Function operation: default destructor					       *
+***********************************************************************/
+Tcp::~Tcp() {
+    close(this->socketDescriptor);
+}
+
 
 /***********************************************************************
 * function name: sendData											   *

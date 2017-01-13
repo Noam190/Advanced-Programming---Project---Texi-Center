@@ -14,7 +14,6 @@ void *printTry( void *ptr )
 
 int main(int argc, char *argv[]) {
 
-
     int portNum = atoi(argv[1]);
     TcpServer* tcp = new TcpServer(portNum);
     //udp.initialize();
@@ -42,6 +41,7 @@ int main(int argc, char *argv[]) {
 
     //run all the other inputs
     menu.run();
+
 
     delete grid;
     delete tcp;

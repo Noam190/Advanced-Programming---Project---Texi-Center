@@ -10,7 +10,7 @@ Trip* createTrip(ThreadPool* threadPool,Matrix *grid, int id, int xStart, int yS
     Point start = Point(xStart, yStart);
     Point end = Point(xEnd, yEnd);
 
-    pthread_t t1 = (pthread_t) id*-1;
+    pthread_t t1 = ((pthread_t) id ) * -1;
 
     PathAgrs* args = new PathAgrs(grid, start, end);
     threadPool->createThread(t1,calculatePath,args);

@@ -5,10 +5,44 @@
 
 #ifndef TCP_H_
 #define TCP_H_
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <unistd.h>
 
-#include "Socket.h"
-class Tcp : public Socket{
+using namespace std;
+
+//return values to each function if error happened
+#define CORRECT 0
+#define ERROR_SOCKET 1
+#define ERROR_BIND 2
+#define ERROR_LISTEN 3
+#define ERROR_CONNECT 4
+#define ERROR_SEND 5
+#define ERROR_RECIVE 6
+#define ERROR_ACCEPT 7
+#define CONNECTION_CLOSED 8
+#define NONE 0
+
+#define IP "127.0.0.1"
+
+class Tcp {
+protected:
+    //true is the socket is for a server, false if for a client
+    bool isServer;
+    //the socket descriptor return from sock()
+    int socketDescriptor;
+    //ip address
+    string ip_address;
+    int backLog;
+    //port number
+    int port_number;
 public:
+    Tcp();
+    ~Tcp();
     /***********************************************************************
     * function name: sendData											   *
     * The Input: string representing the data to send		               *

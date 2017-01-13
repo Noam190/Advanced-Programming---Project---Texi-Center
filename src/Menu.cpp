@@ -40,7 +40,7 @@ void Menu::run() {
         }
         cin >> option;
     }
-    sendDataToAllClient("E");
+   // sendDataToAllClient("E");
  //   taxiCenter.~TaxiCenter();
     return;
 }
@@ -49,7 +49,7 @@ public:
     TaxiCenter* taxiCenter;
     TcpServer* tcp;
     bool stop;
-    DriverAgrs(TaxiCenter* taxiCenter,int  connectNum, TcpServer* tcp, bool stop) {
+    DriverAgrs(TaxiCenter* taxiCenter, TcpServer* tcp, bool stop) {
         this->taxiCenter = taxiCenter;
         this->tcp = tcp;
         this->stop = stop;
@@ -93,13 +93,13 @@ void Menu::updatesFromClient() {
 //expecting a new driver from the client
 void Menu::expectingDriver() {
     int numOfDrivers;
-    int connectNum ;
     std::cin >> numOfDrivers;
+
     this->numOfDrivers = numOfDrivers;
 
     for (int i = 0; i < numOfDrivers; ++i) {
         pthread_t t1 = (pthread_t) i;
-        DriverAgrs* args = new DriverAgrs(taxiCenter,connectNum,tcp, false);
+        DriverAgrs* args = new DriverAgrs(taxiCenter,tcp, false);
         threadPool->createThread(t1,addClient,args);
     }
 }
@@ -155,11 +155,10 @@ void Menu::moveAllDriversToTheEnd() {
 
 //constructor to a new
 Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
-           Clock *clock, TcpServer *tcp, int numOfDrivers)
+           Clock *clock, TcpServer *tcp)
         : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
           clock(clock), tcp(tcp), numOfDrivers(0) {
     tcp->initialize();
-    this->numOfDrivers = numOfDrivers;
 }
 
 // move the drivers to the next point.
@@ -174,7 +173,7 @@ void Menu::advance() {
 
 
 void * Menu::addClient(void *args){
-    DriverAgrs* argsD =(DriverAgrs*) args;
+    DriverAgrs* argsD = (DriverAgrs*) args;
     bool stop = argsD->stop;
     TcpServer* tcp = argsD->tcp;
     TaxiCenter* taxiCenter = argsD->taxiCenter;
@@ -206,8 +205,6 @@ void * Menu::addClient(void *args){
             tcp->sendData("T", connectNum);
             string serial_str_trip = serialize(trip);
             tcp->sendData(serial_str_trip, connectNum);
-        } else {
-            stop= true;
         }
     }
 }

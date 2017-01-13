@@ -31,7 +31,7 @@ public:
 
     //constructor to a new
     Menu(ThreadPool* threadPool,
-         TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, TcpServer* tcp, int numOfDrivers);
+         TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, TcpServer* tcp);
 
     //run the funcs with input
     void run();
@@ -58,8 +58,6 @@ public:
 
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
-
-    void sendDataToAllClient(string data);
 
     static void * addClient(void *args);
 };
