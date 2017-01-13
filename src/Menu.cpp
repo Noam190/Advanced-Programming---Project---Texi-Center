@@ -155,7 +155,7 @@ Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
 void Menu::advance() {
     this->clock->addToCurrentTime(1);
 
-    //go to the drivers
+    // go to the drivers
     sendDataToAllClient("G");
 
     this->taxiCenter->moveAllRidesOneStep();
