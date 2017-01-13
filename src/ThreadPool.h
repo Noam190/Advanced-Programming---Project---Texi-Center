@@ -20,7 +20,7 @@ private:
 public:
     ThreadPool(int pool_size);
     ~ThreadPool();
-    void ThreadPool::createThread(thread_t threadNew, void* pFunc(void*), void* args)
+    void createThread(thread_t threadNew, void* pFunc(void*), void* args);
     void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
     static void * calculatePath(void *pathArgs);
     void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
