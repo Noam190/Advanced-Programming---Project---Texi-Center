@@ -151,7 +151,7 @@ Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
     tcp->initialize();
 }
 
-// move the drivers to the next point .
+// move the drivers to the next point.
 void Menu::advance() {
     this->clock->addToCurrentTime(1);
 
