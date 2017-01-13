@@ -206,7 +206,7 @@ void * Menu::addClient(void *args){
             tcp->sendData("T", connectNum);
             string serial_str_trip = serialize(trip);
             tcp->sendData(serial_str_trip, connectNum);
-        } else{
+        } else {
             stop= true;
         }
     }
