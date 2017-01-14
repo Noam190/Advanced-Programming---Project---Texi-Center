@@ -59,7 +59,7 @@ public:
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
 
-    static void * addClient(void *args);
+    void addClient();
 };
 
 

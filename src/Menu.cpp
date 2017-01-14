@@ -171,12 +171,9 @@ void Menu::advance() {
 
 
 
-void * Menu::addClient(void *args){
-    DriverAgrs* argsD = (DriverAgrs*) args;
-    bool stop = argsD->stop;
-    TcpServer* tcp = argsD->tcp;
-    TaxiCenter* taxiCenter = argsD->taxiCenter;
-    int connectNum = tcp->connectClient();
+void Menu::addClient(void* arg){
+    ClientData* client = (ClientData*) arg;
+    int connectNum = this->tcp->connectClient();
 
     unsigned long readBytes;
     char buffer[1024];
@@ -196,14 +193,4 @@ void * Menu::addClient(void *args){
 
     //add driver to the taxi-center.
     taxiCenter->addDriver(d);
-
-    Trip* trip;
-    while (!stop) {
-        trip = taxiCenter->getTripById(d->getId());
-        if (trip != NULL ) {
-            tcp->sendData("T", connectNum);
-            string serial_str_trip = serialize(trip);
-            tcp->sendData(serial_str_trip, connectNum);
-        }
-    }
 }

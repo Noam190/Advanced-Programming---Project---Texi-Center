@@ -26,13 +26,9 @@ class TcpServer {
 public:
     TcpServer(int port);
 	void Start();
-    void connectClients();
+    void connectClients(int numOfClients, void (*ClientFunc)(void*), void *args);
 	static void* threadFunction(void* element);
-	static void* threadConnectFunction(void* arg);
-	void receiveMessages(void* element);
 	virtual ~TcpServer();
-private:
-
 	struct ClientData
 	{
 		int client_socket;
@@ -40,7 +36,11 @@ private:
 		unsigned int client_size;
 		bool online;
         TcpServer* server;
+        void (*operationFunc)(void*);
+        void * args;
 	};
+
+private:
 
 	int port;
 	int capacity;

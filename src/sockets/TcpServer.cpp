@@ -48,53 +48,14 @@ void TcpServer::Start() {
 	cout << ">> Server is listening on port: " << this->port << "." << endl;
 	this->online = true;
 
-    pthread_t thread;
-    // Create a thread in order to connect the clients.
-    pthread_create(&thread, NULL, threadConnectFunction, (void*) this);
-}
-
-void TcpServer::receiveMessages(void* element) {
-	ClientData* data = (ClientData*) element;
-
-	pthread_mutex_lock(&this->connection_locker);
-	this->num_of_connections++;
-	pthread_mutex_unlock(&this->connection_locker);
-
-	cout << "Connected clients: " << this->num_of_connections << endl;
-
-	while (data->online)
-	{
-		try
-		{
-			char buffer[8192];
-			memset(buffer, 0, sizeof(buffer));
-			long bytes = recv(data->client, buffer, sizeof(buffer), 0);
-
-			if (bytes > 0)
-				cout << buffer << endl;
-			else
-			{
-				data->online = false;
-
-				// Reduce number of connections
-				pthread_mutex_lock(&this->connection_locker);
-				this->num_of_connections--;
-				pthread_mutex_unlock(&this->connection_locker);
-				// Print number of connections
-				cout << "Connected clients: " << this->num_of_connections << endl;
-			}
-		}
-		catch (...)
-		{
-			data->online = false;
-			cout << ">> Connection with client has lost." << endl;
-		}
-	}
+//    pthread_t thread;
+//    // Create a thread in order to connect the clients.
+//    pthread_create(&thread, NULL, threadConnectFunction, (void*) this);
 }
 
 void* TcpServer::threadFunction(void* element) {
-	ClientData* data = (ClientData*)element;
-	data->server->receiveMessages(element);
+	ClientData* data = (ClientData*) element;
+	data->operationFunc(element);
 	data = NULL;
 	return NULL;
 }
@@ -115,9 +76,9 @@ TcpServer::~TcpServer() {
 	delete this->clients;
 }
 
-void TcpServer::connectClients() {
+void TcpServer::connectClients(int numOfClients, void (*ClientFunc)(void*), void *args) {
     // While we're not out of capacity
-    while (this->online)
+    while (numOfClients > 0 && this->online)
     {
         int client;
         int client_socket;
@@ -139,6 +100,8 @@ void TcpServer::connectClients() {
                 data->client_size = client_size;
                 data->server = this;
                 data->online = true;
+                data->operationFunc = ClientFunc;
+                data->args = args;
 
                 // Push the client to the list
 
@@ -149,15 +112,8 @@ void TcpServer::connectClients() {
                 // Create a thread in order to listen to the client
                 pthread_create(&thread, NULL, threadFunction, (void*)data);
 
+                --numOfClients;
             }
         }
     }
 }
-
-void *TcpServer::threadConnectFunction(void *arg) {
-    TcpServer* tcp = (TcpServer*) arg;
-    tcp->connectClients();
-    tcp = NULL;
-    return NULL;
-}
-
