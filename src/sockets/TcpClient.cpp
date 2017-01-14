@@ -22,7 +22,9 @@ void TcpClient::Connect() {
 		if (connect(this->client_socket,
 				(struct sockaddr*)&this->connection_details, sizeof(this->connection_details)) >= 0)
 			this->connected = true;
-	}
+        cout<<"connect successfully \n";
+
+    }
 }
 
 /***********************************************************************
@@ -43,6 +45,7 @@ int TcpClient::sendData(string data) {
                 //return an error represent error at this method
                 return ERROR_SEND;
             } else {
+                cout<<"send data successfully   \n";
                 //return correct if there were no problem
                 return CORRECT;
             }

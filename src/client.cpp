@@ -33,12 +33,13 @@ int main(int argc, char *argv[]) {
 
     TcpClient* tcpClient = new TcpClient( argv[1], atoi(argv[2]));
     tcpClient->Connect();
-
+    std::cout<<"start serialize \n";
     //create a driver
     Driver* driver = insertDriver();
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(driver);
     tcpClient->sendData(serial_str_driver);
+    std::cout<<"finish serialize driver\n";
 
     readBytes = tcpClient->receiveData(buffer, sizeof(buffer));
     std::string vehicleStr(buffer, readBytes);
