@@ -63,12 +63,12 @@ TcpServer::~TcpServer() {
 	pthread_mutex_destroy(&this->list_locker);
 
 	ClientData* data = NULL;
-	while (!this->clients->empty())
-	{
-		data = this->clients->begin()
-		delete data;
-		this->clients->erase
-	}
+
+    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
+        delete ((*it).second);
+        this->clients->erase(it);
+    }
+
 	delete this->clients;
 }
 
@@ -100,7 +100,7 @@ void TcpServer::connectOneClient(int numOfClients, void (*ClientFunc)(void*), vo
 
 				// Push the client to the list
 				pthread_mutex_lock(&this->list_locker);
-				this->clients->push_back(data);
+                this->clients->insert(std::pair<int,ClientData*>(data->client,data);
 				pthread_mutex_unlock(&this->list_locker);
 
 				--numOfClients;
