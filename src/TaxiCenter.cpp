@@ -109,7 +109,7 @@ TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {}
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
     this->clock->addToCurrentTime(1);
-    this->tcp->sendDataToAllClients("E");
+    this->tcp->sendDataToAllClients("G");
     for (int i = 0; i < rides.size(); ++i) {
         rides[i]->moveOneStep();
         if (rides[i]->isDone()) {
@@ -216,6 +216,7 @@ void TaxiCenter::sendTrip(int driverId, Trip *trip) {
     //sent back the taxi
     this->tcp->sendData(serial_str_trip, client_socket);
 }
+
 
 
 //Trip* TaxiCenter::getTripById(int driverId) {

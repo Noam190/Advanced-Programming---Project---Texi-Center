@@ -19,7 +19,7 @@ class TaxiCenter {
 private:
     Clock *clock;
     TcpServer* tcp;
-    static std::vector<Ride*> rides;
+    std::vector<Ride*> rides;
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
