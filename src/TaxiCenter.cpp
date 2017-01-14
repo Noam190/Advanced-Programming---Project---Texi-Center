@@ -109,6 +109,7 @@ TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {}
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
     this->clock->addToCurrentTime(1);
+    this->tcp->sendDataToAllClients("E");
     for (int i = 0; i < rides.size(); ++i) {
         rides[i]->moveOneStep();
         if (rides[i]->isDone()) {
@@ -118,6 +119,7 @@ void TaxiCenter::moveAllRidesOneStep() {
             --i;
         }
     }
+    this->createRides();
 }
 
 
@@ -135,6 +137,8 @@ void TaxiCenter::createRides() {
 
                     Ride* r = new Ride(freeTrips[j], freeDrivers[i]);
                     rides.push_back(r);
+
+                    sendTrip(freeDrivers[i]->getId(), freeTrips[j]);
 
                     freeTrips.erase(freeTrips.begin() + j);
                     freeDrivers.erase(freeDrivers.begin() + i);
@@ -166,12 +170,12 @@ TaxiCenter::~TaxiCenter() {
     }
 }
 
-void TaxiCenter::clientFunction(int clientID) {
+void TaxiCenter::clientFunction(int client_socket) {
 
     unsigned long readBytes;
-    char buffer[1024];
-    std::fill_n(buffer, 1024, 0);
-    readBytes = tcp->receiveData(buffer, sizeof(buffer), clientID);
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
+    readBytes = this->tcp->receiveData(buffer, sizeof(buffer), client_socket);
 
     // deserialize driver
     string serial_str_driver(buffer, readBytes);
@@ -182,26 +186,35 @@ void TaxiCenter::clientFunction(int clientID) {
     //serialize taxi
     string serial_str_taxi = serialize(taxiCab);
     //sent back the taxi
-    tcp->sendData(serial_str_taxi, clientID);
+    this->tcp->sendData(serial_str_taxi, client_socket);
 
     //add driver to the taxi-center.
-    this->clients.insert(pair<int, int>(d->getId(), clientID));
+    this->clients.insert(pair<int, int>(d->getId(), client_socket));
     this->addDriver(d);
 }
 
 void* TaxiCenter::threadFunction(void* element) {
     ClientData* data = (ClientData*) element;
-    data->taxiCenter->clientFunction(data->clientID);
-    data = NULL;
+    data->taxiCenter->clientFunction(data->client_socket);
+    delete data;
     return NULL;
 }
 
 void TaxiCenter::addClient(int threadID) {
     pthread_t t1 = (pthread_t) threadID;
     ClientData* clientData = new ClientData;
-    clientData->clientID = tcp->connectClient();
+    clientData->client_socket = tcp->connectClient();
     clientData->taxiCenter = this;
     createThread(t1, threadFunction, clientData);
+}
+
+void TaxiCenter::sendTrip(int driverId, Trip *trip) {
+    int client_socket = this->clients[driverId];
+
+    //serialize taxi
+    string serial_str_trip = serialize(trip);
+    //sent back the taxi
+    this->tcp->sendData(serial_str_trip, client_socket);
 }
 
 
@@ -209,7 +222,7 @@ void TaxiCenter::addClient(int threadID) {
 //    return this->drivers_trips.at(driverId);
 //}
 
-//void TaxiCenter::clientFunction(Driver *d, int clientID) {
-//    this->clients.insert(pair<int, int>(d->getId(), clientID));
+//void TaxiCenter::clientFunction(Driver *d, int client_socket) {
+//    this->clients.insert(pair<int, int>(d->getId(), client_socket));
 //    this->clientFunction(d);
 //}

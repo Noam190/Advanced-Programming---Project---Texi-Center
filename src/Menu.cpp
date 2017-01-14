@@ -30,8 +30,8 @@ void Menu::run() {
             case 6: //move all the drivers to end
                 moveAllDriversToTheEnd();
                 break;
-            case 9: //update clock time
-                advance();
+            case 9:// move the drivers to the next point.
+                this->taxiCenter->moveAllRidesOneStep();
                 break;
 
 
@@ -40,8 +40,6 @@ void Menu::run() {
         }
         cin >> option;
     }
-   // sendDataToAllClient("E");
- //   taxiCenter.~TaxiCenter();
     return;
 }
 
@@ -57,13 +55,10 @@ void Menu::insertTaxi() {
 
 }
 
-
-
 //expecting a new driver from the client
 void Menu::expectingDriver() {
     int numOfDrivers;
     std::cin >> numOfDrivers;
-
 
     for (int i = 0; i < numOfDrivers; ++i) {
         taxiCenter->addClient(i);
@@ -122,21 +117,15 @@ void Menu::moveAllDriversToTheEnd() {
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid)
         : grid(grid), taxiCenter(taxiCenter) {}
 
-// move the drivers to the next point.
-void Menu::advance() {
-    this->taxiCenter->moveAllRidesOneStep();
-
-    this->taxiCenter->createRides();
-}
 
 
 
-//void Menu::clientFunction(int clientID) {
+//void Menu::clientFunction(int client_socket) {
 //
 //    unsigned long readBytes;
 //    char buffer[1024];
 //    std::fill_n(buffer, 1024, 0);
-//    readBytes = tcp->receiveData(buffer, sizeof(buffer), clientID);
+//    readBytes = tcp->receiveData(buffer, sizeof(buffer), client_socket);
 //
 //    // deserialize driver
 //    string serial_str_driver(buffer, readBytes);
@@ -147,15 +136,15 @@ void Menu::advance() {
 //    //serialize taxi
 //    string serial_str_taxi = serialize(taxiCab);
 //    //sent back the taxi
-//    tcp->sendData(serial_str_taxi, clientID);
+//    tcp->sendData(serial_str_taxi, client_socket);
 //
 //    //add driver to the taxi-center.
-//    taxiCenter->clientFunction(d, clientID);
+//    taxiCenter->clientFunction(d, client_socket);
 //}
 //
 //void* Menu::threadFunction(void* element) {
 //    ClientData* data = (ClientData*) element;
-//    data->menu->clientFunction(data->clientID);
+//    data->menu->clientFunction(data->client_socket);
 //    data = NULL;
 //    return NULL;
 //}

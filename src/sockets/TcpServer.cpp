@@ -165,3 +165,9 @@ int TcpServer::findClientSocketNumber(int clientNum) {
 //        }
 //    }
 }
+
+int TcpServer::sendDataToAllClients(string data) {
+    for (list<ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
+        this->sendData(data, (*it)->client_socket);
+    }
+}

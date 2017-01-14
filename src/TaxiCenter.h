@@ -25,7 +25,7 @@ private:
     std::vector<Trip*> freeTrips;
     std::map<int,int> clients;
     struct ClientData {
-        int clientID;
+        int client_socket;
         TaxiCenter* taxiCenter;
     };
 public:
@@ -74,7 +74,9 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
-    void clientFunction(int clientID);
+    void sendTrip(int DriverId, Trip* trip);
+
+    void clientFunction(int client_socket);
 
     static void* threadFunction(void* element);
 

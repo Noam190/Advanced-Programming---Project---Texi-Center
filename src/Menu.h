@@ -34,8 +34,6 @@ public:
     //create obstacles from the input arguments
     void getObstacles();
 
-    void advance();
-
     //insert a new driver from the input arguments
     void expectingDriver();
 
@@ -58,11 +56,11 @@ public:
 
 
 //    struct ClientData {
-//        int clientID;
+//        int client_socket;
 //        Menu* menu;
 //    };
 
-//    void clientFunction(int clientID);
+//    void clientFunction(int client_socket);
 //
 //    static void* Menu::threadFunction(void* element);
 

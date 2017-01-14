@@ -45,7 +45,8 @@ public:
     int connectClient();
     unsigned long receiveData(char *buffer, unsigned long size, int client) ;
     //static void* threadFunction(void* element);
-    int sendData(string data, int client) ;
+    int sendData(string data, int client);
+    int sendDataToAllClients(string data);
     int findClientSocketNumber(int client);
     virtual ~TcpServer();
 
