@@ -13,23 +13,23 @@
 #define TAXI_CENTER_THREADPOOL_H
 
 
-class ThreadPool {
-private:
-    int m_pool_size;
-    std::vector<pthread_t> m_threads;
-public:
-    ThreadPool(int pool_size);
-    ~ThreadPool();
-    void createThread(thread_t threadNew, void* pFunc(void*), void* args);
-//    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
-//    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
-//    static void *  addClient(void *args);
-
-
-    // std::deque<Task*> m_tasks;
-    //int add_task(Task* task);
-    //  void* execute_thread();
-};
+//class ThreadPool {
+//private:
+//    int m_pool_size;
+//    std::vector<pthread_t> m_threads;
+//public:
+//    ThreadPool(int pool_size);
+//    ~ThreadPool();
+////    void  add_trip_thread(thread_t threadNew,Matrix *grid, Point start,  Point end);
+////    void add_driver_thread(thread_t threadNew, TaxiCenter* taxiCenter,  int connectNum) ;
+////    static void *  clientFunction(void *args);
+//
+//
+//    // std::deque<Task*> m_tasks;
+//    //int add_task(Task* task);
+//    //  void* execute_thread();
+//};
+void createThread(thread_t threadNew, void* pFunc(void*), void* args);
 
 
 #endif //TAXI_CENTER_THREADPOOL_H

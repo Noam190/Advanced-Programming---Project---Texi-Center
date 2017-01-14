@@ -18,14 +18,19 @@
 class TaxiCenter {
 private:
     Clock *clock;
+    TcpServer* tcp;
     static std::vector<Ride*> rides;
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
-    std::map<int,Trip*> drivers_trips;
+    std::map<int,int> clients;
+    struct ClientData {
+        int clientID;
+        TaxiCenter* taxiCenter;
+    };
 public:
     //constructor
-    TaxiCenter(Clock *clock);
+    TaxiCenter(Clock *clock, TcpServer* tcp);
 
     ~TaxiCenter();
 
@@ -34,6 +39,8 @@ public:
 
     //send a taxi
     TaxiCab sendTaxi();
+
+    void addClient(int threadID);
 
     //add a driver to the center
     void addDriver(Driver* d);
@@ -67,7 +74,11 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
-    Trip* getTripById(int driverId);
+    void clientFunction(int clientID);
+
+    static void* threadFunction(void* element);
+
+    //Trip* getTripById(int driverId);
 };
 
 #endif //EX2AP_TAXICENTER_H

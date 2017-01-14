@@ -44,17 +44,7 @@ void Menu::run() {
  //   taxiCenter.~TaxiCenter();
     return;
 }
-class DriverAgrs{
-public:
-    TaxiCenter* taxiCenter;
-    TcpServer* tcp;
-    bool stop;
-    DriverAgrs(TaxiCenter* taxiCenter, TcpServer* tcp, bool stop) {
-        this->taxiCenter = taxiCenter;
-        this->tcp = tcp;
-        this->stop = stop;
-    }
-};
+
 //insert a new taxi from the input arguments
 void Menu::insertTaxi() {
     char dummy;
@@ -86,7 +76,7 @@ void Menu::updatesFromClient() {
 //    this->tcp->sendData(serial_str_taxi);
 //
 //    //add driver to the taxi-center.
-//    this->taxiCenter->addClient(d);
+//    this->taxiCenter->clientFunction(d);
 
 }
 
@@ -97,9 +87,7 @@ void Menu::expectingDriver() {
 
 
     for (int i = 0; i < numOfDrivers; ++i) {
-        pthread_t t1 = (pthread_t) i;
-        DriverAgrs* args = new DriverAgrs(taxiCenter,tcp, false);
-        threadPool->createThread(t1,addClient,args);
+
     }
 }
 
@@ -157,7 +145,7 @@ Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
            Clock *clock, TcpServer *tcp)
         : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
           clock(clock), tcp(tcp) {
-    tcp->initialize();
+    tcp->start();
 }
 
 // move the drivers to the next point.
@@ -171,26 +159,44 @@ void Menu::advance() {
 
 
 
-void Menu::addClient(void* arg){
-    ClientData* client = (ClientData*) arg;
-    int connectNum = this->tcp->connectClient();
+//void Menu::clientFunction(int clientID) {
+//
+//    unsigned long readBytes;
+//    char buffer[1024];
+//    std::fill_n(buffer, 1024, 0);
+//    readBytes = tcp->receiveData(buffer, sizeof(buffer), clientID);
+//
+//    // deserialize driver
+//    string serial_str_driver(buffer, readBytes);
+//    Driver *d = deserialize<Driver>(serial_str_driver);
+//
+//    TaxiCab* taxiCab = taxiCenter->getTaxi(d->getVehicleId());
+//
+//    //serialize taxi
+//    string serial_str_taxi = serialize(taxiCab);
+//    //sent back the taxi
+//    tcp->sendData(serial_str_taxi, clientID);
+//
+//    //add driver to the taxi-center.
+//    taxiCenter->clientFunction(d, clientID);
+//}
+//
+//void* Menu::threadFunction(void* element) {
+//    ClientData* data = (ClientData*) element;
+//    data->menu->clientFunction(data->clientID);
+//    data = NULL;
+//    return NULL;
+//}
 
-    unsigned long readBytes;
-    char buffer[1024];
-    std::fill_n(buffer, 1024, 0);
-    readBytes = tcp->receiveData(buffer, sizeof(buffer), connectNum);
 
-    // deserialize driver
-    string serial_str_driver(buffer, readBytes);
-    Driver *d = deserialize<Driver>(serial_str_driver);
-
-    TaxiCab* taxiCab = taxiCenter->getTaxi(d->getVehicleId());
-
-    //serialize taxi
-    string serial_str_taxi = serialize(taxiCab);
-    //sent back the taxi
-    tcp->sendData(serial_str_taxi, connectNum);
-
-    //add driver to the taxi-center.
-    taxiCenter->addDriver(d);
-}
+//class DriverAgrs{
+//public:
+//    TaxiCenter* taxiCenter;
+//    TcpServer* tcp;
+//    bool stop;
+//    DriverAgrs(TaxiCenter* taxiCenter, TcpServer* tcp, bool stop) {
+//        this->taxiCenter = taxiCenter;
+//        this->tcp = tcp;
+//        this->stop = stop;
+//    }
+//};

@@ -24,14 +24,17 @@ private:
     TaxiCenter *taxiCenter;
     Clock *clock;
     TcpServer *tcp;
-    ThreadPool* threadPool;
-
+    ThreadPool *threadPool;
+//    struct ClientData {
+//        int clientID;
+//        Menu* menu;
+//    };
 
 public:
 
     //constructor to a new
-    Menu(ThreadPool* threadPool,
-         TaxiCenter *taxiCenter, Matrix* grid, Clock* clock, TcpServer* tcp);
+    Menu(ThreadPool *threadPool,
+         TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, TcpServer *tcp);
 
     //run the funcs with input
     void run();
@@ -59,7 +62,9 @@ public:
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
 
-    void addClient();
+//    void clientFunction(int clientID);
+//
+//    static void* Menu::threadFunction(void* element);
 };
 
 
