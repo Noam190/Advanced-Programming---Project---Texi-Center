@@ -1,55 +1,48 @@
-//
-// Created by noam on 12/01/17.
-//
+/*
+ * TcpClient.h
+ *
+ *  Created on: Jan 10, 2017
+ *      Author: uriah
+ */
 
-#ifndef TAXI_CENTER_TCPCLIENT_H
-#define TAXI_CENTER_TCPCLIENT_H
+#ifndef CLIENT_CLIENT_H_
+#define CLIENT_CLIENT_H_
 
+#define CORRECT 0
+#define ERROR_SOCKET 1
+#define ERROR_BIND 2
+#define ERROR_LISTEN 3
+#define ERROR_CONNECT 4
+#define ERROR_SEND 5
+#define ERROR_RECIVE 6
+#define ERROR_ACCEPT 7
+#define CONNECTION_CLOSED 8
+#define NONE 0
+#include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <string>
+#include <sstream>
+#include <stdexcept>
 
-#include "Tcp.h"
+using namespace std;
 
-class TcpClient : public Tcp{
+class TcpClient {
 public:
-    /***********************************************************************
-    * function name: Tcp												   *
-    * The Input: Boolean, true - if server, false if client and port number*
-    * The output: none										               *
-    * The Function operation: creating new Tcp						       *
-    ***********************************************************************/
-    TcpClient(string ip,int port_num);
-    /***********************************************************************
-    * function name: ~Tcp												   *
-    * The Input: none													   *
-    * The output: none										               *
-    * The Function operation: default destructor					       *
-    ***********************************************************************/
-    virtual ~TcpClient();
-    /***********************************************************************
-	* function name: initialize											   *
-	* The Input: none              										   *
-	* The output: int number representing the return status		           *
-	* The Function operation: initialize the Socket object and getting a   *
-	* socket descriptor.												   *
-	***********************************************************************/
-    int initialize();
-    /***********************************************************************
-    * function name: sendData											   *
-    * The Input: string representing the data to send		               *
-    * The output: int number representing the return status		           *
-    * The Function operation: sending the input data to the socket         *
-    * who connect to this socket. 										   *
-    ***********************************************************************/
+	TcpClient(char* ip, int port);
+	void Connect();
+	virtual ~TcpClient();
     int sendData(string data);
-    /***********************************************************************
-    * function name: recive												   *
-    * The Input: none										               *
-    * The output: int number representing the return status	               *
-    * The Function operation: getting data from the other socket and print *
-    * the data															   *
-    ***********************************************************************/
     unsigned long receiveData(char *buffer, unsigned long size);
-
+private:
+	char* ip;
+	int port;
+	int client_socket;
+	struct sockaddr_in connection_details;
+	bool connected;
 };
 
-
-#endif //TAXI_CENTER_TCPCLIENT_H
+#endif /* CLIENT_CLIENT_H_ */

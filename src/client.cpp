@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
 
 
     TcpClient* tcpClient = new TcpClient( argv[1], atoi(argv[2]));
-    tcpClient->initialize();
+    tcpClient->Connect();
 
     //create a driver
     Driver* driver = insertDriver();

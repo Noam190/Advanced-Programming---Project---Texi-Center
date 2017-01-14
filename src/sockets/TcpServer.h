@@ -1,56 +1,56 @@
-//
-// Created by noam on 12/01/17.
-//
+/*
+ * TcpServer.h
+ *
+ *  Created on: Jan 10, 2017
+ *      Author: uriah
+ */
 
-#ifndef TAXI_CENTER_TCPSERVER_H
-#define TAXI_CENTER_TCPSERVER_H
+#ifndef SERVER_SERVER_H_
+#define SERVER_SERVER_H_
 
+#include <iostream>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <unistd.h>
+#include <string.h>
+#include <string>
+#include <sstream>
+#include <stdexcept>
+#include <pthread.h>
+#include <list>
 
-#include "Socket.h"
-#include "Tcp.h"
+using namespace std;
 
-class TcpServer : public Tcp {
+class TcpServer {
 public:
-    /***********************************************************************
-    * function name: Tcp												   *
-    * The Input: Boolean, true - if server, false if client and port number*
-    * The output: none										               *
-    * The Function operation: creating new Tcp						       *
-    ***********************************************************************/
-    TcpServer(int port_num);
-    /***********************************************************************
-    * function name: ~Tcp												   *
-    * The Input: none													   *
-    * The output: none										               *
-    * The Function operation: default destructor					       *
-    ***********************************************************************/
-    virtual ~TcpServer();
-    /***********************************************************************
-	* function name: initialize											   *
-	* The Input: none              										   *
-	* The output: int number representing the return status		           *
-	* The Function operation: initialize the Socket object and getting a   *
-	* socket descriptor.												   *
-	***********************************************************************/
-    int initialize();
-    int connectClient();
-    /***********************************************************************
-    * function name: sendData											   *
-    * The Input: string representing the data to send		               *
-    * The output: int number representing the return status		           *
-    * The Function operation: sending the input data to the socket         *
-    * who connect to this socket. 										   *
-    ***********************************************************************/
-    int sendData(string data, int descriptorCommunicateClient);
-    /***********************************************************************
-    * function name: recive												   *
-    * The Input: none										               *
-    * The output: int number representing the return status	               *
-    * The Function operation: getting data from the other socket and print *
-    * the data															   *
-    ***********************************************************************/
-    unsigned long receiveData(char *buffer, unsigned long size, int descriptorCommunicateClient);
+    TcpServer(int port);
+	void Start();
+    void connectClients();
+	static void* threadFunction(void* element);
+	static void* threadConnectFunction(void* arg);
+	void receiveMessages(void* element);
+	virtual ~TcpServer();
+private:
+
+	struct ClientData
+	{
+		int client_socket;
+		int client;
+		unsigned int client_size;
+		bool online;
+        TcpServer* server;
+	};
+
+	int port;
+	int capacity;
+	int num_of_connections;
+	int server_socket;
+	bool online;
+	struct sockaddr_in server_details;
+	list<ClientData*>* clients;
+	pthread_mutex_t connection_locker;
+	pthread_mutex_t list_locker;
 };
 
-
-#endif //TAXI_CENTER_TCPSERVER_H
+#endif /* SERVER_SERVER_H_ */
