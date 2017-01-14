@@ -1,9 +1,4 @@
-/*
- * TcpServer.h
- *
- *  Created on: Jan 10, 2017
- *      Author: uriah
- */
+
 
 #ifndef SERVER_SERVER_H_
 #define SERVER_SERVER_H_
@@ -69,7 +64,7 @@ private:
 	int server_socket;
 	bool online;
 	struct sockaddr_in server_details;
-    map<int, ClientData*>* clients;
+    list<ClientData*>* clients;
 
     pthread_mutex_t connection_locker;
 	pthread_mutex_t map_locker;

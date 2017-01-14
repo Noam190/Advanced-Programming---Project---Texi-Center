@@ -4,7 +4,7 @@
 
 TcpServer::TcpServer(int port) {
 	this->port = port;
-	this->clients = new  map<int,ClientData*>;
+	this->clients = new  list<ClientData*>;
 	this->server_socket = -1;
 	this->capacity = 50;
 	this->num_of_connections = 0;
@@ -64,9 +64,8 @@ TcpServer::~TcpServer() {
 
 	ClientData* data = NULL;
 
-    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
-        delete ((*it).second);
-        it = this->clients->erase(it);//not finish !!! TODO erase of the end !!!
+    for (list<ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
+        delete(*it);
     }
 
 	delete this->clients;
@@ -95,7 +94,7 @@ int TcpServer::connectClient() {
 
             // Push the client to the list
             pthread_mutex_lock(&this->map_locker);
-            this->clients->insert(std::pair<int,ClientData*>(data->client,data);
+            this->clients->push_back(data);
             pthread_mutex_unlock(&this->map_locker);
 
             return data->client_socket;
@@ -160,9 +159,9 @@ unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int clien
     return CONNECTION_CLOSED;
 }
 int TcpServer::findClientSocketNumber(int clientNum) {
-    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
-        if ((*it).first == clientNum) {
-            return (*it).second->client_socket;
-        }
-    }
+//    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
+//        if ((*it).first == clientNum) {
+//            return (*it).second->client_socket;
+//        }
+//    }
 }
