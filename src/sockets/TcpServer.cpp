@@ -1,19 +1,15 @@
-/*
- * TcpServer.cpp
- *
- *  Created on: Jan 10, 2017
- *      Author: uriah
- */
 
+#include <map>
 #include "TcpServer.h"
 
 TcpServer::TcpServer(int port) {
 	this->port = port;
-	this->clients = new list<ClientData*>;
+	this->clients = new  map<int,ClientData*>;
 	this->server_socket = -1;
 	this->capacity = 50;
 	this->num_of_connections = 0;
 	this->online = false;
+
 	// Init mutex
 	pthread_mutex_init(&this->connection_locker, 0);
 	pthread_mutex_init(&this->list_locker, 0);
@@ -69,51 +65,111 @@ TcpServer::~TcpServer() {
 	ClientData* data = NULL;
 	while (!this->clients->empty())
 	{
-		data = this->clients->front();
+		data = this->clients->begin()
 		delete data;
-		this->clients->pop_front();
+		this->clients->erase
 	}
 	delete this->clients;
 }
 
-void TcpServer::connectClients(int numOfClients, void (*ClientFunc)(void*), void *args) {
-    // While we're not out of capacity
-    while (numOfClients > 0 && this->online)
-    {
-        int client;
-        int client_socket;
-        unsigned int client_size;
-        ClientData* data;
-        pthread_t thread;
 
-        // If there's some remaining capacity on server
-        if (this->num_of_connections < this->capacity)
-        {
-            // Accepted a client
-            client = accept(this->server_socket, (struct sockaddr*)&client_socket, &client_size);
-            if (client >= 0)
-            {
-                // Create the clients data
-                data = new ClientData();
-                data->client_socket = client_socket;
-                data->client = client;
-                data->client_size = client_size;
-                data->server = this;
-                data->online = true;
-                data->operationFunc = ClientFunc;
-                data->args = args;
+void TcpServer::connectOneClient(int numOfClients, void (*ClientFunc)(void*), void *args) {
 
-                // Push the client to the list
+		int client;
+		int client_socket;
+		unsigned int client_size;
+		ClientData* data;
 
-                pthread_mutex_lock(&this->list_locker);
-                this->clients->push_back(data);
-                pthread_mutex_unlock(&this->list_locker);
+		// If there's some remaining capacity on server
+		if (this->num_of_connections < this->capacity)
+		{
+			// Accepted a client
+			client = accept(this->server_socket, (struct sockaddr*)&client_socket, &client_size);
+			if (client >= 0)
+			{
+				// Create the clients data
+				data = new ClientData();
+				data->client_socket = client_socket;
+				data->client = client;
+				data->client_size = client_size;
+				data->server = this;
+				data->online = true;
+				data->operationFunc = ClientFunc;
+				data->args = args;
 
-                // Create a thread in order to listen to the client
-                pthread_create(&thread, NULL, threadFunction, (void*)data);
 
-                --numOfClients;
+				// Push the client to the list
+				pthread_mutex_lock(&this->list_locker);
+				this->clients->push_back(data);
+				pthread_mutex_unlock(&this->list_locker);
+
+				--numOfClients;
+			}
+		}
+
+}
+
+/***********************************************************************
+* function name: sendData											   *
+* The Input: string data to send									   *
+* The output: int number representing the return status		           *
+* The Function operation: sending the required data, using his length  *
+* and the socket descroptor											   *
+***********************************************************************/
+int TcpServer::sendData(string data, int client) {
+    if (this->online) {
+        unsigned long data_len = data.length();
+        const char *datas = data.c_str();
+        try {
+            // Send the message to the server
+            int clientSocket =findClientSocketNumber(client);
+            int bytes = (int) send(clientSocket, datas, (size_t) data_len, 0);
+            if (bytes < 0) {
+                //return an error represent error at this method
+                return ERROR_SEND;
+            } else {
+                //return correct if there were no problem
+                return CORRECT;
             }
+        } catch (...) {
+            cout << ">> Error." << endl;
+        }
+    }
+    return CONNECTION_CLOSED;
+}
+/***********************************************************************
+* function name: recive												   *
+* The Input: none										               *
+* The output: int number representing the return status	               *
+* The Function operation: getting data from the other socket to,	   *
+* enter it to the buffer and print the data							   *
+***********************************************************************/
+unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int client) {
+    if (this->online) {
+        unsigned long read_bytes = 0;
+        try {
+            int clientSocket =findClientSocketNumber(client);
+            read_bytes = (unsigned long) recv(clientSocket, buffer, (size_t) size, 0);
+            //checking the errors
+            if (read_bytes == 0) {
+                return CONNECTION_CLOSED;
+            } else if (read_bytes < 0) {
+                //return an error represent error at this method
+                return ERROR_RECIVE;
+            }
+        } catch (...) {
+            cout << ">> Error." << endl;
+        }
+
+        //return correct if there were no problem
+        return read_bytes;
+    }
+    return CONNECTION_CLOSED;
+}
+int TcpServer::findClientSocketNumber(int clientNum) {
+    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
+        if ((*it).first == clientNum) {
+            return (*it).second->client_socket;
         }
     }
 }

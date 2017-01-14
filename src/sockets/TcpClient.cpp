@@ -1,9 +1,4 @@
-/*
- * TcpClient.cpp
- *
- *  Created on: Jan 10, 2017
- *      Author: uriah
- */
+
 
 #include "TcpClient.h"
 

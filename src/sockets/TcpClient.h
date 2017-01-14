@@ -1,9 +1,4 @@
-/*
- * TcpClient.h
- *
- *  Created on: Jan 10, 2017
- *      Author: uriah
- */
+
 
 #ifndef CLIENT_CLIENT_H_
 #define CLIENT_CLIENT_H_

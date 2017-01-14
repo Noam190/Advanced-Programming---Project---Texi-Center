@@ -1,9 +1,7 @@
-/*
- * TcpServer.h
- *
- *  Created on: Jan 10, 2017
- *      Author: uriah
- */
+#define CORRECT 0
+#define ERROR_SEND 5
+#define CONNECTION_CLOSED 8
+#define ERROR_RECIVE 6
 
 #ifndef SERVER_SERVER_H_
 #define SERVER_SERVER_H_
@@ -26,10 +24,16 @@ class TcpServer {
 public:
     TcpServer(int port);
 	void Start();
-    void connectClients(int numOfClients, void (*ClientFunc)(void*), void *args);
-	static void* threadFunction(void* element);
-	virtual ~TcpServer();
-	struct ClientData
+   // void connectClients(int numOfClients, void (*ClientFunc)(void*), void *args);
+    void connectOneClient(int numOfClients, void (*ClientFunc)(void*), void *args);
+    unsigned long receiveData(char *buffer, unsigned long size, int client) ;
+    static void* threadFunction(void* element);
+    int sendData(string data, int client) ;
+    int findClientSocketNumber(int client);
+
+        virtual ~TcpServer();
+
+    struct ClientData
 	{
 		int client_socket;
 		int client;
@@ -38,18 +42,19 @@ public:
         TcpServer* server;
         void (*operationFunc)(void*);
         void * args;
-	};
+
+    };
 
 private:
-
 	int port;
 	int capacity;
 	int num_of_connections;
 	int server_socket;
 	bool online;
 	struct sockaddr_in server_details;
-	list<ClientData*>* clients;
-	pthread_mutex_t connection_locker;
+    map<int,ClientData*>* clients;
+
+    pthread_mutex_t connection_locker;
 	pthread_mutex_t list_locker;
 };
 
