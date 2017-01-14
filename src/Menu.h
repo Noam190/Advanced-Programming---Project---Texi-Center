@@ -25,7 +25,7 @@ private:
     Clock *clock;
     TcpServer *tcp;
     ThreadPool* threadPool;
-    int numOfDrivers;
+
 
 public:
 

@@ -95,7 +95,6 @@ void Menu::expectingDriver() {
     int numOfDrivers;
     std::cin >> numOfDrivers;
 
-    this->numOfDrivers = numOfDrivers;
 
     for (int i = 0; i < numOfDrivers; ++i) {
         pthread_t t1 = (pthread_t) i;
@@ -157,7 +156,7 @@ void Menu::moveAllDriversToTheEnd() {
 Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
            Clock *clock, TcpServer *tcp)
         : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
-          clock(clock), tcp(tcp), numOfDrivers(0) {
+          clock(clock), tcp(tcp) {
     tcp->initialize();
 }
 
