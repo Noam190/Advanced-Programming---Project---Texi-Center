@@ -57,28 +57,7 @@ void Menu::insertTaxi() {
 
 }
 
-//pass date from server<->client
-void Menu::updatesFromClient() {
-//    unsigned long readBytes;
-//    char buffer[1024];
-//    std::fill_n(buffer, 1024, 0);
-//    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
-//
-//    // deserialize driver
-//    string serial_str_driver(buffer, readBytes);
-//    Driver *d = deserialize<Driver>(serial_str_driver);
-//
-//    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
-//
-//    //serialize taxi
-//    string serial_str_taxi = serialize(taxiCab);
-//    //sent back the taxi
-//    this->tcp->sendData(serial_str_taxi);
-//
-//    //add driver to the taxi-center.
-//    this->taxiCenter->clientFunction(d);
 
-}
 
 //expecting a new driver from the client
 void Menu::expectingDriver() {
@@ -87,7 +66,7 @@ void Menu::expectingDriver() {
 
 
     for (int i = 0; i < numOfDrivers; ++i) {
-
+        taxiCenter->addClient(i);
     }
 }
 
@@ -103,7 +82,7 @@ void Menu::insertTrip() {
              >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
              >> dummy >>timeOfStart;
     //create the trip
-    Trip* newTrip = createTrip(threadPool, grid, id, xStart, yStart, xEnd, yEnd,
+    Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
     taxiCenter->insertTrip(newTrip);
@@ -139,19 +118,12 @@ void Menu::moveAllDriversToTheEnd() {
     this->taxiCenter->moveAllRidesToTheEnd();
 }
 
-
 //constructor to a new
-Menu::Menu(ThreadPool* threadPool,TaxiCenter *taxiCenter, Matrix *grid,
-           Clock *clock, TcpServer *tcp)
-        : threadPool(threadPool),grid(grid), taxiCenter(taxiCenter),
-          clock(clock), tcp(tcp) {
-    tcp->start();
-}
+Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid)
+        : grid(grid), taxiCenter(taxiCenter) {}
 
 // move the drivers to the next point.
 void Menu::advance() {
-    this->clock->addToCurrentTime(1);
-
     this->taxiCenter->moveAllRidesOneStep();
 
     this->taxiCenter->createRides();
@@ -200,3 +172,27 @@ void Menu::advance() {
 //        this->stop = stop;
 //    }
 //};
+
+
+//pass date from server<->client
+//void Menu::updatesFromClient() {
+//    unsigned long readBytes;
+//    char buffer[1024];
+//    std::fill_n(buffer, 1024, 0);
+//    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
+//
+//    // deserialize driver
+//    string serial_str_driver(buffer, readBytes);
+//    Driver *d = deserialize<Driver>(serial_str_driver);
+//
+//    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
+//
+//    //serialize taxi
+//    string serial_str_taxi = serialize(taxiCab);
+//    //sent back the taxi
+//    this->tcp->sendData(serial_str_taxi);
+//
+//    //add driver to the taxi-center.
+//    this->taxiCenter->clientFunction(d);
+
+//}

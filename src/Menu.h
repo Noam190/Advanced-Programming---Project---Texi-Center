@@ -22,19 +22,11 @@ class Menu {
 private:
     Matrix *grid;
     TaxiCenter *taxiCenter;
-    Clock *clock;
-    TcpServer *tcp;
-    ThreadPool *threadPool;
-//    struct ClientData {
-//        int clientID;
-//        Menu* menu;
-//    };
 
 public:
 
     //constructor to a new
-    Menu(ThreadPool *threadPool,
-         TaxiCenter *taxiCenter, Matrix *grid, Clock *clock, TcpServer *tcp);
+    Menu(TaxiCenter *taxiCenter, Matrix *grid);
 
     //run the funcs with input
     void run();
@@ -43,9 +35,6 @@ public:
     void getObstacles();
 
     void advance();
-
-    //pass date from server<->client
-    void updatesFromClient();
 
     //insert a new driver from the input arguments
     void expectingDriver();
@@ -61,12 +50,21 @@ public:
 
     // move all the drivers to the next node in the trip
     void moveAllDriversToTheEnd();
-
-//    void clientFunction(int clientID);
-//
-//    static void* Menu::threadFunction(void* element);
 };
 
 
 
 #endif //EX2AP_MANUOPTIONS_H
+
+
+//    struct ClientData {
+//        int clientID;
+//        Menu* menu;
+//    };
+
+//    void clientFunction(int clientID);
+//
+//    static void* Menu::threadFunction(void* element);
+
+//    //pass date from server<->client
+//    void updatesFromClient();

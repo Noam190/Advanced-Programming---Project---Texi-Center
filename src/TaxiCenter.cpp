@@ -108,6 +108,7 @@ TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {}
 
 //move all the rides one step forward
 void TaxiCenter::moveAllRidesOneStep() {
+    this->clock->addToCurrentTime(1);
     for (int i = 0; i < rides.size(); ++i) {
         rides[i]->moveOneStep();
         if (rides[i]->isDone()) {
@@ -165,16 +166,6 @@ TaxiCenter::~TaxiCenter() {
     }
 }
 
-//Trip* TaxiCenter::getTripById(int driverId) {
-//    return this->drivers_trips.at(driverId);
-//}
-
-//void TaxiCenter::clientFunction(Driver *d, int clientID) {
-//    this->clients.insert(pair<int, int>(d->getId(), clientID));
-//    this->clientFunction(d);
-//}
-
-
 void TaxiCenter::clientFunction(int clientID) {
 
     unsigned long readBytes;
@@ -212,3 +203,13 @@ void TaxiCenter::addClient(int threadID) {
     clientData->taxiCenter = this;
     createThread(t1, threadFunction, clientData);
 }
+
+
+//Trip* TaxiCenter::getTripById(int driverId) {
+//    return this->drivers_trips.at(driverId);
+//}
+
+//void TaxiCenter::clientFunction(Driver *d, int clientID) {
+//    this->clients.insert(pair<int, int>(d->getId(), clientID));
+//    this->clientFunction(d);
+//}
