@@ -11,6 +11,7 @@ Trip::Trip(int id, int totalMeters, int numberOfPassengers, double tariff, Point
     this->numOfPassengers = numberOfPassengers;
     this->tariff = tariff;
     this->timeOfStart = timeOfStart;
+    this->path = NULL;
 }
 
 // Constructor all the members
@@ -114,8 +115,10 @@ void Trip::setPath(std::vector<Point*>* pathPoints){
 }
 
 Trip::~Trip() {
-    for (int i = 0; i < path->size() ; ++i) {
-       delete (*path)[i];
+    if (this->path != NULL) {
+        for (int i = 0; i < path->size(); ++i) {
+            delete (*path)[i];
+        }
+        delete this->path;
     }
-    delete this->path;
 }

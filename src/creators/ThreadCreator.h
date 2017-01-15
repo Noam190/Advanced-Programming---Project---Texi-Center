@@ -12,7 +12,7 @@
 #ifndef TAXI_CENTER_THREADPOOL_H
 #define TAXI_CENTER_THREADPOOL_H
 
-void createThread(thread_t threadNew, void* pFunc(void*), void* args);
+pthread_t createThread(void *(*pFunc)(void *), void *args);
 
 
 #endif //TAXI_CENTER_THREADPOOL_H

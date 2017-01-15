@@ -39,7 +39,7 @@ private:
 
 public:
     // Constructor
-    Trip() : timeOfStart(-1) {};
+    Trip() : path(NULL), timeOfStart(-1) {};
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,

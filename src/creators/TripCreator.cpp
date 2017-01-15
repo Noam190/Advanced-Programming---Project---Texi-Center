@@ -4,18 +4,19 @@
 
 #include "TripCreator.h"
 //help to create a trip
-Trip* createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
-                 double tariff, int timeOfStart){
+tripAndThread createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
+                         double tariff, int timeOfStart){
 
     Point start = Point(xStart, yStart);
     Point end = Point(xEnd, yEnd);
 
-    pthread_t t1 = ((pthread_t) id ) * -1;
-
     PathAgrs* args = new PathAgrs(grid, start, end);
-    createThread(t1,calculatePath,args);
+    pthread_t ptId = createThread(calculatePath, args);
+    tripAndThread t;
+    t.trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
+    t.ptId = ptId;
 
-    return new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
+    return t;
 }
 
 void * calculatePath (void *pathArgs) {

@@ -8,6 +8,7 @@
 #include "sockets/TcpServer.h"
 #include "Serialization.h"
 #include "creators/ThreadCreator.h"
+#include "creators/TripCreator.h"
 
 //send a taxi
 TaxiCab TaxiCenter::sendTaxi() {
@@ -36,8 +37,9 @@ void TaxiCenter::addTaxiCab(TaxiCab* taxi) {
 }
 
 //add a trip to the center
-void TaxiCenter::insertTrip(Trip* t) {
-    this->freeTrips.push_back(t);
+void TaxiCenter::insertTrip(tripAndThread t) {
+    this->tripThreads.insert(pair<int, pthread_t>(t.trip->getId(), t.ptId));
+    this->freeTrips.push_back(t.trip);
 }
 
 //remove a driver to the center
@@ -131,7 +133,9 @@ void TaxiCenter::createRides() {
         if (freeTrips[j]->getTimeOfStart() == clock->getCurrentTime()){
             for (int i = 0; i < freeDrivers.size(); ++i) {
                 if (freeDrivers[i]->getCurrentLocation() == freeTrips[j]->getStartPoint()) {
-                    pthread_join(((pthread_t) freeTrips[j]->getId())* -1, &status);
+
+                    pthread_t ptId = tripThreads[freeTrips[j]->getId()];
+                    pthread_join(ptId, &status);
                     std::vector<Point*>* pathPoints = (vector<Point*> *) status;
                     freeTrips[j]->setPath(pathPoints);
 
@@ -204,7 +208,7 @@ void TaxiCenter::addClient(int threadID) {
     ClientData* clientData = new ClientData;
     clientData->client_socket = tcp->connectClient();
     clientData->taxiCenter = this;
-    createThread(t1, threadFunction, clientData);
+    createThread(threadFunction, clientData);
 }
 
 void TaxiCenter::sendTrip(int driverId, Trip *trip) {

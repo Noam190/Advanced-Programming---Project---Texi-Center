@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     std::cin >> width >> height;
     Matrix* grid = new Matrix(width, height);
     Menu menu = Menu(taxiCenter, grid);
-    boost::container::string s = "This is boost::container::string";
+    string s = "This is string";
     LOG(INFO) << s;
     //run all the other inputs
     menu.run();

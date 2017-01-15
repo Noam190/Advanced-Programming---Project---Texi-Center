@@ -14,6 +14,7 @@
 #include "Trip.h"
 #include "Ride.h"
 #include "sockets/TcpServer.h"
+#include "creators/TripCreator.h"
 
 class TaxiCenter {
 private:
@@ -23,7 +24,8 @@ private:
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
-    std::map<int,int> clients;
+    std::map<int, int> clients;
+    std::map<int, pthread_t> tripThreads;
     struct ClientData {
         int client_socket;
         TaxiCenter* taxiCenter;
@@ -52,7 +54,7 @@ public:
     TaxiCab * getTaxi(int idVehicle);
 
     //add a trip to the center
-    void insertTrip(Trip* t);
+    void insertTrip(struct tripAndThread t);
 
     //remove a driver to the center
     void removeDriver(int id);

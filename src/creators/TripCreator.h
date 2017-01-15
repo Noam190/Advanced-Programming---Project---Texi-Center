@@ -10,11 +10,17 @@
 #include "../core/Matrix.h"
 #include "ThreadCreator.h"
 
+struct tripAndThread {
+    Trip* trip;
+    pthread_t ptId;
+};
+
 //help to create a trip
-Trip* createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
-                 double tariff, int timeOfStart);
+tripAndThread createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
+                         double tariff, int timeOfStart);
 
 static void * calculatePath(void *pathArgs);
+
 
 class PathAgrs{
 public:

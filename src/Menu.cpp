@@ -76,7 +76,7 @@ void Menu::insertTrip() {
              >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
              >> dummy >>timeOfStart;
     //create the trip
-    Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
+    tripAndThread newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
                               numOfPass, tariff, timeOfStart);
 
     taxiCenter->insertTrip(newTrip);
