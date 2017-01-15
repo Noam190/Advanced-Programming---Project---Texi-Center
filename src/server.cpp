@@ -1,3 +1,8 @@
+#include <boost/container/string.hpp>
+
+#include "easylogging++.h"#include <boost/container/string.hpp>
+
+#include "easylogging++.h"
 #include "sockets/Udp.h"
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
@@ -19,7 +24,8 @@ int main(int argc, char *argv[]) {
     std::cin >> width >> height;
     Matrix* grid = new Matrix(width, height);
     Menu menu = Menu(taxiCenter, grid);
-
+    boost::container::string s = "This is boost::container::string";
+    LOG(INFO) << s;
     //run all the other inputs
     menu.run();
 

@@ -50,6 +50,7 @@ void Menu::insertTaxi() {
     //create the taxi
     TaxiCab* cab = createTaxi(id, taxiType, manufacturer, color);
     this->taxiCenter->addTaxiCab(cab);
+    
 
 }
 
