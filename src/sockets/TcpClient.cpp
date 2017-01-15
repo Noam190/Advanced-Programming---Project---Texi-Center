@@ -16,7 +16,7 @@ void TcpClient::Connect() {
 		// Memset the connection details
 		memset(&this->connection_details, 0, sizeof(this->connection_details));
 		this->connection_details.sin_family = AF_INET;
-		this->connection_details.sin_addr.s_addr = inet_addr(ip.c_str());
+		this->connection_details.sin_addr.s_addr = inet_addr(this->ip.c_str());
 		this->connection_details.sin_port = htons(port);
 		// Connect to a server
 		if (connect(this->client_socket, (struct sockaddr*)&this->connection_details, 
@@ -47,7 +47,7 @@ int TcpClient::sendData(string data) {
                 //return an error represent error at this method
                 return ERROR_SEND;
             } else {
-                cout<<"send data successfully   \n";
+                cout<<"send data successfully \n";
                 //return correct if there were no problem
                 return CORRECT;
             }
@@ -65,7 +65,7 @@ int TcpClient::sendData(string data) {
 * The Function operation: getting data from the other socket to,	   *
 * enter it to the buffer and print the data							   *
 ***********************************************************************/
-unsigned long TcpClient::receiveData(char *buffer, unsigned long size) {
+long TcpClient::receiveData(char *buffer, unsigned long size) {
     if (this->connected) {
         long read_bytes = 0;
         try {
@@ -88,6 +88,7 @@ unsigned long TcpClient::receiveData(char *buffer, unsigned long size) {
 }
 
 TcpClient::~TcpClient() {
+    cout << "close CLIENT" << endl;
 	close(this->client_socket);
 }
 

@@ -4,14 +4,14 @@
 #define CLIENT_CLIENT_H_
 
 #define CORRECT 0
-#define ERROR_SOCKET 1
-#define ERROR_BIND 2
-#define ERROR_LISTEN 3
-#define ERROR_CONNECT 4
-#define ERROR_SEND 5
-#define ERROR_RECIVE 6
-#define ERROR_ACCEPT 7
-#define CONNECTION_CLOSED 8
+#define ERROR_SOCKET -1
+#define ERROR_BIND -2
+#define ERROR_LISTEN -3
+#define ERROR_CONNECT -4
+#define ERROR_SEND -5
+#define ERROR_RECIVE -6
+#define ERROR_ACCEPT -7
+#define CONNECTION_CLOSED -8
 #define NONE 0
 #include <iostream>
 #include <sys/socket.h>
@@ -31,7 +31,7 @@ public:
 	void Connect();
 	virtual ~TcpClient();
     int sendData(string data);
-    unsigned long receiveData(char *buffer, unsigned long size);
+	long receiveData(char *buffer, unsigned long size);
 private:
 	string ip;
 	int port;

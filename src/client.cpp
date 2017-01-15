@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     char buffer[8192];
     Ride *ride = NULL;
     Trip *t = NULL;
-    unsigned long readBytes;
+    long readBytes;
 
 
     TcpClient* tcpClient = new TcpClient(argv[1], atoi(argv[2]));

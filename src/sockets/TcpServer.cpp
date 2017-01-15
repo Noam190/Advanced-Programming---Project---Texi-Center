@@ -27,17 +27,15 @@ void TcpServer::start() {
 	memset(&this->server_details, 0, sizeof(this->server_details));
 	this->server_details.sin_family = AF_INET;
 	this->server_details.sin_addr.s_addr = INADDR_ANY;
-	this->server_details.sin_port = htons(this->port);
+	this->server_details.sin_port = htons((uint16_t) this->port);
 	bzero(&(this->server_details.sin_zero), 8);
 
 	// Binding
-	if (bind(this->server_socket, (struct sockaddr*)&this->server_details,
-			sizeof(struct sockaddr)) == -1)
-	{
+	if (bind(this->server_socket, (struct sockaddr*)&this->server_details, sizeof(struct sockaddr)) == -1) {
 		cout << ">> Failure: binding." << endl;
-	}
-	else
-		cout << ">> Successfully binded." << endl;
+	} else {
+        cout << ">> Successfully binded." << endl;
+    }
 
 	// Listening
 	listen(this->server_socket, this->capacity);
@@ -57,6 +55,7 @@ void TcpServer::start() {
 //}
 
 TcpServer::~TcpServer() {
+    cout << "close SERVER" << endl;
 	close(this->server_socket);
 
 	pthread_mutex_destroy(&this->connection_locker);
@@ -74,8 +73,8 @@ TcpServer::~TcpServer() {
 
 int TcpServer::connectClient() {
     int client;
-    int client_socket;
-    unsigned int client_size;
+    struct sockaddr_in client_socket;
+    unsigned int client_size = sizeof(client_socket);
     ClientData* data;
 
     // If there's some remaining capacity on server
@@ -97,7 +96,7 @@ int TcpServer::connectClient() {
             this->clients->push_back(data);
             pthread_mutex_unlock(&this->map_locker);
 
-            return data->client_socket;
+            return data->client;
         } else {
             return ERROR_ACCEPT;
         }
@@ -140,7 +139,7 @@ int TcpServer::sendData(string data, int client_socket) {
 * The Function operation: getting data from the other socket to,	   *
 * enter it to the buffer and print the data							   *
 ***********************************************************************/
-unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int client_socket) {
+long TcpServer::receiveData(char *buffer, unsigned long size, int client_socket) {
     if (this->online) {
         long read_bytes = 0;
         try {
@@ -171,6 +170,6 @@ int TcpServer::findClientSocketNumber(int clientNum) {
 
 int TcpServer::sendDataToAllClients(string data) {
     for (list<ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
-        this->sendData(data, (*it)->client_socket);
+        this->sendData(data, (*it)->client);
     }
 }

@@ -4,14 +4,14 @@
 #define SERVER_SERVER_H_
 
 #define CORRECT 0
-#define ERROR_SOCKET 1
-#define ERROR_BIND 2
-#define ERROR_LISTEN 3
-#define ERROR_CONNECT 4
-#define ERROR_SEND 5
-#define ERROR_RECIVE 6
-#define ERROR_ACCEPT 7
-#define CONNECTION_CLOSED 8
+#define ERROR_SOCKET -1
+#define ERROR_BIND -2
+#define ERROR_LISTEN -3
+#define ERROR_CONNECT -4
+#define ERROR_SEND -5
+#define ERROR_RECIVE -6
+#define ERROR_ACCEPT -7
+#define CONNECTION_CLOSED -8
 #define NONE 0
 
 #include <iostream>
@@ -43,7 +43,7 @@ public:
 	void start();
     // void connectClients(int numOfClients, void (*ClientFunc)(void*), void *args);
     int connectClient();
-    unsigned long receiveData(char *buffer, unsigned long size, int client) ;
+    long receiveData(char *buffer, unsigned long size, int client) ;
     //static void* threadFunction(void* element);
     int sendData(string data, int client);
     int sendDataToAllClients(string data);
@@ -52,7 +52,7 @@ public:
 
 private:
     struct ClientData {
-        int client_socket;
+		struct sockaddr_in client_socket;
         int client;
         unsigned int client_size;
         bool online;
