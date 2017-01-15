@@ -87,7 +87,7 @@ void TaxiCenter::moveAllRidesToTheEnd() {
     while(rides.size() > 0) {
         rides.front()->moveToTheEnd();
         freeDrivers.push_back(rides.front()->getDriver());
-        delete  rides[0];
+        delete rides[0];
         rides.erase(rides.begin());
     }
 }
@@ -171,7 +171,6 @@ TaxiCenter::~TaxiCenter() {
 }
 
 void TaxiCenter::clientFunction(int client_socket) {
-
     unsigned long readBytes;
     char buffer[8192];
     std::fill_n(buffer, 8192, 0);

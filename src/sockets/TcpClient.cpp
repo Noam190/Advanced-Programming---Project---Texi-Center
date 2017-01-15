@@ -2,7 +2,7 @@
 
 #include "TcpClient.h"
 
-TcpClient::TcpClient(char* ip, int port) {
+TcpClient::TcpClient(string ip, int port) {
 	this->ip = ip;
 	this->port = port;
 	this->client_socket = -1;
@@ -16,14 +16,16 @@ void TcpClient::Connect() {
 		// Memset the connection details
 		memset(&this->connection_details, 0, sizeof(this->connection_details));
 		this->connection_details.sin_family = AF_INET;
-		this->connection_details.sin_addr.s_addr = inet_addr(ip);
+		this->connection_details.sin_addr.s_addr = inet_addr(ip.c_str());
 		this->connection_details.sin_port = htons(port);
 		// Connect to a server
-		if (connect(this->client_socket,
-				(struct sockaddr*)&this->connection_details, sizeof(this->connection_details)) >= 0)
-			this->connected = true;
-        cout<<"connect successfully \n";
-
+		if (connect(this->client_socket, (struct sockaddr*)&this->connection_details, 
+                    sizeof(this->connection_details)) >= 0) {
+            this->connected = true;
+            cout<<"connect successfully"<< endl;
+            return;
+        }
+        cout<<"connection error" << endl;
     }
 }
 
@@ -36,7 +38,7 @@ void TcpClient::Connect() {
 ***********************************************************************/
 int TcpClient::sendData(string data) {
     if (this->connected) {
-        unsigned long data_len = data.length();
+        unsigned long data_len = data.size() + 1;
         const char *datas = data.c_str();
         try {
             // Send the message to the server
@@ -65,9 +67,9 @@ int TcpClient::sendData(string data) {
 ***********************************************************************/
 unsigned long TcpClient::receiveData(char *buffer, unsigned long size) {
     if (this->connected) {
-        unsigned long read_bytes = 0;
+        long read_bytes = 0;
         try {
-            read_bytes = (unsigned long) recv(this->client_socket, buffer, (size_t) size, 0);
+            read_bytes = recv(this->client_socket, buffer, (size_t) size, 0);
             //checking the errors
             if (read_bytes == 0) {
                 return CONNECTION_CLOSED;
@@ -80,7 +82,7 @@ unsigned long TcpClient::receiveData(char *buffer, unsigned long size) {
         }
 
         //return correct if there were no problem
-        return read_bytes;
+        return (unsigned long) read_bytes;
     }
     return CONNECTION_CLOSED;
 }

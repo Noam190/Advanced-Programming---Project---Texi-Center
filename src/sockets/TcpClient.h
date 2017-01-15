@@ -27,13 +27,13 @@ using namespace std;
 
 class TcpClient {
 public:
-	TcpClient(char* ip, int port);
+	TcpClient(string ip, int port);
 	void Connect();
 	virtual ~TcpClient();
     int sendData(string data);
     unsigned long receiveData(char *buffer, unsigned long size);
 private:
-	char* ip;
+	string ip;
 	int port;
 	int client_socket;
 	struct sockaddr_in connection_details;

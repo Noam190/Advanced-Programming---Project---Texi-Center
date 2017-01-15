@@ -31,8 +31,9 @@ int main(int argc, char *argv[]) {
     unsigned long readBytes;
 
 
-    TcpClient* tcpClient = new TcpClient( argv[1], atoi(argv[2]));
+    TcpClient* tcpClient = new TcpClient(argv[1], atoi(argv[2]));
     tcpClient->Connect();
+
     std::cout<<"start serialize \n";
     //create a driver
     Driver* driver = insertDriver();

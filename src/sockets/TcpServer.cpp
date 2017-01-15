@@ -98,8 +98,11 @@ int TcpServer::connectClient() {
             pthread_mutex_unlock(&this->map_locker);
 
             return data->client_socket;
+        } else {
+            return ERROR_ACCEPT;
         }
     }
+    return ERROR_ACCEPT;
 }
 
 /***********************************************************************
@@ -111,7 +114,7 @@ int TcpServer::connectClient() {
 ***********************************************************************/
 int TcpServer::sendData(string data, int client_socket) {
     if (this->online) {
-        unsigned long data_len = data.length();
+        unsigned long data_len = data.size() + 1;
         const char *datas = data.c_str();
         try {
             // Send the message to the server
@@ -139,9 +142,9 @@ int TcpServer::sendData(string data, int client_socket) {
 ***********************************************************************/
 unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int client_socket) {
     if (this->online) {
-        unsigned long read_bytes = 0;
+        long read_bytes = 0;
         try {
-            read_bytes = (unsigned long) recv(client_socket, buffer, (size_t) size, 0);
+            read_bytes = recv(client_socket, buffer, (size_t) size, 0);
             //checking the errors
             if (read_bytes == 0) {
                 return CONNECTION_CLOSED;
@@ -154,7 +157,7 @@ unsigned long TcpServer::receiveData(char *buffer, unsigned long size, int clien
         }
 
         //return correct if there were no problem
-        return read_bytes;
+        return (unsigned long) read_bytes;
     }
     return CONNECTION_CLOSED;
 }
