@@ -33,8 +33,6 @@ void Menu::run() {
             case 9:// move the drivers to the next point.
                 this->taxiCenter->moveAllRidesOneStep();
                 break;
-
-
             default:
                 break;
         }
