@@ -41,18 +41,7 @@ void TcpServer::start() {
 	listen(this->server_socket, this->capacity);
 	cout << ">> Server is listening on port: " << this->port << "." << endl;
 	this->online = true;
-
-//    pthread_t thread;
-//    // Create a thread in order to connect the clients.
-//    pthread_create(&thread, NULL, threadConnectFunction, (void*) this);
 }
-
-//void* TcpServer::threadFunction(void* element) {
-//	ClientData* data = (ClientData*) element;
-//	data->operationFunc(element);
-//	data = NULL;
-//	return NULL;
-//}
 
 TcpServer::~TcpServer() {
     cout << "close SERVER" << endl;
@@ -87,7 +76,6 @@ int TcpServer::connectClient() {
             data->client_socket = client_socket;
             data->client = client;
             data->client_size = client_size;
-            data->server = this;
             data->online = true;
 
 
@@ -111,13 +99,13 @@ int TcpServer::connectClient() {
 * The Function operation: sending the required data, using his length  *
 * and the socket descroptor											   *
 ***********************************************************************/
-int TcpServer::sendData(string data, int client_socket) {
+int TcpServer::sendData(string data, int client) {
     if (this->online) {
         unsigned long data_len = data.size() + 1;
         const char *datas = data.c_str();
         try {
             // Send the message to the server
-            int bytes = (int) send(client_socket, datas, (size_t) data_len, 0);
+            int bytes = (int) send(client, datas, (size_t) data_len, 0);
             if (bytes < 0) {
                 //return an error represent error at this method
                 return ERROR_SEND;
@@ -139,11 +127,11 @@ int TcpServer::sendData(string data, int client_socket) {
 * The Function operation: getting data from the other socket to,	   *
 * enter it to the buffer and print the data							   *
 ***********************************************************************/
-long TcpServer::receiveData(char *buffer, unsigned long size, int client_socket) {
+long TcpServer::receiveData(char *buffer, unsigned long size, int client) {
     if (this->online) {
         long read_bytes = 0;
         try {
-            read_bytes = recv(client_socket, buffer, (size_t) size, 0);
+            read_bytes = recv(client, buffer, (size_t) size, 0);
             //checking the errors
             if (read_bytes == 0) {
                 return CONNECTION_CLOSED;
@@ -159,13 +147,6 @@ long TcpServer::receiveData(char *buffer, unsigned long size, int client_socket)
         return (unsigned long) read_bytes;
     }
     return CONNECTION_CLOSED;
-}
-int TcpServer::findClientSocketNumber(int clientNum) {
-//    for (map<int,ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
-//        if ((*it).first == clientNum) {
-//            return (*it).second->client_socket;
-//        }
-//    }
 }
 
 int TcpServer::sendDataToAllClients(string data) {
