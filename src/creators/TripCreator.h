@@ -8,7 +8,7 @@
 
 #include "../Trip.h"
 #include "../core/Matrix.h"
-#include "../ThreadPool.h"
+#include "ThreadCreator.h"
 
 //help to create a trip
 Trip* createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
