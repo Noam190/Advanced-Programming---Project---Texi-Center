@@ -29,12 +29,12 @@ void * calculatePath (void *pathArgs) {
 
     // Mark all the vertices as not visit
     std::list<Node *> pathNodes = BFS(startNode, endNode);
-    std::vector<Point>* pathPoints = new vector<Point>();
+    std::vector<Point*>* pathPoints = new vector<Point*>();
     length = pathNodes.size();
     for (int i = 0; i < length; ++i) {
         Node *n = pathNodes.front();
         Point p = args->grid->getPoint(n);
-        pathPoints->push_back(p);
+        pathPoints->push_back(new Point(p.x(), p.y()));
         pathNodes.pop_front();
     }
     delete args;

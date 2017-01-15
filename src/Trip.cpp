@@ -15,7 +15,7 @@ Trip::Trip(int id, int totalMeters, int numberOfPassengers, double tariff, Point
 
 // Constructor all the members
 Trip::Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-           double tariff, Point start, Point end, vector<Point>* path, int timeOfStart) : path(path) {
+           double tariff, Point start, Point end, vector<Point*>* path, int timeOfStart) : path(path) {
     Trip(id ,totalMeters, numberOfPassengers, tariff, start, end, timeOfStart);
     this->length = length;
 }
@@ -102,16 +102,20 @@ void Trip::setTimeOfStart(int newTimeOfStart){
 
 //move one step forward
 void Trip::moveOneStep() {
+    delete (this->path->front());
     this->path->erase(this->path->begin());
-    this->updateLocation(this->path->front());
+    this->updateLocation(*(this->path->front()));
 }
 
 //getters ang setters
-void Trip::setPath(std::vector<Point>* pathPoints){
+void Trip::setPath(std::vector<Point*>* pathPoints){
     this->path = pathPoints;
     setLength(this->path->size());
 }
 
 Trip::~Trip() {
+    for (int i = 0; i < path->size() ; ++i) {
+       delete (*path)[i];
+    }
     delete this->path;
 }

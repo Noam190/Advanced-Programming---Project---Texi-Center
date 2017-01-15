@@ -132,7 +132,7 @@ void TaxiCenter::createRides() {
             for (int i = 0; i < freeDrivers.size(); ++i) {
                 if (freeDrivers[i]->getCurrentLocation() == freeTrips[j]->getStartPoint()) {
                     pthread_join(((pthread_t) freeTrips[j]->getId())* -1, &status);
-                    std::vector<Point>* pathPoints = (vector<Point> *) status;
+                    std::vector<Point*>* pathPoints = (vector<Point*> *) status;
                     freeTrips[j]->setPath(pathPoints);
 
                     Ride* r = new Ride(freeTrips[j], freeDrivers[i]);
