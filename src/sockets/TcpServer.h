@@ -41,13 +41,10 @@ class TcpServer {
 public:
     TcpServer(int port);
 	void start();
-    // void connectClients(int numOfClients, void (*ClientFunc)(void*), void *args);
     int connectClient();
     long receiveData(char *buffer, unsigned long size, int client) ;
-    //static void* threadFunction(void* element);
     int sendData(string data, int client);
     int sendDataToAllClients(string data);
-    int findClientSocketNumber(int client);
     virtual ~TcpServer();
 
 private:
@@ -56,7 +53,6 @@ private:
         int client;
         unsigned int client_size;
         bool online;
-        TcpServer *server;
     };
 
 	int port;
