@@ -1,5 +1,5 @@
 //
-// Created by noam on 16/12/16.
+//  Created by noam on 16/12/16.
 //
 
 #include "Menu.h"
@@ -31,6 +31,7 @@ void Menu::run() {
                 moveAllDriversToTheEnd();
                 break;
             case 9:// move the drivers to the next point.
+                cout<<"hii";
                 this->taxiCenter->moveAllRidesOneStep();
                 break;
 
