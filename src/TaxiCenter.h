@@ -24,9 +24,10 @@ private:
     std::vector<Driver*> freeDrivers;
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
-    std::map<int, int> clients;
-    std::map<int, Trip*> tripByDrivers;
+    std::vector<pthread_t> clientsThreads;
+    std::map<int, pair<Trip*, char>> tripByDrivers;
     std::map<int, pthread_t> tripThreads;
+    pthread_mutex_t map_locker;
     struct ClientData {
         int client_socket;
         TaxiCenter* taxiCenter;
@@ -43,7 +44,7 @@ public:
     //send a taxi
     TaxiCab sendTaxi();
 
-    void addClient(int threadID);
+    void addClient();
 
     //add a driver to the center
     void addDriver(Driver* d);
@@ -77,13 +78,14 @@ public:
     //get the driver location
     Point getDriverLocation(int id);
 
-    void sendTrip(int DriverId, Trip* trip);
+    //void sendTrip(int DriverId, Trip* trip);
 
     void clientFunction(int client_socket);
 
     static void* threadFunction(void* element);
 
     //Trip* getTripById(int driverId);
+
 };
 
 #endif //EX2AP_TAXICENTER_H

@@ -9,10 +9,6 @@ TcpServer::TcpServer(int port) {
 	this->capacity = 50;
 	this->num_of_connections = 0;
 	this->online = false;
-
-	// Init mutex
-	pthread_mutex_init(&this->connection_locker, 0);
-	pthread_mutex_init(&this->map_locker, 0);
 }
 
 void TcpServer::start() {
@@ -47,13 +43,11 @@ TcpServer::~TcpServer() {
     cout << "close SERVER" << endl;
 	close(this->server_socket);
 
-	pthread_mutex_destroy(&this->connection_locker);
-	pthread_mutex_destroy(&this->map_locker);
-
 	ClientData* data = NULL;
 
     for (list<ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
-        delete(*it);
+        data = *it;
+        delete data;
     }
 
 	delete this->clients;
@@ -80,9 +74,7 @@ int TcpServer::connectClient() {
 
 
             // Push the client to the list
-            pthread_mutex_lock(&this->map_locker);
             this->clients->push_back(data);
-            pthread_mutex_unlock(&this->map_locker);
 
             return data->client;
         } else {
@@ -149,7 +141,7 @@ long TcpServer::receiveData(char *buffer, unsigned long size, int client) {
     return CONNECTION_CLOSED;
 }
 
-int TcpServer::sendDataToAllClients(string data) {
+void TcpServer::sendDataToAllClients(string data) {
     for (list<ClientData*>::iterator it = clients->begin(); it != clients->end(); ++it) {
         this->sendData(data, (*it)->client);
     }

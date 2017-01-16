@@ -27,7 +27,7 @@ void TaxiCenter::addDriver(Driver* d) {
         d->setTaxiCab(taxi);
         this->removeTaxi(taxi->getId());
     }
-
+    this->tripByDrivers[d->getId()] = pair<Trip*, char>(NULL, '\0');
     this->freeDrivers.push_back(d);
 }
 
@@ -108,7 +108,9 @@ TaxiCab * TaxiCenter::getTaxi(int idVehicle) {
     return NULL;
 }
 
-TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {}
+TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {
+    pthread_mutex_init(&this->map_locker, 0);
+}
 
 
 //move all the rides one step forward
@@ -117,6 +119,9 @@ void TaxiCenter::moveAllRidesOneStep() {
     this->tcp->sendDataToAllClients("G");
     for (int i = 0; i < rides.size(); ++i) {
         rides[i]->moveOneStep();
+        pthread_mutex_lock(&this->map_locker);
+        this->tripByDrivers[rides[i]->getDriver()->getId()].second = 'G';
+        pthread_mutex_unlock(&this->map_locker);
         if (rides[i]->isDone()) {
             freeDrivers.push_back(rides[i]->getDriver());
             delete  rides[i];
@@ -145,7 +150,10 @@ void TaxiCenter::createRides() {
                     Ride* r = new Ride(freeTrips[j], freeDrivers[i]);
                     rides.push_back(r);
 
-                    sendTrip(freeDrivers[i]->getId(), freeTrips[j]);
+                    //sendTrip(freeDrivers[i]->getId(), freeTrips[j]);
+                    pthread_mutex_lock(&this->map_locker);
+                    this->tripByDrivers[freeDrivers[i]->getId()].first = freeTrips[j];
+                    pthread_mutex_unlock(&this->map_locker);
 
                     freeTrips.erase(freeTrips.begin() + j);
                     freeDrivers.erase(freeDrivers.begin() + i);
@@ -159,6 +167,18 @@ void TaxiCenter::createRides() {
 }
 
 TaxiCenter::~TaxiCenter() {
+    for (map<int, std::pair<Trip *, char>>::iterator it = tripByDrivers.begin();
+         it != tripByDrivers.end(); ++it) {
+        pthread_mutex_lock(&this->map_locker);
+        it->second.second = 'E';
+        pthread_mutex_unlock(&this->map_locker);
+    }
+
+    for (int k = 0; k < clientsThreads.size() ; ++k) {
+        pthread_join(clientsThreads[k], NULL);
+    }
+
+    pthread_mutex_destroy(&this->map_locker);
     for (int i = 0; i < freeDrivers.size() ; ++i) {
         delete freeDrivers[i];
     }
@@ -178,7 +198,8 @@ TaxiCenter::~TaxiCenter() {
 }
 
 void TaxiCenter::clientFunction(int client_socket) {
-    unsigned long readBytes;
+    bool onDrive = false;
+    long readBytes;
     char buffer[8192];
     std::fill_n(buffer, 8192, 0);
     readBytes = this->tcp->receiveData(buffer, sizeof(buffer), client_socket);
@@ -195,8 +216,34 @@ void TaxiCenter::clientFunction(int client_socket) {
     this->tcp->sendData(serial_str_taxi, client_socket);
 
     //add driver to the taxi-center.
-    this->clients.insert(pair<int, int>(d->getId(), client_socket));
+    //this->clients.insert(pair<int, int>(d->getId(), client_socket));
     this->addDriver(d);
+
+    while (1) {
+        Trip* trip = this->tripByDrivers[d->getId()].first;
+        if (trip != NULL) {
+            onDrive = true;
+            this->tcp->sendData("T", client_socket);
+            //serialize taxi
+            string serial_str_trip = serialize(trip);
+            //sent back the taxi
+            this->tcp->sendData(serial_str_trip, client_socket);
+            // reset the driver's trip -
+            pthread_mutex_lock(&this->map_locker);
+            this->tripByDrivers[d->getId()] = NULL;
+            pthread_mutex_unlock(&this->map_locker);
+        }
+        if(onDrive && this->tripByDrivers[d->getId()].second == 'G') {
+            this->tcp->sendData("G", client_socket);
+            pthread_mutex_lock(&this->map_locker);
+            this->tripByDrivers[d->getId()].second = '\0';
+            pthread_mutex_unlock(&this->map_locker);
+        }
+        if (this->tripByDrivers[d->getId()].second == 'E') {
+            this->tcp->sendData("E", client_socket);
+            return;
+        }
+    }
 }
 
 void* TaxiCenter::threadFunction(void* element) {
@@ -206,22 +253,22 @@ void* TaxiCenter::threadFunction(void* element) {
     return NULL;
 }
 
-void TaxiCenter::addClient(int threadID) {
-    pthread_t t1 = (pthread_t) threadID;
+void TaxiCenter::addClient() {
     ClientData* clientData = new ClientData;
     clientData->client_socket = tcp->connectClient();
     clientData->taxiCenter = this;
-    createThread(threadFunction, clientData);
+    pthread_t pthread = createThread(threadFunction, clientData);
+    this->clientsThreads.push_back(pthread);
 }
 
-void TaxiCenter::sendTrip(int driverId, Trip *trip) {
-    int client_socket = this->clients[driverId];
-
-    //serialize taxi
-    string serial_str_trip = serialize(trip);
-    //sent back the taxi
-    this->tcp->sendData(serial_str_trip, client_socket);
-}
+//void TaxiCenter::sendTrip(int driverId, Trip *trip) {
+//    int client_socket = this->clients[driverId];
+//    this->tcp->sendData("T", client_socket);
+//    //serialize taxi
+//    string serial_str_trip = serialize(trip);
+//    //sent back the taxi
+//    this->tcp->sendData(serial_str_trip, client_socket);
+//}
 
 
 

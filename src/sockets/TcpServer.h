@@ -44,7 +44,7 @@ public:
     int connectClient();
     long receiveData(char *buffer, unsigned long size, int client) ;
     int sendData(string data, int client);
-    int sendDataToAllClients(string data);
+    void sendDataToAllClients(string data);
     virtual ~TcpServer();
 
 private:
