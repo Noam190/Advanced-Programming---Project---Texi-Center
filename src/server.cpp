@@ -28,12 +28,12 @@ int main(int argc, char *argv[]) {
     //run all the other inputs
     menu.run();
 
-    tcp->sendDataToAllClients("E");
+
 
     delete grid;
-    delete tcp;
     delete clock;
     delete taxiCenter;
+    delete tcp;
     return 0;
 }
 
