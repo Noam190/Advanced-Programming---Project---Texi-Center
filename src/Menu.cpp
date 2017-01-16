@@ -60,7 +60,7 @@ void Menu::expectingDriver() {
     std::cin >> numOfDrivers;
 
     for (int i = 0; i < numOfDrivers; ++i) {
-        taxiCenter->addClient(i);
+        taxiCenter->addClient();
     }
 }
 
