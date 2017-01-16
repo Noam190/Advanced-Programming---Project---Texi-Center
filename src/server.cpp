@@ -1,8 +1,8 @@
 #include <boost/container/string.hpp>
 
-#include "easylogging++.h"#include <boost/container/string.hpp>
+#include "logging/easylogging++.h"
 
-#include "easylogging++.h"
+#include "logging/easylogging++.h"
 #include "sockets/Udp.h"
 #include "core/Matrix.h"
 #include "TaxiCenter.h"

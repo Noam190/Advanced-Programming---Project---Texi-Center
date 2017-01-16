@@ -4,7 +4,7 @@
 
 #ifndef EX2AP_MANUOPTIONS_H
 #define EX2AP_MANUOPTIONS_H
-#include "easylogging++.h"
+#include "logging/easylogging++.h"
 #include <iostream>
 #include "creators/DriverCreator.h"
 #include "creators/TripCreator.h"
