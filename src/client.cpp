@@ -25,7 +25,7 @@ Driver* insertDriver() {
 
 
 int main(int argc, char *argv[]) {
-    char buffer[8192];
+    char buffer[120000];
     Ride *ride = NULL;
     Trip *t = NULL;
     long readBytes;
