@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
     Matrix* grid = new Matrix(width, height);
     Menu menu = Menu(taxiCenter, grid);
     string s = "This is string";
-    LOG(INFO) << s;
+//    LOG(INFO) << s;
     //run all the other inputs
     menu.run();
 

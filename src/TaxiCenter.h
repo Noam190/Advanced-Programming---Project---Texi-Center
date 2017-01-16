@@ -25,6 +25,7 @@ private:
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
     std::map<int, int> clients;
+    std::map<int, Trip*> tripByDrivers;
     std::map<int, pthread_t> tripThreads;
     struct ClientData {
         int client_socket;

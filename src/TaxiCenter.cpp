@@ -46,7 +46,8 @@ void TaxiCenter::insertTrip(tripAndThread t) {
 void TaxiCenter::removeDriver(int id) {
     for (vector<Driver*>::iterator it = freeDrivers.begin(); it != freeDrivers.end(); ++it) {
         if((*it)->getId() == id) {
-            it = this->freeDrivers.erase(it);
+            this->freeDrivers.erase(it);
+            return;
         }
     }
 }
@@ -55,7 +56,8 @@ void TaxiCenter::removeDriver(int id) {
 void TaxiCenter::removeTrip(int id) {
     for (vector<Trip*>::iterator it = freeTrips.begin(); it != freeTrips.end(); ++it) {
         if((*it)->getId() == id) {
-            it = this->freeTrips.erase(it);
+            this->freeTrips.erase(it);
+            return;
         }
     }
 }
@@ -65,6 +67,7 @@ void TaxiCenter::removeTaxi(int idVehicle) {
     for (vector<TaxiCab*>::iterator it = freeCabs.begin(); freeCabs.size() != 0 && it != freeCabs.end(); ++it) {
         if((*it)->getId() == idVehicle) {
             freeCabs.erase(it);
+            return;
         }
     }
 }
@@ -147,10 +150,10 @@ void TaxiCenter::createRides() {
                     freeTrips.erase(freeTrips.begin() + j);
                     freeDrivers.erase(freeDrivers.begin() + i);
 
-                    --i;//because we erased one free driver.
-                    --j;//because we erased one free trip.
+                    break;
                 }
             }
+            --j;//because we erased one free trip.
         }
     }
 }
