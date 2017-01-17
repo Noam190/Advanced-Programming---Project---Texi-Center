@@ -231,7 +231,7 @@ void TaxiCenter::clientFunction(int client_socket) {
             this->tcp->sendData(serial_str_trip, client_socket);
             // reset the driver's trip -
             pthread_mutex_lock(&this->map_locker);
-            this->tripByDrivers[d->getId()].first = NULL;
+            this->tripByDrivers[d->getId()].first =  NULL;
             pthread_mutex_unlock(&this->map_locker);
         }
         if(onDrive && this->tripByDrivers[d->getId()].second == 'G') {
