@@ -41,7 +41,7 @@ int TcpServer::start() {
     }
     cout << ">> Server is listening on port: " << this->port << "." << endl;
     this->online = true;
-    return CORRECT;BTH
+    return CORRECT;
 }
 
 TcpServer::~TcpServer() {

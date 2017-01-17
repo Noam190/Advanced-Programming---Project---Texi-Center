@@ -2,9 +2,12 @@
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
 #include "Menu.h"
-#include <pthread.h>
+#include "logging/easylogging++.h";
+INITIALIZE_EASYLOGGINGPP
 
 int main(int argc, char *argv[]) {
+
+    LOG(INFO) << "first log";
 
 
     int portNum = atoi(argv[1]);
