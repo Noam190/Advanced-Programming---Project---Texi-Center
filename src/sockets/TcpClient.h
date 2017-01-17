@@ -12,7 +12,6 @@
 #define ERROR_RECIVE -6
 #define ERROR_ACCEPT -7
 #define CONNECTION_CLOSED -8
-#define NONE 0
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -28,7 +27,7 @@ using namespace std;
 class TcpClient {
 public:
 	TcpClient(string ip, int port);
-	void Connect();
+	int Connect();
 	virtual ~TcpClient();
     int sendData(string data);
 	long receiveData(char *buffer, unsigned long size);

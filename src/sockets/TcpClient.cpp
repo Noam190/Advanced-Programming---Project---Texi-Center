@@ -9,7 +9,7 @@ TcpClient::TcpClient(string ip, int port) {
 	this->connected = false;
 }
 
-void TcpClient::Connect() {
+int TcpClient::Connect() {
 	// Init socket
 	this->client_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if(this->client_socket >= 0){
@@ -23,10 +23,12 @@ void TcpClient::Connect() {
                     sizeof(this->connection_details)) >= 0) {
             this->connected = true;
             cout<<"connect successfully"<< endl;
-            return;
+            return CORRECT;
         }
         cout<<"connection error" << endl;
+        return ERROR_CONNECT;
     }
+    return ERROR_SOCKET;
 }
 
 /***********************************************************************

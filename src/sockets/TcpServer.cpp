@@ -11,14 +11,15 @@ TcpServer::TcpServer(int port) {
 	this->online = false;
 }
 
-void TcpServer::start() {
+int TcpServer::start() {
 	// Socketing TCP
 	this->server_socket = socket(AF_INET, SOCK_STREAM, 0);
-	if (this->server_socket == -1)
-		cout << ">> Failure: opening socket." << endl;
-	else
-		cout << ">> Successfully opened socket." << endl;
-
+	if (this->server_socket == -1) {
+        cout << ">> Failure: opening socket." << endl;
+        return ERROR_SOCKET;
+    } else {
+        cout << ">> Successfully opened socket." << endl;
+    }
 	// Server details
 	memset(&this->server_details, 0, sizeof(this->server_details));
 	this->server_details.sin_family = AF_INET;
@@ -27,16 +28,20 @@ void TcpServer::start() {
 	bzero(&(this->server_details.sin_zero), 8);
 
 	// Binding
-	if (bind(this->server_socket, (struct sockaddr*)&this->server_details, sizeof(struct sockaddr)) == -1) {
+	if (bind(this->server_socket, (struct sockaddr*)&this->server_details, sizeof(struct sockaddr)) < 0) {
 		cout << ">> Failure: binding." << endl;
+        return ERROR_BIND;
 	} else {
         cout << ">> Successfully binded." << endl;
     }
 
 	// Listening
-	listen(this->server_socket, this->capacity);
-	cout << ">> Server is listening on port: " << this->port << "." << endl;
-	this->online = true;
+	if(listen(this->server_socket, this->capacity) < 0) {
+        return ERROR_LISTEN;
+    }
+    cout << ">> Server is listening on port: " << this->port << "." << endl;
+    this->online = true;
+    return CORRECT;BTH
 }
 
 TcpServer::~TcpServer() {
@@ -136,7 +141,7 @@ long TcpServer::receiveData(char *buffer, unsigned long size, int client) {
         }
 
         //return correct if there were no problem
-        return (unsigned long) read_bytes;
+        return read_bytes;
     }
     return CONNECTION_CLOSED;
 }

@@ -12,7 +12,6 @@
 #define ERROR_RECIVE -6
 #define ERROR_ACCEPT -7
 #define CONNECTION_CLOSED -8
-#define NONE 0
 
 #include <iostream>
 #include <sys/socket.h>
@@ -40,7 +39,7 @@ using namespace std;
 class TcpServer {
 public:
     TcpServer(int port);
-	void start();
+	int start();
     int connectClient();
     long receiveData(char *buffer, unsigned long size, int client) ;
     int sendData(string data, int client);
