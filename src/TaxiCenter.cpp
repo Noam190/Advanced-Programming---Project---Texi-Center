@@ -27,7 +27,8 @@ void TaxiCenter::addDriver(Driver* d) {
         d->setTaxiCab(taxi);
         this->removeTaxi(taxi->getId());
     }
-    this->tripByDrivers[d->getId()] = pair<Trip*, char>(NULL, '\0');
+    Trip t= Trip(-1,-1,-1,-1,-1.-1,Point(-8,-8),Point(-8,-8),NULL,-1);
+    this->tripByDrivers[d->getId()] = pair<Trip*, char>(&t, '\0');
     this->freeDrivers.push_back(d);
 }
 

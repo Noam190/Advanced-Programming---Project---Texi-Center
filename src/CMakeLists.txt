@@ -19,19 +19,19 @@ set(SOURCE_FILES Serialization.h core/Point.cpp core/Point.h core/Node.cpp
 
 set(SOCKETS_FILES sockets/Socket.cpp  sockets/Tcp.cpp sockets/Socket.h sockets/Tcp.h
         sockets/TcpServer.cpp sockets/TcpServer.h  sockets/TcpClient.cpp sockets/TcpClient.h)
-set(ELPP_MAJOR_VERSION "9")
-set(ELPP_MINOR_VERSION "90")
-set(ELPP_VERSION_STRING "${ELPP_MAJOR_VERSION}.${ELPP_MINOR_VERSION}")
+#set(ELPP_MAJOR_VERSION "9")
+#set(ELPP_MINOR_VERSION "90")
+#set(ELPP_VERSION_STRING "${ELPP_MAJOR_VERSION}.${ELPP_MINOR_VERSION}")
 
-set(ELPP_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "The directory the headers are installed in")
+#set(ELPP_INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/include" CACHE PATH "The directory the headers are installed in")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-install(FILES
-        src/logging/easylogging++.h
-        src/logging/easylogging++.cc
-        DESTINATION "${ELPP_INCLUDE_INSTALL_DIR}"
-        COMPONENT dev)
+#install(FILES
+#        src/logging/easylogging++.h
+#        src/logging/easylogging++.cc
+#        DESTINATION "${ELPP_INCLUDE_INSTALL_DIR}"
+#        COMPONENT dev)
 
 add_library(sockets ${SOCKETS_FILES})
 add_library(core ${SOURCE_FILES})

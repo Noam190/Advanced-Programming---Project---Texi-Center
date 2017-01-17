@@ -4,7 +4,7 @@
 
 #ifndef EX2AP_MANUOPTIONS_H
 #define EX2AP_MANUOPTIONS_H
-#include "logging/easylogging++.h"
+
 #include <iostream>
 #include "creators/DriverCreator.h"
 #include "creators/TripCreator.h"
@@ -12,7 +12,7 @@
 #include "TaxiCenter.h"
 #include "core/Grid.h"
 #include "Clock.h"
-#include "sockets/Udp.h"
+
 #include "core/Matrix.h"
 #include "Serialization.h"
 #include "creators/ThreadCreator.h"
