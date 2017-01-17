@@ -1,8 +1,4 @@
-#include <boost/container/string.hpp>
 
-#include "logging/easylogging++.h"
-
-#include "logging/easylogging++.h"
 #include "sockets/Udp.h"
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
@@ -11,6 +7,7 @@
 #include <pthread.h>
 
 int main(int argc, char *argv[]) {
+
 
     int portNum = atoi(argv[1]);
     TcpServer* tcp = new TcpServer(portNum);

@@ -25,7 +25,7 @@ private:
     std::vector<TaxiCab*> freeCabs;
     std::vector<Trip*> freeTrips;
     std::vector<pthread_t> clientsThreads;
-    std::map<int, pair<Trip*, char>> tripByDrivers;
+    std::map<int, pair<Trip*, char> > tripByDrivers;
     std::map<int, pthread_t> tripThreads;
     pthread_mutex_t map_locker;
     struct ClientData {

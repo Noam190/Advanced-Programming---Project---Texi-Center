@@ -11,7 +11,7 @@
 class Matrix : public Grid {
 private:
     unsigned long width, height;
-    vector<vector<NodeMatrix *>> arr;
+    vector< vector<NodeMatrix *> > arr;
     //update neighbors
     void neighbors(Node* n, int x, int y);
 
