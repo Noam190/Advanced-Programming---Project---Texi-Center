@@ -5,6 +5,7 @@
 #ifndef EX2AP_TAXICENTER_H
 #define EX2AP_TAXICENTER_H
 
+#define NONE 0
 
 #include <vector>
 #include <boost/tuple/tuple.hpp>

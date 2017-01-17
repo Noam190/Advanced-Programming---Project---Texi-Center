@@ -5,13 +5,13 @@
 
 all: server.out client.out
 
-server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpServer.o ThreadCreator.o
-	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpServer.o ThreadCreator.o -pthread -lboost_serialization
+server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o
+	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o -pthread -lboost_serialization
 
-client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpClient.o ThreadCreator.o
-	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpClient.o ThreadCreator.o -pthread -lboost_serialization
+client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o
+	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o -pthread -lboost_serialization
 
-client.o: src/client.cpp src/Clock.h src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h
+client.o: src/client.cpp src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h
 	g++ -g -c src/client.cpp
 
 server.o: src/server.cpp src/TaxiCenter.h src/Menu.h src/core/Matrix.h
@@ -65,7 +65,7 @@ Statistics.o: src/Statistics.cpp src/Statistics.h src/persons/Person.h
 TaxiCab.o: src/cabs/TaxiCab.cpp src/cabs/TaxiCab.h src/cabs/Vehicle.h
 	g++ -g -c -std=c++0x src/cabs/TaxiCab.cpp
 
-TaxiCenter.o: src/TaxiCenter.cpp src/TaxiCenter.h src/persons/Driver.h src/cabs/TaxiCab.h src/Trip.h src/Ride.h 
+TaxiCenter.o: src/TaxiCenter.cpp src/TaxiCenter.h src/persons/Driver.h src/cabs/TaxiCab.h src/Trip.h src/Ride.h src/sockets/TcpServer.h
 	g++ -g -c -std=c++0x src/TaxiCenter.cpp
 
 TaxiCreator.o: src/creators/TaxiCreator.cpp src/creators/TaxiCreator.h src/cabs/TaxiCab.h
@@ -83,17 +83,11 @@ ThreadCreator.o: src/creators/ThreadCreator.cpp src/creators/ThreadCreator.h src
 Vehicle.o: src/cabs/Vehicle.cpp src/cabs/Vehicle.h
 	g++ -g -c -std=c++0x src/cabs/Vehicle.cpp
 
-Socket.o: src/sockets/Socket.h src/sockets/Socket.cpp
-	g++ -g -c -std=c++0x src/sockets/Socket.cpp
-
-TcpServer.o: src/sockets/TcpServer.h src/sockets/TcpServer.cpp src/sockets/Socket.h src/sockets/Socket.cpp
+TcpServer.o: src/sockets/TcpServer.h src/sockets/TcpServer.cpp
 	g++ -g -c -std=c++0x src/sockets/TcpServer.cpp
 
-TcpClient.o: src/sockets/TcpClient.h src/sockets/TcpClient.cpp src/sockets/Socket.h src/sockets/Socket.cpp
+TcpClient.o: src/sockets/TcpClient.h src/sockets/TcpClient.cpp
 	g++ -g -c -std=c++0x src/sockets/TcpClient.cpp
-
-Tcp.o: src/sockets/Tcp.h src/sockets/Tcp.cpp src/sockets/Socket.h src/sockets/Socket.cpp
-	g++ -g -c -std=c++0x src/sockets/Tcp.cpp
 
 clean:
 	rm -f *.o *.out

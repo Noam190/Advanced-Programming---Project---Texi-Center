@@ -1,9 +1,7 @@
 
-#include "sockets/Udp.h"
 #include "core/Matrix.h"
 #include "TaxiCenter.h"
 #include "Menu.h"
-#include "sockets/Tcp.h"
 #include <pthread.h>
 
 int main(int argc, char *argv[]) {
