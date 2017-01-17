@@ -57,7 +57,9 @@ int Driver::getVelocity() {
 }
 
 Driver::~Driver() {
-    delete taxiCab;
+    if (taxiCab != NULL) {
+        delete taxiCab;
+    }
 }
 
 

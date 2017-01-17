@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
 
     delete tcpClient;
     delete driver;
+    if(ride != NULL) {
+        delete ride;
+    }
     return 0;
 }
 
