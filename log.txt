@@ -1,4 +1,10 @@
-* commit bb3a77aafcd141704f0df02620ae0c3d421c9634
+* commit 1cc2c3ee4ca6bde8a5ebdc2e866471be93695aaa (HEAD -> master)
+| Author: Noam Simon <simonoam@gamil.com>
+| Date:   Tue Jan 17 00:41:32 2017 +0200
+| 
+|     update log.txt
+|  
+* commit bb3a77aafcd141704f0df02620ae0c3d421c9634 (origin/master, origin/HEAD)
 | Author: Noam Simon <simonoam@gamil.com>
 | Date:   Mon Jan 16 23:21:16 2017 +0200
 | 

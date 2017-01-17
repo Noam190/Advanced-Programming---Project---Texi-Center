@@ -6,10 +6,10 @@
 all: server.out client.out
 
 server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpServer.o ThreadCreator.o
-	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpServer.o ThreadCreator.o -lboost_serialization
+	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpServer.o ThreadCreator.o -pthread -lboost_serialization
 
 client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpClient.o ThreadCreator.o
-	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpClient.o ThreadCreator.o -lboost_serialization
+	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o Socket.o Tcp.o TcpClient.o ThreadCreator.o -pthread -lboost_serialization
 
 client.o: src/client.cpp src/Clock.h src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h
 	g++ -g -c src/client.cpp
@@ -37,7 +37,6 @@ LuxuryCab.o: src/cabs/LuxuryCab.cpp src/cabs/LuxuryCab.h src/cabs/TaxiCab.h
 
 Matrix.o: src/core/Matrix.cpp src/core/Matrix.h src/core/Grid.h src/core/NodeMatrix.h
 	g++ -g -c -std=c++0x src/core/Matrix.cpp
-
 
 Node.o: src/core/Node.cpp src/core/Node.h
 	g++ -g -c -std=c++0x src/core/Node.cpp
