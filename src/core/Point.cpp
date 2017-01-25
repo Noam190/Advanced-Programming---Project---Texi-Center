@@ -3,12 +3,12 @@
 #include <iostream>
 
 // Constructor uses int x and y values
-Point::Point(int x, int y) : xVal(x), yVal(y) {}
+Point::Point(long x, long y) : xVal(x), yVal(y) {}
 //get x
-int Point::x()const { return  this->xVal; }
+long Point::x()const { return  this->xVal; }
 
 //get y
-int Point::y()const { return  this->yVal; }
+long Point::y()const { return  this->yVal; }
 
 //constructor Point uses Point p
 Point::Point(const Point &p) {

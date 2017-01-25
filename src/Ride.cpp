@@ -8,8 +8,9 @@
 //move the ride to the end
 void Ride::moveToTheEnd() {
     if (clock->getCurrentTime() >= trip->getTimeOfStart()) {
-        this->trip->updateLocation(this->end);
-        this->driver->updateLocation(this->end);
+        while (!isDone()) {
+            this->moveOneStep();
+        }
     }
 }
 

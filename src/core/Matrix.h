@@ -22,7 +22,7 @@ public:
     ~Matrix();
 
     //get a Node
-    Node* getNode(int x, int y);
+    Node* getNode(long x, long y);
 
     Point getPoint(Node *n);
 

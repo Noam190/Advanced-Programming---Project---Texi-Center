@@ -6,18 +6,29 @@
 #include "creators/DriverCreator.h"
 #include "Serialization.h"
 #include "sockets/TcpClient.h"
+#include "InputParser.h"
 
 //insert a driver as a client
 Driver* insertDriver() {
-
-    char dummy;
+    InputParser inputParser = InputParser();
+    string input;
     int id, age;
     char status;
     int experience, vehicleId;
-    std::cin >> id >> dummy >> age >> dummy >> status >> dummy >> experience >> dummy >> vehicleId;
-    Driver* d = createDriver(id, age, status, experience, vehicleId);
-    return d;
 
+    getline(cin, input);
+    if(inputParser.checkInput(regex("\\d*,\\d*,[M,D,W,S],\\d*,\\d*"), input)) {
+        vector<string> temp;
+        boost::split(temp, input, boost::is_any_of(","));
+        id = stoi(temp[0]);
+        age = stoi(temp[1]);
+        status = temp[2][0];
+        experience = stoi(temp[3]);
+        vehicleId = stoi(temp[4]);
+        Driver *d = createDriver(id, age, status, experience, vehicleId);
+        return d;
+    }
+    exit(0);
 }
 
 
@@ -28,12 +39,15 @@ int main(int argc, char *argv[]) {
     long readBytes;
 
 
-    TcpClient* tcpClient = new TcpClient(argv[1], atoi(argv[2]));
-    tcpClient->Connect();
 
-    std::cout<<"start serialize \n";
     //create a driver
     Driver* driver = insertDriver();
+
+
+    TcpClient* tcpClient = new TcpClient(argv[1], stoi(argv[2]));
+    tcpClient->Connect();
+ 
+    std::cout<<"start serialize \n";
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(driver);
     tcpClient->sendData(serial_str_driver);

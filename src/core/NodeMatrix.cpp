@@ -10,7 +10,7 @@ NodeMatrix::NodeMatrix() : point(Point(-1, -1)) {
 }
 
 //constructor uses int x and y
-NodeMatrix::NodeMatrix(int x, int y) : point(Point(x, y)) {
+NodeMatrix::NodeMatrix(long x, long y) : point(Point(x, y)) {
     this->isObstacle = false;
 }
 

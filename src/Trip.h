@@ -32,10 +32,13 @@ private:
     int totalMeters;
     int numOfPassengers;
     double tariff;
-    Point startPoint;
-    Point endPoint;
-    Point currentLocation;
+    Point* startPoint;
+    Point* endPoint;
+    Point* currentLocation;
     int timeOfStart;
+
+    //update the trip location
+    void updateLocation(Point* p);
 
 public:
     // Constructor
@@ -43,11 +46,11 @@ public:
 
     // Constructor all the members
     Trip(unsigned long length, int id, int totalMeters, int numberOfPassengers,
-         double tariff, Point start, Point end, vector<Point*>* path, int timeOfStart);
+         double tariff, Point* start, Point* end, vector<Point*>* path, int timeOfStart);
 
     // Constructor all the members
     Trip(int id, int totalMeters, int numberOfPassengers,
-         double tariff, Point start, Point end, int timeOfStart);
+         double tariff, Point* start, Point* end, int timeOfStart);
 
 
     //move the one step - to the next point.
@@ -90,10 +93,10 @@ public:
     Point getEndPoint();
 
     //getters ang setters
-    void setStartPoint(Point p);
+    void setStartPoint(Point* p);
 
     //getters ang setters
-    void setEndPoint(Point p);
+    void setEndPoint(Point* p);
 
     //getters and setters
     int getTimeOfStart();
@@ -105,13 +108,9 @@ public:
     Point getCurrentPoint();
 
     //getters ang setters
-    void setCurrentPoint(Point p);
-
-    //getters ang setters
     void setPath(std::vector<Point*>* pathPoints);
 
-    //update the trip location
-    void updateLocation(Point p);
+
 
     ~Trip();
 };

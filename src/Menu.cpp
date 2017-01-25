@@ -4,6 +4,7 @@
 
 #include "Menu.h"
 #include "creators/ThreadCreator.h"
+#include "InputParser.h"
 #include <pthread.h>
 
 //  run the input to the program
@@ -43,15 +44,25 @@ void Menu::run() {
 
 //insert a new taxi from the input arguments
 void Menu::insertTaxi() {
-    char dummy;
+    string input;
     int id, taxiType;
     char manufacturer, color;
-    std::cin >> id >> dummy >> taxiType >> dummy >> manufacturer >> dummy >> color;
-    //create the taxi
-    TaxiCab* cab = createTaxi(id, taxiType, manufacturer, color);
-    this->taxiCenter->addTaxiCab(cab);
-    
 
+    getline(cin, input);
+    if(this->inputParser->checkInput("taxi cab", input)) {
+        vector<string> temp;
+        boost::split(temp, input, boost::is_any_of(","));
+        id = stoi(temp[0]);
+        taxiType = stoi(temp[1]);
+        manufacturer = temp[2][0];
+        color = temp[3][0];
+        //create the taxi
+        TaxiCab *cab = createTaxi(id, taxiType, manufacturer, color);
+        this->taxiCenter->addTaxiCab(cab);
+        return;
+    }
+
+    std::cout << "-1" << endl;
 }
 
 //expecting a new driver from the client
@@ -66,38 +77,68 @@ void Menu::expectingDriver() {
 
 //insert a new trip from the input arguments
 void Menu::insertTrip() {
-    char dummy;
+    string input;
     int id;
-    int xStart, yStart, xEnd, yEnd;
+    long xStart, yStart, xEnd, yEnd;
     int numOfPass;
     double tariff;
     int timeOfStart;
-    std::cin >> id >> dummy >> xStart >> dummy >> yStart >> dummy >> xEnd
-             >> dummy >> yEnd >> dummy >> numOfPass >> dummy >> tariff
-             >> dummy >>timeOfStart;
-    //create the trip
-    tripAndThread newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
-                              numOfPass, tariff, timeOfStart);
 
-    taxiCenter->insertTrip(newTrip);
+    getline(cin, input);
+    if(this->inputParser->checkInput("trip", input)) {
+        vector<string> temp;
+        boost::split(temp, input, boost::is_any_of(","));
+        id = stoi(temp[0]);
+        xStart = stol(temp[1]);
+        yStart = stol(temp[2]);
+        xEnd = stol(temp[3]);
+        yEnd = stol(temp[4]);
+        timeOfStart = stoi(temp[7]);
+        if (checkPoint(xStart, yEnd) && checkPoint(xEnd, yEnd) && timeOfStart > 0) {
+            numOfPass = stoi(temp[5]);
+            tariff = stoi(temp[6]);
+
+            //create the trip
+            tripAndThread newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
+                                               numOfPass, tariff, timeOfStart);
+
+            taxiCenter->insertTrip(newTrip);
+            return;
+        }
+    }
+    std::cout << "-1" << endl;
+
 }
 
 //create obstacles from the input arguments
 void Menu::getObstacles() {
+    string input;
     int numOfObstacles;
-    char dummy;
-    int x;
-    int y;
+    long x;
+    long y;
     //num of obstacles
-    std::cin >> numOfObstacles;
-    while (numOfObstacles > 0) {
-        std::cin >> x >> dummy  >> y;
-        Node* n = new NodeMatrix(x, y);
-        this->grid->addObstacle(n);
-        delete n;
-        numOfObstacles--;
+    getline(cin, input);
+    if(this->inputParser->checkInput(regex("\\d*"), input)) {
+        numOfObstacles = stoi(input);
+        if (numOfObstacles >= 0) {
+            while (numOfObstacles > 0) {
+                input.clear();
+                getline(cin, input);
+                if(this->inputParser->checkInput(regex("\\d*,\\d*"), input)) {
+                    vector<string> temp;
+                    boost::split(temp, input, boost::is_any_of(","));
+                    x = stol(temp[0]);
+                    y = stol(temp[1]);
+                    if (checkPoint(x, y)) {
+                        Node *n = new NodeMatrix(x, y);
+                        this->grid->addObstacle(n);
+                        delete n;
+                        numOfObstacles--;
+                    }
+                }
+            }
+        }
     }
-
 }
 
 //get the driver location from the input arguments
@@ -113,74 +154,12 @@ void Menu::moveAllDriversToTheEnd() {
 }
 
 //constructor to a new
-Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid)
-        : grid(grid), taxiCenter(taxiCenter) {}
+Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser)
+        : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser) {
+    inputParser->addRegex("taxi cab", "\\d*,[1,2],[M,F,T,S],[R,B,G,W,P]");
+    inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
+}
 
-
-
-
-//void Menu::clientFunction(int client_socket) {
-//
-//    unsigned long readBytes;
-//    char buffer[1024];
-//    std::fill_n(buffer, 1024, 0);
-//    readBytes = tcp->receiveData(buffer, sizeof(buffer), client_socket);
-//
-//    // deserialize driver
-//    string serial_str_driver(buffer, readBytes);
-//    Driver *d = deserialize<Driver>(serial_str_driver);
-//
-//    TaxiCab* taxiCab = taxiCenter->getTaxi(d->getVehicleId());
-//
-//    //serialize taxi
-//    string serial_str_taxi = serialize(taxiCab);
-//    //sent back the taxi
-//    tcp->sendData(serial_str_taxi, client_socket);
-//
-//    //add driver to the taxi-center.
-//    taxiCenter->clientFunction(d, client_socket);
-//}
-//
-//void* Menu::threadFunction(void* element) {
-//    ClientData* data = (ClientData*) element;
-//    data->menu->clientFunction(data->client_socket);
-//    data = NULL;
-//    return NULL;
-//}
-
-
-//class DriverAgrs{
-//public:
-//    TaxiCenter* taxiCenter;
-//    TcpServer* tcp;
-//    bool stop;
-//    DriverAgrs(TaxiCenter* taxiCenter, TcpServer* tcp, bool stop) {
-//        this->taxiCenter = taxiCenter;
-//        this->tcp = tcp;
-//        this->stop = stop;
-//    }
-//};
-
-
-//pass date from server<->client
-//void Menu::updatesFromClient() {
-//    unsigned long readBytes;
-//    char buffer[1024];
-//    std::fill_n(buffer, 1024, 0);
-//    readBytes = this->tcp->receiveData(buffer, sizeof(buffer));
-//
-//    // deserialize driver
-//    string serial_str_driver(buffer, readBytes);
-//    Driver *d = deserialize<Driver>(serial_str_driver);
-//
-//    TaxiCab* taxiCab = this->taxiCenter->getTaxi(d->getVehicleId());
-//
-//    //serialize taxi
-//    string serial_str_taxi = serialize(taxiCab);
-//    //sent back the taxi
-//    this->tcp->sendData(serial_str_taxi);
-//
-//    //add driver to the taxi-center.
-//    this->taxiCenter->clientFunction(d);
-
-//}
+bool Menu::checkPoint(long x, long y){
+    return x >= 0 && x < this->grid->getWidth() && y >= 0 && x < this->grid->getHeight();
+}

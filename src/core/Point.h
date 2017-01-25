@@ -8,7 +8,7 @@
 
 class Point {
 private:
-    int xVal, yVal;
+    long xVal, yVal;
 
     friend class boost::serialization::access;
     template<class Archive>
@@ -22,16 +22,16 @@ public:
 
 
     // Constructor uses int x and y values
-    Point(int x, int y);
+    Point(long x, long y);
 
     //constructor uses Point p
     Point(const Point &p);
 
     //get x
-    int x()const;
+    long x()const;
 
     //get y
-    int y()const;
+    long y()const;
 
     //overloading ==
     bool operator== (const Point &p) const;

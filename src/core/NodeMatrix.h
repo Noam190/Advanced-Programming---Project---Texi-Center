@@ -19,7 +19,7 @@ public:
     Point getPoint() const;
 
     //constructor uses int x and y
-    NodeMatrix(int x, int y);
+    NodeMatrix(long x, long y);
 
     void setIsObstacle(bool x);
 

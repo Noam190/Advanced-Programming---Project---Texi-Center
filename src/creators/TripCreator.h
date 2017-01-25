@@ -16,10 +16,11 @@ struct tripAndThread {
 };
 
 //help to create a trip
-tripAndThread createTrip(Matrix *grid, int id, int xStart, int yStart, int xEnd, int yEnd, int numOfPass,
+tripAndThread createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long yEnd, int numOfPass,
                          double tariff, int timeOfStart);
 
-static void * calculatePath(void *pathArgs);
+void * calculatePath(void *pathArgs);
+
 
 
 class PathAgrs{

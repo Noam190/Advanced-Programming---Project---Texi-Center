@@ -1,6 +1,7 @@
 
 #include <map>
 #include "TcpServer.h"
+#include "../logging/easylogging++.h"
 
 TcpServer::TcpServer(int port) {
 	this->port = port;
@@ -15,10 +16,10 @@ int TcpServer::start() {
 	// Socketing TCP
 	this->server_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->server_socket == -1) {
-        cout << ">> Failure: opening socket." << endl;
+        LOG(ERROR) << ">> Failure: opening socket.";
         return ERROR_SOCKET;
     } else {
-        cout << ">> Successfully opened socket." << endl;
+        LOG(DEBUG) << ">> Successfully opened socket.";
     }
 	// Server details
 	memset(&this->server_details, 0, sizeof(this->server_details));
@@ -29,23 +30,23 @@ int TcpServer::start() {
 
 	// Binding
 	if (bind(this->server_socket, (struct sockaddr*)&this->server_details, sizeof(struct sockaddr)) < 0) {
-		cout << ">> Failure: binding." << endl;
+        LOG(ERROR) << ">> Failure: binding.";
         return ERROR_BIND;
 	} else {
-        cout << ">> Successfully binded." << endl;
+        LOG(DEBUG) << ">> Successfully binded.";
     }
 
 	// Listening
 	if(listen(this->server_socket, this->capacity) < 0) {
+        LOG(ERROR) << ">> Failure: listening.";
         return ERROR_LISTEN;
     }
-    cout << ">> Server is listening on port: " << this->port << "." << endl;
+    LOG(DEBUG) << ">> Server is listening on port: " << this->port << ".";
     this->online = true;
     return CORRECT;
 }
 
 TcpServer::~TcpServer() {
-    cout << "close SERVER" << endl;
 	close(this->server_socket);
 
 	ClientData* data = NULL;
@@ -56,6 +57,7 @@ TcpServer::~TcpServer() {
     }
 
 	delete this->clients;
+    LOG(DEBUG) << "close SERVER";
 }
 
 
@@ -68,7 +70,7 @@ int TcpServer::connectClient() {
     // If there's some remaining capacity on server
     if (this->num_of_connections < this->capacity) {
         // Accepted a client
-        client = accept(this->server_socket, (struct sockaddr*)&client_socket, &client_size);
+        client = accept(this->server_socket, (struct sockaddr*) &client_socket, &client_size);
         if (client >= 0) {
             // Create the clients data
             data = new ClientData();
@@ -80,13 +82,15 @@ int TcpServer::connectClient() {
 
             // Push the client to the list
             this->clients->push_back(data);
-
+            LOG(DEBUG) << ">> accepting new client.";
             return data->client;
         } else {
+            LOG(ERROR) << ">> Failure: accepting client.";
             return ERROR_ACCEPT;
         }
     }
-    return ERROR_ACCEPT;
+    LOG(ERROR) << ">> Failure: accepting client - out of capacity.";
+    return ERROR_CAPACITY;
 }
 
 /***********************************************************************
@@ -111,7 +115,7 @@ int TcpServer::sendData(string data, int client) {
                 return CORRECT;
             }
         } catch (...) {
-            cout << ">> Error." << endl;
+            cout << ">> Error.";
         }
     }
     return CONNECTION_CLOSED;

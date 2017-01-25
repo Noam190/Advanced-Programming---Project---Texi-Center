@@ -35,7 +35,7 @@ void Matrix::neighbors(Node* n, int x , int y){
     }
 }
 //get a Node
-Node* Matrix::getNode(int x, int y) {
+Node* Matrix::getNode(long x, long y) {
     return this->arr[x][y];
 }
 

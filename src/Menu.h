@@ -17,16 +17,18 @@
 #include "Serialization.h"
 #include "creators/ThreadCreator.h"
 #include "sockets/TcpServer.h"
+#include "InputParser.h"
 
 class Menu {
 private:
+    InputParser* inputParser;
     Matrix *grid;
     TaxiCenter *taxiCenter;
-
+    bool checkPoint(long x,long y);
 public:
 
     //constructor to a new
-    Menu(TaxiCenter *taxiCenter, Matrix *grid);
+    Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser);
 
     //run the funcs with input
     void run();
@@ -50,19 +52,4 @@ public:
     void moveAllDriversToTheEnd();
 };
 
-
-
 #endif //EX2AP_MANUOPTIONS_H
-
-
-//    struct ClientData {
-//        int client_socket;
-//        Menu* menu;
-//    };
-
-//    void clientFunction(int client_socket);
-//
-//    static void* Menu::threadFunction(void* element);
-
-//    //pass date from server<->client
-//    void updatesFromClient();
