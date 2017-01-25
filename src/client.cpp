@@ -28,6 +28,7 @@ Driver* insertDriver() {
         Driver *d = createDriver(id, age, status, experience, vehicleId);
         return d;
     }
+
     exit(0);
 }
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     TcpClient* tcpClient = new TcpClient(argv[1], stoi(argv[2]));
     tcpClient->Connect();
- 
+
     std::cout<<"start serialize \n";
     //serialize driver
     std::string serial_str_driver = serialize<Driver>(driver);
