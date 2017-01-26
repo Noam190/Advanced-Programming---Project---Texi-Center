@@ -9,15 +9,18 @@
 #include "../Trip.h"
 #include "../core/Matrix.h"
 #include "ThreadCreator.h"
+#include "../TaxiCenter.h"
+#include "../Job.h"
+#include "../ThreadPool.h"
 
 struct tripAndThread {
     Trip* trip;
-    pthread_t ptId;
+    int ptId;
 };
 
 //help to create a trip
 tripAndThread createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long yEnd, int numOfPass,
-                         double tariff, int timeOfStart);
+                         double tariff, int timeOfStart, Job* arr,  ThreadPool* tripThreadPool,int numInJobs );
 
 void * calculatePath(void *pathArgs);
 

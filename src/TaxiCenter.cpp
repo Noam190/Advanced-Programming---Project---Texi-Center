@@ -10,6 +10,7 @@
 #include "creators/ThreadCreator.h"
 #include "creators/TripCreator.h"
 
+
 //send a taxi
 TaxiCab TaxiCenter::sendTaxi() {
     return TaxiCab(HONDA, RED, 0,0,0, 0);
@@ -109,8 +110,10 @@ TaxiCab * TaxiCenter::getTaxi(int idVehicle) {
     return NULL;
 }
 
-TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp) : clock(clock), tcp(tcp) {
+TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp)
+        : clock(clock),tcp(tcp) {
     pthread_mutex_init(&this->map_locker, 0);
+
 }
 
 

@@ -15,7 +15,8 @@ set(SOURCE_FILES Serialization.h core/Point.cpp core/Point.h core/Node.cpp
         persons/Person.h TaxiCenter.cpp TaxiCenter.h cabs/Vehicle.cpp cabs/Vehicle.h creators/TripCreator.cpp
         creators/TripCreator.h creators/TaxiCreator.cpp creators/TaxiCreator.h creators/DriverCreator.cpp
         creators/DriverCreator.h Menu.cpp Menu.h Ride.cpp Ride.h Clock.cpp Clock.h creators/ThreadCreator.cpp creators/ThreadCreator.h
-        logging/easylogging++.h logging/easylogging++.cpp InputParser.cpp InputParser.h)
+        logging/easylogging++.h logging/easylogging++.cpp InputParser.cpp InputParser.h
+         Job.cpp Job.h ThreadPool.cpp ThreadPool.h)
 
 set(SOCKETS_FILES sockets/TcpServer.cpp sockets/TcpServer.h  sockets/TcpClient.cpp sockets/TcpClient.h)
 set(ELPP_MAJOR_VERSION "9")

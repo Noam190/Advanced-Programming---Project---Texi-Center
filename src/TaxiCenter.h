@@ -11,11 +11,12 @@
 #include <boost/tuple/tuple.hpp>
 #include <map>
 #include "persons/Driver.h"
-#include "cabs/TaxiCab.h"
+#include  "cabs/TaxiCab.h"
 #include "Trip.h"
 #include "Ride.h"
 #include "sockets/TcpServer.h"
 #include "creators/TripCreator.h"
+#include "ThreadPool.h"
 
 class TaxiCenter {
 private:
@@ -29,6 +30,8 @@ private:
     std::map<int, pair<Trip*, char> > tripByDrivers;
     std::map<int, pthread_t> tripThreads;
     pthread_mutex_t map_locker;
+
+
     struct ClientData {
         int client_socket;
         TaxiCenter* taxiCenter;

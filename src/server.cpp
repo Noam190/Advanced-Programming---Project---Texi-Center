@@ -7,6 +7,9 @@
 
 #define ELPP_THREAD_SAFE
 #include "logging/easylogging++.h"
+#include "Job.h"
+#include "ThreadPool.h"
+
 INITIALIZE_EASYLOGGINGPP
 
 
@@ -30,6 +33,10 @@ int main(int argc, char *argv[]) {
     TcpServer* tcp = new TcpServer(portNum);
     tcp->start();
 
+    ThreadPool* tripThreadPool= new ThreadPool(3);
+    Job *arr;
+
+
     Clock* clock = new Clock();
     TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp);
     InputParser* inputParser = new InputParser();
@@ -47,12 +54,13 @@ int main(int argc, char *argv[]) {
         if (height > 0 && width > 0) {
 
             Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
-            Menu menu = Menu(taxiCenter, grid, inputParser);
+            Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool,arr, 0);
             //run all the other inputs
             menu.run();
 
             delete grid;
             delete clock;
+            delete tripThreadPool;
             delete taxiCenter;
             delete tcp;
             delete inputParser;

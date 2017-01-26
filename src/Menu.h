@@ -24,11 +24,15 @@ private:
     InputParser* inputParser;
     Matrix *grid;
     TaxiCenter *taxiCenter;
+    ThreadPool* tripThreadPool;
+    Job *arr[5];
+    int numInJobs;
     bool checkPoint(long x,long y);
 public:
 
     //constructor to a new
-    Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser);
+    Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser,
+         ThreadPool* tripThreadPool,Job *arr, int numInJobs);
 
     //run the funcs with input
     void run();
