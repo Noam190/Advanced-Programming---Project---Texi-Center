@@ -2,10 +2,11 @@
 // Created by mei on 25/01/17.
 //
 
-#ifndef TAXI_CENTER_THREADPOOL_H
-#define TAXI_CENTER_THREADPOOL_H
-#endif //TAXI_CENTER_THREADPOOL_H
-
+//#ifndef TAXI_CENTER_THREADPOOL_H
+//#define TAXI_CENTER_THREADPOOL_H
+//#endif //TAXI_CENTER_THREADPOOL_H
+#ifndef THREADPOOL_H
+#define THREADPOOL_H
 
 
 #include <sys/types.h>
@@ -29,3 +30,4 @@ public:
 };
 
 
+#endif //TAXI_CENTER_THREADPOOL_H
