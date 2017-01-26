@@ -34,7 +34,6 @@ int main(int argc, char *argv[]) {
     tcp->start();
 
     ThreadPool* tripThreadPool= new ThreadPool(3);
-    Job *arr;
 
 
     Clock* clock = new Clock();
@@ -54,7 +53,7 @@ int main(int argc, char *argv[]) {
         if (height > 0 && width > 0) {
 
             Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
-            Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool,arr, 0);
+            Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool, 0);
             //run all the other inputs
             menu.run();
 

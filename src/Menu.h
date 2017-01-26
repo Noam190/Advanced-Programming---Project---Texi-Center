@@ -25,14 +25,13 @@ private:
     Matrix *grid;
     TaxiCenter *taxiCenter;
     ThreadPool* tripThreadPool;
-    Job *arr[5];
-    int numInJobs;
+
     bool checkPoint(long x,long y);
 public:
 
     //constructor to a new
     Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser,
-         ThreadPool* tripThreadPool,Job *arr, int numInJobs);
+         ThreadPool* tripThreadPool);
 
     //run the funcs with input
     void run();

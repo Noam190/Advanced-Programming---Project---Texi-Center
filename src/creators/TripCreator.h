@@ -19,8 +19,8 @@ struct tripAndThread {
 };
 
 //help to create a trip
-tripAndThread createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long yEnd, int numOfPass,
-                         double tariff, int timeOfStart, Job* arr,  ThreadPool* tripThreadPool,int numInJobs );
+tripAndThread createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd,
+     long yEnd, int numOfPass, double tariff, int timeOfStart, ThreadPool* tripThreadPool);
 
 void * calculatePath(void *pathArgs);
 
