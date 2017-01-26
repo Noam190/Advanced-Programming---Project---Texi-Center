@@ -11,14 +11,17 @@ tripAndThread createTrip(Matrix *grid, int id, long xStart,
     Point* start = new Point(xStart, yStart);
     Point* end = new Point(xEnd, yEnd);
 
-    PathAgrs* args = new PathAgrs(grid, *start, *end);
+    Trip* trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
+
+    PathAgrs* args = new PathAgrs(grid, *start, *end, trip);
+
     Job* job=new Job(calculatePath, args);
     tripThreadPool->addJob(job);
 
-//    pthread_t ptId = createThread(calculatePath, args);
+    //    pthread_t ptId = createThread(calculatePath, args);
     tripAndThread t;
-    t.trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
-    t.ptId = numInJobs;
+     t.trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
+    t.ptId = -1;
 
     return t;
 }

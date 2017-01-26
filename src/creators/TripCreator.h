@@ -31,7 +31,9 @@ public:
     Matrix* grid;
     Point* start;
     Point* end;
-    PathAgrs(Matrix *grid, Point start,  Point end) : grid(grid) {
+    Trip* trip;
+
+    PathAgrs(Matrix *grid, Point start,  Point end, Trip* trip) : grid(grid), trip(trip) {
         this->start = new Point(start.x(), start.y());
         this->end = new Point(end.x(), end.y());
     }

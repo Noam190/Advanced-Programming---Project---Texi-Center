@@ -109,6 +109,8 @@ public:
 
     //getters ang setters
     void setPath(std::vector<Point*>* pathPoints);
+    //getters ang setters
+    bool hasPath();
 
 
 
