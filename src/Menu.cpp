@@ -9,37 +9,46 @@
 
 //  run the input to the program
 void Menu::run() {
+    string input;
+    int option = 0;
+
     //getObstacles();
-    cin.ignore();
-    int option;
-    cin >> option;
-    while (option != 7) {
-        cin.ignore();
-        switch (option) {
-            case 1: //insert drivers
-                expectingDriver();
-                break;
-            case 2: //insert trip
-                insertTrip();
-                break;
-            case 3: //insert taxi
-                insertTaxi();
-                break;
-            case 4: //get the drivers location
-                getDriverLocation();
-                break;
-            case 6: //move all the drivers to end
-                moveAllDriversToTheEnd();
-                break;
-            case 9:// move the drivers to the next point.
-                this->taxiCenter->moveAllRidesOneStep();
-                break;
-            default:
-                break;
+    //cin.ignore();
+     do {
+        //cin >> option;
+        getline(cin, input);
+        if(this->inputParser->checkInput("manu options", input)) {
+            option = stoi(input);
+            runOption(option);
+        } else {
+            std::cout << "-1" << endl;
         }
-        cin >> option;
+    } while (option != 7);
+}
+
+void Menu::runOption(int option) {
+    switch (option) {
+        case 1: //insert drivers
+            expectingDriver();
+            break;
+        case 2: //insert trip
+            insertTrip();
+            break;
+        case 3: //insert taxi
+            insertTaxi();
+            break;
+        case 4: //get the drivers location
+            getDriverLocation();
+            break;
+        case 6: //move all the drivers to end
+            moveAllDriversToTheEnd();
+            break;
+        case 9:// move the drivers to the next point.
+            this->taxiCenter->moveAllRidesOneStep();
+            break;
+        default:
+            return;
     }
-    return;
 }
 
 //insert a new taxi from the input arguments
@@ -155,11 +164,14 @@ void Menu::moveAllDriversToTheEnd() {
 //constructor to a new
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
-    inputParser->addRegex("taxi cab", "\\d*,[1,2],[M,F,T,S],[R,B,G,W,P]");
+    inputParser->addRegex("taxi cab", "\\d*,[12],[MFTS],[RBGWP]");
     inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
+    inputParser->addRegex("manu options", "[1234679]");
 
 }
 
 bool Menu::checkPoint(long x, long y){
     return x >= 0 && x < this->grid->getWidth() && y >= 0 && x < this->grid->getHeight();
 }
+
+

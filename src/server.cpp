@@ -23,7 +23,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
         boost::split(temp, inputGrid, boost::is_any_of(" "));
         *width = stol(temp[0]);
         *height = stol(temp[1]);
-        if (height > 0 && width > 0) {
+        if (*height > 0 && *width > 0) {
             string input;
             int numOfObstacles;
             long x;
@@ -53,8 +53,13 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
                                 delete obstacles;
                                 return NULL;
                             }
+
                         }
+                        return NULL;
+
                     }
+                    return obstacles;
+
                 }
             }
         } else {

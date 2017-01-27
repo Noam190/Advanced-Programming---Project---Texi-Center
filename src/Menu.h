@@ -27,6 +27,7 @@ private:
     ThreadPool* tripThreadPool;
 
     bool checkPoint(long x,long y);
+    void runOption(int option);
 public:
 
     //constructor to a new
