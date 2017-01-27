@@ -29,14 +29,14 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
     long y;
     //num of obstacles
     getline(cin, input);
-    if (!inputParser->checkInput(regex("\\d*"), input)) {
+    if (!inputParser->checkInput(regex("\\d+"), input)) {
         return NULL;
     }
     numOfObstacles = stoi(input);
     while (numOfObstacles > 0) {
         input.clear();
         getline(cin, input);
-        if (inputParser->checkInput(regex("\\d*,\\d*"), input)) {
+        if (inputParser->checkInput(regex("\\d+,\\d+"), input)) {
             vector<string> temp;
             boost::split(temp, input, boost::is_any_of(","));
             x = stol(temp[0]);
@@ -62,7 +62,7 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
 vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* height) {
     string inputGrid;
     getline(cin, inputGrid);
-    if (inputParser->checkInput(regex("\\d* \\d*"), inputGrid)) {
+    if (inputParser->checkInput(regex("\\d+ \\d+"), inputGrid)) {
         vector<string> temp;
         boost::split(temp, inputGrid, boost::is_any_of(" "));
         *width = stol(temp[0]);

@@ -17,7 +17,7 @@ Driver* insertDriver() {
     int experience, vehicleId;
 
     getline(cin, input);
-    if(inputParser.checkInput(regex("\\d*,\\d*,[M,D,W,S],\\d*,\\d*"), input)) {
+    if(inputParser.checkInput(regex("\\d\\d*,\\d*,[M,D,W,S],\\d\\d*,\\d\\d*"), input)) {
         vector<string> temp;
         boost::split(temp, input, boost::is_any_of(","));
         id = stoi(temp[0]);

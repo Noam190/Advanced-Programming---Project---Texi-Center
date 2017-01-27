@@ -15,9 +15,8 @@ void Menu::run() {
     //getObstacles();
     //cin.ignore();
      do {
-        //cin >> option;
-        getline(cin, input);
-        if(this->inputParser->checkInput("manu options", input)) {
+         getline(cin, input);
+         if(this->inputParser->checkInput("manu options", input)) {
             option = stoi(input);
             runOption(option);
         } else {
@@ -76,12 +75,17 @@ void Menu::insertTaxi() {
 
 //expecting a new driver from the client
 void Menu::expectingDriver() {
+    string input;
     int numOfDrivers;
-    std::cin >> numOfDrivers;
-
-    for (int i = 0; i < numOfDrivers; ++i) {
-        taxiCenter->addClient();
+    getline(cin, input);
+    if(this->inputParser->checkInput(regex("\\d+"), input)) {
+        numOfDrivers = stoi(input);
+        for (int i = 0; i < numOfDrivers; ++i) {
+            taxiCenter->addClient();
+        }
+        return;
     }
+    std::cout << "-1" << endl;
 }
 
 //insert a new trip from the input arguments
@@ -151,9 +155,15 @@ void Menu::insertTrip() {
 
 //get the driver location from the input arguments
 void Menu::getDriverLocation() {
+    string input;
     int idDriver;
-    std::cin >> idDriver;
-    std::cout << this->taxiCenter->getDriverLocation(idDriver);
+    getline(cin, input);
+    if(this->inputParser->checkInput(regex("\\d+"), input)) {
+        idDriver = stoi(input);
+        std::cout << this->taxiCenter->getDriverLocation(idDriver);
+        return;
+    }
+    std::cout << "-1" << endl;
 }
 
 // move all the drivers to the next node in the trip
@@ -164,8 +174,8 @@ void Menu::moveAllDriversToTheEnd() {
 //constructor to a new
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
-    inputParser->addRegex("taxi cab", "\\d*,[12],[FHTS],[RBGWP]");
-    inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
+    inputParser->addRegex("taxi cab", "\\d+,[12],[FHTS],[RBGWP]");
+    inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+");
     inputParser->addRegex("manu options", "[1234679]");
 
 }
