@@ -139,7 +139,7 @@ void TaxiCenter::moveAllRidesOneStep() {
 
 //create a new ride
 void TaxiCenter::createRides() {
-    void * status;
+    void * status ;
 
     for (int j = 0; j < freeTrips.size(); ++j) {
         if (freeTrips[j]->getTimeOfStart() == clock->getCurrentTime()){
