@@ -12,7 +12,7 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-vector<NodeMatrix*>* deleteObsticales(vector<NodeMatrix *> *obstacles) {
+vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     for (int i = 0; i < obstacles->size(); ++i) {
         delete (*obstacles)[i];
     }
@@ -20,9 +20,9 @@ vector<NodeMatrix*>* deleteObsticales(vector<NodeMatrix *> *obstacles) {
     return NULL;
 }
 
-vector<NodeMatrix*>* getObsticals(InputParser* inputParser, long width, long height) {
-    vector<NodeMatrix *> *obstacles;
-
+vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long height) {
+    vector<NodeMatrix *> *obstacles = new vector<NodeMatrix *>();
+    ;
     string input;
     long numOfObstacles;
     long x;
@@ -33,7 +33,6 @@ vector<NodeMatrix*>* getObsticals(InputParser* inputParser, long width, long hei
         return NULL;
     }
     numOfObstacles = stoi(input);
-    obstacles = new vector<NodeMatrix *>((unsigned long) numOfObstacles);
     while (numOfObstacles > 0) {
         input.clear();
         getline(cin, input);
@@ -47,11 +46,11 @@ vector<NodeMatrix*>* getObsticals(InputParser* inputParser, long width, long hei
                 obstacles->push_back(n);
                 numOfObstacles--;
             } else {
-                return deleteObsticales(obstacles);
+                return deleteObstacles(obstacles);
             }
 
         } else {
-            return deleteObsticales(obstacles);
+            return deleteObstacles(obstacles);
         }
 
     }
@@ -69,7 +68,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
         *width = stol(temp[0]);
         *height = stol(temp[1]);
         if (*height > 0 && *width > 0) {
-            return getObsticals(inputParser, *width, *height);
+            return getObstacles(inputParser, *width, *height);
         } else {
             return NULL;
         }

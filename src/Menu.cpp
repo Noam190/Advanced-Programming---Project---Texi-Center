@@ -164,7 +164,7 @@ void Menu::moveAllDriversToTheEnd() {
 //constructor to a new
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
-    inputParser->addRegex("taxi cab", "\\d*,[12],[MFTS],[RBGWP]");
+    inputParser->addRegex("taxi cab", "\\d*,[12],[FHTS],[RBGWP]");
     inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
     inputParser->addRegex("manu options", "[1234679]");
 
