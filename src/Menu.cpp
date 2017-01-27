@@ -15,13 +15,18 @@ void Menu::run() {
     //getObstacles();
     //cin.ignore();
      do {
+
         //cin >> option;
+         cin.clear();
         getline(cin, input);
-        if(this->inputParser->checkInput("manu options", input)) {
+        if(!this->inputParser->checkInput("manu options", input)) {
+
+            std::cout << "-1" << endl;
+            std::cout<<"CASE1";
+
+        } else {
             option = stoi(input);
             runOption(option);
-        } else {
-            std::cout << "-1" << endl;
         }
     } while (option != 7);
 }
@@ -70,8 +75,8 @@ void Menu::insertTaxi() {
         this->taxiCenter->addTaxiCab(cab);
         return;
     }
+        std::cout << "-1" << endl;
 
-    std::cout << "-1" << endl;
 }
 
 //expecting a new driver from the client
@@ -115,7 +120,9 @@ void Menu::insertTrip() {
             return;
         }
     }
-    std::cout << "-1" << endl;
+
+        std::cout << "-1" << endl;
+
 }
 
 ////create obstacles from the input arguments
@@ -166,7 +173,7 @@ Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, Threa
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
     inputParser->addRegex("taxi cab", "\\d*,[12],[FHTS],[RBGWP]");
     inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
-    inputParser->addRegex("manu options", "[1234679]");
+    inputParser->addRegex("manu options", "[1,2,3,4,6,7,9]");
 
 }
 
