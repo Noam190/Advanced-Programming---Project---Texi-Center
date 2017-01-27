@@ -16,7 +16,7 @@ NodeMatrix::NodeMatrix(long x, long y) : point(Point(x, y)) {
 
 //print the value
 void NodeMatrix::printValue(ostream &os) const {
-    os<<this->point;
+    os << this->point;
 }
 
 //overloading <<
@@ -46,4 +46,8 @@ int NodeMatrix::getDistance() {
         return -2;
     }
     return Node::getDistance();
+}
+
+bool NodeMatrix::IsObstacle() {
+    return this->isObstacle;
 }

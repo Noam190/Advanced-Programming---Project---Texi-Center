@@ -33,6 +33,8 @@ public:
     //remove a new obstacle
     void removeObstacle(Node* n);
 
+    bool isObstacle(long x, long y);
+
     //get width
     unsigned long getWidth() { return width; }
 

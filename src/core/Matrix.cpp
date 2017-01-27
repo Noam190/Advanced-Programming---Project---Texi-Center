@@ -90,3 +90,7 @@ Matrix::~Matrix() {
         }
     }
 }
+
+bool Matrix::isObstacle(long x, long y) {
+    return this->arr[x][y]->IsObstacle();
+}

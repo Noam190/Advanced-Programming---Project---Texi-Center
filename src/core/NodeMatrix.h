@@ -23,6 +23,8 @@ public:
 
     void setIsObstacle(bool x);
 
+    bool IsObstacle();
+
     int getDistance();
 
 

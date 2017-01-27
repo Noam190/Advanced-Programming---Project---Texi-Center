@@ -107,7 +107,7 @@ void Menu::insertTrip() {
         xEnd = stol(temp[3]);
         yEnd = stol(temp[4]);
         timeOfStart = stoi(temp[7]);
-        if (checkPoint(xStart, yEnd) && checkPoint(xEnd, yEnd) && timeOfStart > 0) {
+        if (checkPoint(xStart, yEnd) && checkPoint(xEnd, yEnd)) {
             numOfPass = stoi(temp[5]);
             tariff = stoi(temp[6]);
 
@@ -179,13 +179,16 @@ void Menu::moveAllDriversToTheEnd() {
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
     inputParser->addRegex("taxi cab", "\\d+,[12],[FHTS],[RBGWP]");
-    inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+");
+    inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,[1-9]\\d*");
     inputParser->addRegex("manu options", "[1234679]");
 
 }
 
 bool Menu::checkPoint(long x, long y){
-    return x >= 0 && x < this->grid->getWidth() && y >= 0 && x < this->grid->getHeight();
+    if(x >= 0 && x < this->grid->getWidth() && y >= 0 && x < this->grid->getHeight()){
+        return !this->grid->isObstacle(x, y);
+    }
+    return false;
 }
 
 
