@@ -13,6 +13,59 @@
 INITIALIZE_EASYLOGGINGPP
 
 
+//create obstacles from the input arguments
+vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* height) {
+    vector<NodeMatrix *> *obstacles = NULL;
+    string inputGrid;
+    getline(cin, inputGrid);
+    if (inputParser->checkInput(regex("\\d* \\d*"), inputGrid)) {
+        vector<string> temp;
+        boost::split(temp, inputGrid, boost::is_any_of(" "));
+        *width = stol(temp[0]);
+        *height = stol(temp[1]);
+        if (height > 0 && width > 0) {
+            string input;
+            int numOfObstacles;
+            long x;
+            long y;
+            obstacles = new vector<NodeMatrix *>();
+            //num of obstacles
+            getline(cin, input);
+            if (inputParser->checkInput(regex("\\d*"), input)) {
+                numOfObstacles = stoi(input);
+                if (numOfObstacles >= 0) {
+                    while (numOfObstacles > 0) {
+                        input.clear();
+                        getline(cin, input);
+                        if (inputParser->checkInput(regex("\\d*,\\d*"), input)) {
+                            temp.clear();
+                            boost::split(temp, input, boost::is_any_of(","));
+                            x = stol(temp[0]);
+                            y = stol(temp[1]);
+                            if (x >= 0 && x < *width && y >= 0 && x < *height) {
+                                NodeMatrix *n = new NodeMatrix(x, y);
+                                obstacles->push_back(n);
+                                numOfObstacles--;
+                            } else {
+                                for (int i = 0; i < obstacles->size(); ++i) {
+                                    delete (*obstacles)[i];
+                                }
+                                delete obstacles;
+                                return NULL;
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            return NULL;
+        }
+    } else {
+        return NULL;
+    }
+    return obstacles;
+}
+
 int main(int argc, char *argv[]) {
     START_EASYLOGGINGPP(argc, argv);
     el::Configurations defaultConf;
@@ -39,34 +92,38 @@ int main(int argc, char *argv[]) {
     Clock* clock = new Clock();
     TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp);
     InputParser* inputParser = new InputParser();
-    inputParser->addRegex("grid", "\\d* \\d*");
 
-    //grid initialize grid and add obstacles if there are any.
-    //std::cin >> width >> height;
-    string inputGrid;
-    getline(cin, inputGrid);
-    if (inputParser->checkInput("grid", inputGrid)) {
-        vector<string> temp;
-        boost::split(temp, inputGrid, boost::is_any_of(" "));
-        long width = stol(temp[0]);
-        long height = stol(temp[1]);
-        if (height > 0 && width > 0) {
-
-            Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
-            Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool);
-            //run all the other inputs
-            menu.run();
-
-            delete grid;
-            delete clock;
-            delete tripThreadPool;
-            delete taxiCenter;
-            delete tcp;
-            delete inputParser;
-            return 0;
+    long width = -1  , height = -1;
+    vector<NodeMatrix *> *obstacles = NULL;
+    do {
+        obstacles = getGridArgs(inputParser, &width, &height);
+        if (obstacles == NULL) {
+            std::cout << "-1" << std::endl;
         }
+    } while (obstacles == NULL);
+    Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
+    for (int i = 0; i < obstacles->size(); ++i) {
+        Node* n = (*obstacles)[i];
+        grid->addObstacle(n);
+        delete n;
     }
+    delete obstacles;
+
+    Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool);
+    //run all the other inputs
+    menu.run();
+
+    delete grid;
+    delete clock;
+    delete tripThreadPool;
+    delete taxiCenter;
+    delete tcp;
+    delete inputParser;
+    return 0;
+
+
 }
+
 
 //Node* n  = grid->getNode(4, 34);
 //std::list<Node*> l = n->getNeighbors();

@@ -9,7 +9,7 @@
 
 //  run the input to the program
 void Menu::run() {
-    getObstacles();
+    //getObstacles();
     cin.ignore();
     int option;
     cin >> option;
@@ -107,39 +107,38 @@ void Menu::insertTrip() {
         }
     }
     std::cout << "-1" << endl;
-
 }
 
-//create obstacles from the input arguments
-void Menu::getObstacles() {
-    string input;
-    int numOfObstacles;
-    long x;
-    long y;
-    //num of obstacles
-    getline(cin, input);
-    if(this->inputParser->checkInput(regex("\\d*"), input)) {
-        numOfObstacles = stoi(input);
-        if (numOfObstacles >= 0) {
-            while (numOfObstacles > 0) {
-                input.clear();
-                getline(cin, input);
-                if(this->inputParser->checkInput(regex("\\d*,\\d*"), input)) {
-                    vector<string> temp;
-                    boost::split(temp, input, boost::is_any_of(","));
-                    x = stol(temp[0]);
-                    y = stol(temp[1]);
-                    if (checkPoint(x, y)) {
-                        Node *n = new NodeMatrix(x, y);
-                        this->grid->addObstacle(n);
-                        delete n;
-                        numOfObstacles--;
-                    }
-                }
-            }
-        }
-    }
-}
+////create obstacles from the input arguments
+//void Menu::getObstacles() {
+//    string input;
+//    int numOfObstacles;
+//    long x;
+//    long y;
+//    //num of obstacles
+//    getline(cin, input);
+//    if(this->inputParser->checkInput(regex("\\d*"), input)) {
+//        numOfObstacles = stoi(input);
+//        if (numOfObstacles >= 0) {
+//            while (numOfObstacles > 0) {
+//                input.clear();
+//                getline(cin, input);
+//                if(this->inputParser->checkInput(regex("\\d*,\\d*"), input)) {
+//                    vector<string> temp;
+//                    boost::split(temp, input, boost::is_any_of(","));
+//                    x = stol(temp[0]);
+//                    y = stol(temp[1]);
+//                    if (checkPoint(x, y)) {
+//                        Node *n = new NodeMatrix(x, y);
+//                        this->grid->addObstacle(n);
+//                        delete n;
+//                        numOfObstacles--;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
 
 //get the driver location from the input arguments
 void Menu::getDriverLocation() {
@@ -154,10 +153,8 @@ void Menu::moveAllDriversToTheEnd() {
 }
 
 //constructor to a new
-Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid,
-           InputParser *inputParser, ThreadPool* tripThreadPool)
-        : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser),
-          tripThreadPool(tripThreadPool){
+Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
+        : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
     inputParser->addRegex("taxi cab", "\\d*,[1,2],[M,F,T,S],[R,B,G,W,P]");
     inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
 
