@@ -10,24 +10,28 @@
 //  run the input to the program
 void Menu::run() {
     string input;
+
     int option = 0;
 
     //getObstacles();
     //cin.ignore();
      do {
 
-        //cin >> option;
-         cin.clear();
         getline(cin, input);
-        if(!this->inputParser->checkInput("manu options", input)) {
+         std::cout <<"in  "<<input<<std::endl;
+         cout.flush();
+        while()
+             if (!this->inputParser->checkInput("manu options", input)) {
+                 std::cout << "-1" << std::endl;
+                 cout.flush();
+                 cin.clear();
 
-            std::cout << "-1" << endl;
-            std::cout<<"CASE1";
+             } else {
+                 option = stoi(input);
+                 runOption(option);
+                 cout.flush();
+             }
 
-        } else {
-            option = stoi(input);
-            runOption(option);
-        }
     } while (option != 7);
 }
 
@@ -75,7 +79,8 @@ void Menu::insertTaxi() {
         this->taxiCenter->addTaxiCab(cab);
         return;
     }
-        std::cout << "-1" << endl;
+        std::cout << "-1" << std::endl;
+    cout.flush();
 
 }
 
@@ -121,7 +126,8 @@ void Menu::insertTrip() {
         }
     }
 
-        std::cout << "-1" << endl;
+        std::cout << "-1" << std::endl;
+    cout.flush();
 
 }
 
@@ -160,7 +166,8 @@ void Menu::insertTrip() {
 void Menu::getDriverLocation() {
     int idDriver;
     std::cin >> idDriver;
-    std::cout << this->taxiCenter->getDriverLocation(idDriver);
+    std::cout << this->taxiCenter->getDriverLocation(idDriver)<<std::endl;
+    cout.flush();
 }
 
 // move all the drivers to the next node in the trip
