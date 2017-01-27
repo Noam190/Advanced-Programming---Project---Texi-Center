@@ -76,20 +76,12 @@ public:
     //move all the rides one step forward
     void moveAllRidesOneStep();
 
-    //move all the rides to the end point
-    void moveAllRidesToTheEnd();
-
     //get the driver location
     Point getDriverLocation(int id);
-
-    //void sendTrip(int DriverId, Trip* trip);
 
     void clientFunction(int client_socket);
 
     static void* threadFunction(void* element);
-
-    //Trip* getTripById(int driverId);
-
 };
 
 #endif //EX2AP_TAXICENTER_H

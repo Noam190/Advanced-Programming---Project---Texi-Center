@@ -16,6 +16,7 @@ void Menu::run() {
     //cin.ignore();
      do {
          getline(cin, input);
+         trim(input);
          if(this->inputParser->checkInput("manu options", input)) {
             option = stoi(input);
             runOption(option);
@@ -39,9 +40,6 @@ void Menu::runOption(int option) {
         case 4: //get the drivers location
             getDriverLocation();
             break;
-        case 6: //move all the drivers to end
-            moveAllDriversToTheEnd();
-            break;
         case 9:// move the drivers to the next point.
             this->taxiCenter->moveAllRidesOneStep();
             break;
@@ -57,6 +55,7 @@ void Menu::insertTaxi() {
     char manufacturer, color;
 
     getline(cin, input);
+    trim(input);
     if(this->inputParser->checkInput("taxi cab", input)) {
         vector<string> temp;
         boost::split(temp, input, boost::is_any_of(","));
@@ -78,6 +77,7 @@ void Menu::expectingDriver() {
     string input;
     int numOfDrivers;
     getline(cin, input);
+    trim(input);
     if(this->inputParser->checkInput(regex("\\d+"), input)) {
         numOfDrivers = stoi(input);
         for (int i = 0; i < numOfDrivers; ++i) {
@@ -98,6 +98,7 @@ void Menu::insertTrip() {
     int timeOfStart;
 
     getline(cin, input);
+    trim(input);
     if(this->inputParser->checkInput("trip", input)) {
         vector<string> temp;
         boost::split(temp, input, boost::is_any_of(","));
@@ -161,6 +162,7 @@ void Menu::getDriverLocation() {
     string input;
     int idDriver;
     getline(cin, input);
+    trim(input);
     if(this->inputParser->checkInput(regex("\\d+"), input)) {
         idDriver = stoi(input);
         try {
@@ -173,17 +175,12 @@ void Menu::getDriverLocation() {
     std::cout << "-1" << endl;
 }
 
-// move all the drivers to the next node in the trip
-void Menu::moveAllDriversToTheEnd() {
-    this->taxiCenter->moveAllRidesToTheEnd();
-}
-
 //constructor to a new
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
     inputParser->addRegex("taxi cab", "\\d+,[12],[FHTS],[RBGWP]");
     inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,[1-9]\\d*");
-    inputParser->addRegex("manu options", "[1234679]");
+    inputParser->addRegex("manu options", "[123479]");
 
 }
 

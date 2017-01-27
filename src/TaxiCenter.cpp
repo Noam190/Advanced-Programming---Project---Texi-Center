@@ -89,15 +89,6 @@ Point TaxiCenter::getDriverLocation(int id) {
     throw -1;
 }
 
-//move all the rides to the end point
-void TaxiCenter::moveAllRidesToTheEnd() {
-    while(rides.size() > 0) {
-        rides.front()->moveToTheEnd();
-        freeDrivers.push_back(rides.front()->getDriver());
-        delete rides[0];
-        rides.erase(rides.begin());
-    }
-}
 
 //get a taxi from the list by vehicle id
 TaxiCab * TaxiCenter::getTaxi(int idVehicle) {
@@ -287,4 +278,14 @@ void TaxiCenter::addClient() {
 //void TaxiCenter::clientFunction(Driver *d, int client_socket) {
 //    this->clients.insert(pair<int, int>(d->getId(), client_socket));
 //    this->clientFunction(d);
+//}
+
+////move all the rides to the end point
+//void TaxiCenter::moveAllRidesToTheEnd() {
+//    while(rides.size() > 0) {
+//        rides.front()->moveToTheEnd();
+//        freeDrivers.push_back(rides.front()->getDriver());
+//        delete rides[0];
+//        rides.erase(rides.begin());
+//    }
 //}
