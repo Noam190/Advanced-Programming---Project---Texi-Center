@@ -86,7 +86,7 @@ Point TaxiCenter::getDriverLocation(int id) {
             return (*it)->getDriverLocation();
         }
     }
-    return Point(-8,-8);
+    throw -1;
 }
 
 //move all the rides to the end point

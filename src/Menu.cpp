@@ -160,7 +160,11 @@ void Menu::getDriverLocation() {
     getline(cin, input);
     if(this->inputParser->checkInput(regex("\\d+"), input)) {
         idDriver = stoi(input);
-        std::cout << this->taxiCenter->getDriverLocation(idDriver);
+        try {
+            std::cout << this->taxiCenter->getDriverLocation(idDriver);
+        } catch (...) {
+            std::cout << -1 << std::endl;
+        }
         return;
     }
     std::cout << "-1" << endl;
