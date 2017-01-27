@@ -12,10 +12,54 @@
 
 INITIALIZE_EASYLOGGINGPP
 
+vector<NodeMatrix*>* deleteObsticales(vector<NodeMatrix *> *obstacles) {
+    for (int i = 0; i < obstacles->size(); ++i) {
+        delete (*obstacles)[i];
+    }
+    delete obstacles;
+    return NULL;
+}
+
+vector<NodeMatrix*>* getObsticals(InputParser* inputParser, long width, long height) {
+    vector<NodeMatrix *> *obstacles = new vector<NodeMatrix *>();
+
+    string input;
+    int numOfObstacles;
+    long x;
+    long y;
+    //num of obstacles
+    getline(cin, input);
+    if (!inputParser->checkInput(regex("^[1-9][0-9]*$"), input)) {
+        return NULL;
+    }
+    numOfObstacles = stoi(input);
+    while (numOfObstacles > 0) {
+        input.clear();
+        getline(cin, input);
+        if (inputParser->checkInput(regex("\\d*,\\d*"), input)) {
+            vector<string> temp;
+            boost::split(temp, input, boost::is_any_of(","));
+            x = stol(temp[0]);
+            y = stol(temp[1]);
+            if (x >= 0 && x < width && y >= 0 && x < height) {
+                NodeMatrix *n = new NodeMatrix(x, y);
+                obstacles->push_back(n);
+                numOfObstacles--;
+            } else {
+                return deleteObsticales(obstacles);
+            }
+
+        } else {
+            return deleteObsticales(obstacles);
+        }
+
+    }
+    return obstacles;
+}
+
 
 //create obstacles from the input arguments
 vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* height) {
-    vector<NodeMatrix *> *obstacles = NULL;
     string inputGrid;
     getline(cin, inputGrid);
     if (inputParser->checkInput(regex("\\d* \\d*"), inputGrid)) {
@@ -24,47 +68,13 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
         *width = stol(temp[0]);
         *height = stol(temp[1]);
         if (*height > 0 && *width > 0) {
-            string input;
-            int numOfObstacles;
-            long x;
-            long y;
-            obstacles = new vector<NodeMatrix *>();
-            //num of obstacles
-            getline(cin, input);
-            if (inputParser->checkInput(regex("\\d*"), input)) {
-                numOfObstacles = stoi(input);
-                if (numOfObstacles > 0) {
-                    while (numOfObstacles > 0) {
-                        input.clear();
-                        getline(cin, input);
-                        if (inputParser->checkInput(regex("\\d*,\\d*"), input)) {
-                            temp.clear();
-                            boost::split(temp, input, boost::is_any_of(","));
-                            x = stol(temp[0]);
-                            y = stol(temp[1]);
-                            if (x >= 0 && x < *width && y >= 0 && x < *height) {
-                                NodeMatrix *n = new NodeMatrix(x, y);
-                                obstacles->push_back(n);
-                                numOfObstacles--;
-                            } else {
-                                for (int i = 0; i < obstacles->size(); ++i) {
-                                    delete (*obstacles)[i];
-                                }
-                                delete obstacles;
-                                return NULL;
-                            }
-                        }
-                    }
-                }
-            }
+            return getObsticals(inputParser, *width, *height);
         } else {
             return NULL;
         }
     } else {
         return NULL;
     }
-
-    return obstacles;
 }
 
 int main(int argc, char *argv[]) {
