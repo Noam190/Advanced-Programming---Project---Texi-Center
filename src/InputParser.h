@@ -13,10 +13,10 @@ using namespace std;
 class InputParser {
 private:
     map<string, regex>* regexes;
-    const regex taxiCab = regex("\\d*,\\d*,[H,F,T,S],[R,B,G,W,P]");
-    const regex trip = regex("\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
-    const regex grid = regex("\\d* \\d*");
-    const regex driver = regex("\\d*,\\d*,[M,D,W,S],\\d*,\\d*");
+//    const regex taxiCab = regex("\\d*,\\d*,[H,F,T,S],[R,B,G,W,P]");
+//    const regex trip = regex("\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
+//    const regex grid = regex("\\d* \\d*");
+//    const regex driver = regex("\\d*,\\d*,[M,D,W,S],\\d*,\\d*");
 public:
     InputParser();
     void addRegex(string key, string regex);
