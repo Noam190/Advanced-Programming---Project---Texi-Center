@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     TcpServer* tcp = new TcpServer(portNum);
     tcp->start();
 
-    ThreadPool* tripThreadPool= new ThreadPool(3);
+    ThreadPool* tripThreadPool= new ThreadPool(5);
 
 
     Clock* clock = new Clock();

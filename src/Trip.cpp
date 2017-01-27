@@ -112,10 +112,7 @@ void Trip::setPath(std::vector<Point*>* pathPoints){
 }
 //getters ang setters
 bool Trip::hasPath(){
-    if(this->path==NULL){
-        return false;
-    }
-    return true;
+    return this->path != NULL;
 }
 
 Trip::~Trip() {

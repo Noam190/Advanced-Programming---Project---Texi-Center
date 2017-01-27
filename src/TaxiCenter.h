@@ -28,7 +28,7 @@ private:
     std::vector<Trip*> freeTrips;
     std::vector<pthread_t> clientsThreads;
     std::map<int, pair<Trip*, char> > tripByDrivers;
-    std::map<int, pthread_t> tripThreads;
+    //std::map<int, pthread_t> tripThreads;
     pthread_mutex_t map_locker;
 
 
@@ -60,7 +60,7 @@ public:
     TaxiCab * getTaxi(int idVehicle);
 
     //add a trip to the center
-    void insertTrip(struct tripAndThread t);
+    void insertTrip(Trip *t);
 
     //remove a driver to the center
     void removeDriver(int id);

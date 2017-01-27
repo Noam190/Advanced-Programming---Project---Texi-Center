@@ -4,9 +4,9 @@
 
 #include "TripCreator.h"
 //help to create a trip
-tripAndThread createTrip(Matrix *grid, int id, long xStart,
-         long yStart, long xEnd, long yEnd, int numOfPass,
-         double tariff, int timeOfStart, ThreadPool* tripThreadPool){
+Trip * createTrip(Matrix *grid, int id, long xStart,
+                  long yStart, long xEnd, long yEnd, int numOfPass,
+                  double tariff, int timeOfStart, ThreadPool *tripThreadPool){
 
     Point* start = new Point(xStart, yStart);
     Point* end = new Point(xEnd, yEnd);
@@ -15,15 +15,15 @@ tripAndThread createTrip(Matrix *grid, int id, long xStart,
 
     PathAgrs* args = new PathAgrs(grid, *start, *end, trip);
 
-    Job* job=new Job(calculatePath, args);
+    Job* job= new Job(calculatePath, args);
     tripThreadPool->addJob(job);
 
     //    pthread_t ptId = createThread(calculatePath, args);
-    tripAndThread t;
-     t.trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
-    t.ptId = -1;
+//    tripAndThread t;
+//     t.trip = new Trip(id, 0, numOfPass, tariff, start, end, timeOfStart);
+//    t.ptId = -1;
 
-    return t;
+    return trip;
 }
 
  void * calculatePath (void *pathArgs) {
@@ -45,7 +45,10 @@ tripAndThread createTrip(Matrix *grid, int id, long xStart,
         pathPoints->push_back(new Point(p.x(), p.y()));
         pathNodes.pop_front();
     }
+
+    args->trip->setPath(pathPoints);
+
     delete args;
-    return  pathPoints;
+    return NULL;
 }
 

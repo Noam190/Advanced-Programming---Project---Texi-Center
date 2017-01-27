@@ -39,9 +39,9 @@ void TaxiCenter::addTaxiCab(TaxiCab* taxi) {
 }
 
 //add a trip to the center
-void TaxiCenter::insertTrip(tripAndThread t) {
-    this->tripThreads.insert(pair<int, pthread_t>(t.trip->getId(), t.ptId));
-    this->freeTrips.push_back(t.trip);
+void TaxiCenter::insertTrip(Trip *t) {
+    //this->tripThreads.insert(pair<int, pthread_t>(t.trip->getId(), t.ptId));
+    this->freeTrips.push_back(t);
 }
 
 //remove a driver to the center
@@ -152,8 +152,8 @@ void TaxiCenter::createRides() {
                     }
                     //pthread_join(ptId, &status);
 
-                    std::vector<Point*>* pathPoints = (vector<Point*> *) status;//TODO update path from job
-                    freeTrips[j]->setPath(pathPoints);
+//                    std::vector<Point*>* pathPoints = (vector<Point*> *) status;
+//                    freeTrips[j]->setPath(pathPoints);
 
                     Ride* r = new Ride(freeTrips[j], freeDrivers[i]);
                     rides.push_back(r);

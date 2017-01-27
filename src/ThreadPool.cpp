@@ -19,8 +19,8 @@ void ThreadPool::doJobs() {
             jobs_queue.pop();
             pthread_mutex_unlock(&lock);
             job->execute();
-        }
-        else {
+
+        } else {
             pthread_mutex_unlock(&lock);
             sleep(1);
         }

@@ -99,7 +99,7 @@ void Menu::insertTrip() {
             tariff = stoi(temp[6]);
 
             //create the trip
-            tripAndThread newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
+            Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
                                numOfPass, tariff, timeOfStart,tripThreadPool);
 
             taxiCenter->insertTrip(newTrip);
@@ -155,9 +155,9 @@ void Menu::moveAllDriversToTheEnd() {
 
 //constructor to a new
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid,
-           InputParser *inputParser, ThreadPool* tripThreadPool)
+           InputParser *inputParser, ThreadPool* tripThreadPool, Job* arr,int numInJobs)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser),
-          tripThreadPool(tripThreadPool){
+          tripThreadPool(tripThreadPool), numInJobs(numInJobs){
     inputParser->addRegex("taxi cab", "\\d*,[1,2],[M,F,T,S],[R,B,G,W,P]");
     inputParser->addRegex("trip", "\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*,\\d*");
 
