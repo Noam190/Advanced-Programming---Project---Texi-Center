@@ -33,7 +33,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
             getline(cin, input);
             if (inputParser->checkInput(regex("\\d*"), input)) {
                 numOfObstacles = stoi(input);
-                if (numOfObstacles >= 0) {
+                if (numOfObstacles > 0) {
                     while (numOfObstacles > 0) {
                         input.clear();
                         getline(cin, input);
@@ -53,13 +53,8 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
                                 delete obstacles;
                                 return NULL;
                             }
-
                         }
-                        return NULL;
-
                     }
-                    return obstacles;
-
                 }
             }
         } else {
@@ -68,6 +63,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
     } else {
         return NULL;
     }
+
     return obstacles;
 }
 
