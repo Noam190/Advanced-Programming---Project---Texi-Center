@@ -108,6 +108,9 @@ void Menu::insertTrip() {
         yEnd = stol(temp[4]);
         timeOfStart = stoi(temp[7]);
         if (checkPoint(xStart, yEnd) && checkPoint(xEnd, yEnd)) {
+            if (xStart == xEnd && yStart == yEnd) {
+                return;
+            }
             numOfPass = stoi(temp[5]);
             tariff = stoi(temp[6]);
 
