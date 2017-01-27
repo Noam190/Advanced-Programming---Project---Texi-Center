@@ -21,18 +21,19 @@ vector<NodeMatrix*>* deleteObsticales(vector<NodeMatrix *> *obstacles) {
 }
 
 vector<NodeMatrix*>* getObsticals(InputParser* inputParser, long width, long height) {
-    vector<NodeMatrix *> *obstacles = new vector<NodeMatrix *>();
+    vector<NodeMatrix *> *obstacles;
 
     string input;
-    int numOfObstacles;
+    long numOfObstacles;
     long x;
     long y;
     //num of obstacles
     getline(cin, input);
-    if (!inputParser->checkInput(regex("^[1-9][0-9]*$"), input)) {
+    if (!inputParser->checkInput(regex("\\d*"), input)) {
         return NULL;
     }
     numOfObstacles = stoi(input);
+    obstacles = new vector<NodeMatrix *>((unsigned long) numOfObstacles);
     while (numOfObstacles > 0) {
         input.clear();
         getline(cin, input);
