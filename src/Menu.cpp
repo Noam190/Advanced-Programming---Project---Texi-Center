@@ -185,7 +185,7 @@ Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, Threa
 }
 
 bool Menu::checkPoint(long x, long y){
-    if(x >= 0 && x < this->grid->getWidth() && y >= 0 && x < this->grid->getHeight()){
+    if(x >= 0 && x < this->grid->getWidth() && y >= 0 && y < this->grid->getHeight()){
         return !this->grid->isObstacle(x, y);
     }
     return false;
