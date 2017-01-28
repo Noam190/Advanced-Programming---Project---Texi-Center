@@ -108,7 +108,7 @@ void Menu::insertTrip() {
         xEnd = stol(temp[3]);
         yEnd = stol(temp[4]);
         timeOfStart = stoi(temp[7]);
-        if (checkPoint(xStart, xEnd) && checkPoint(xEnd, yEnd)) {
+        if (checkPoint(xStart, yStart) && checkPoint(xEnd, yEnd)) {
             if (xStart == xEnd && yStart == yEnd) {
                 return;
             }
