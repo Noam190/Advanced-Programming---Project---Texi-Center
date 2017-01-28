@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(Taxi-Center)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x  -pthread -DELPP_THREAD_SAFE")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -pthread -DELPP_THREAD_SAFE -DELPP_DISABLE_LOGS")
 
 set(BOOST_ROOT CACHE PATH "/usr/include/boost/")
 find_package(Boost 1.58.0 COMPONENTS serialization system regex)
