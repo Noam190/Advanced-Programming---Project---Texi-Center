@@ -116,8 +116,8 @@ void Menu::insertTrip() {
             tariff = stoi(temp[6]);
 
             //create the trip
-            Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd,
-                               numOfPass, tariff, timeOfStart,tripThreadPool);
+            Trip* newTrip = createTrip(grid, id, xStart, yStart, xEnd, yEnd, numOfPass, tariff, timeOfStart,
+                                       tripThreadPool, taxiCenter);
 
             taxiCenter->insertTrip(newTrip);
             return;

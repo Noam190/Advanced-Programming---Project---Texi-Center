@@ -7,20 +7,15 @@
 
 
 #include "../Trip.h"
+#include "../TaxiCenter.h"
 #include "../core/Matrix.h"
 #include "ThreadCreator.h"
 #include "../TaxiCenter.h"
 #include "../Job.h"
 #include "../ThreadPool.h"
-
-struct tripAndThread {
-    Trip* trip;
-    int ptId;
-};
-
 //help to create a trip
-Trip * createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd,
-                  long yEnd, int numOfPass, double tariff, int timeOfStart, ThreadPool *tripThreadPool);
+Trip *createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long yEnd, int numOfPass, double tariff,
+                 int timeOfStart, ThreadPool *tripThreadPool, TaxiCenter *taxiCenter);
 
 void * calculatePath(void *pathArgs);
 
@@ -32,8 +27,10 @@ public:
     Point* start;
     Point* end;
     Trip* trip;
+    TaxiCenter* taxiCenter;
 
-    PathAgrs(Matrix *grid, Point start,  Point end, Trip* trip) : grid(grid), trip(trip) {
+    PathAgrs(Matrix *grid, Point start,  Point end, Trip* trip, TaxiCenter* taxiCenter)
+            : grid(grid), trip(trip), taxiCenter(taxiCenter) {
         this->start = new Point(start.x(), start.y());
         this->end = new Point(end.x(), end.y());
     }

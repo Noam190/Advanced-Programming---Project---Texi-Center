@@ -5,13 +5,11 @@
 #ifndef EX2AP_TAXICENTER_H
 #define EX2AP_TAXICENTER_H
 
-#define NONE 0
-
 #include <vector>
 #include <boost/tuple/tuple.hpp>
 #include <map>
 #include "persons/Driver.h"
-#include  "cabs/TaxiCab.h"
+#include "cabs/TaxiCab.h"
 #include "Trip.h"
 #include "Ride.h"
 #include "sockets/TcpServer.h"

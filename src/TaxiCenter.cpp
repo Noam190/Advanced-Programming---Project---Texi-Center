@@ -58,6 +58,7 @@ void TaxiCenter::removeDriver(int id) {
 void TaxiCenter::removeTrip(int id) {
     for (vector<Trip*>::iterator it = freeTrips.begin(); it != freeTrips.end(); ++it) {
         if((*it)->getId() == id) {
+            delete (*it);
             this->freeTrips.erase(it);
             return;
         }
