@@ -6,12 +6,12 @@
 #include <boost/algorithm/string.hpp>
 
 #define ELPP_THREAD_SAFE
-#include "logging/easylogging++.h"
+/*#include "logging/easylogging++.h"*/
 #include "Job.h"
 #include "ThreadPool.h"
-
+/*
 INITIALIZE_EASYLOGGINGPP
-
+*/
 vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     for (int i = 0; i < obstacles->size(); ++i) {
         delete (*obstacles)[i];
@@ -86,7 +86,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
 }
 
 int main(int argc, char *argv[]) {
-    START_EASYLOGGINGPP(argc, argv);
+/*    START_EASYLOGGINGPP(argc, argv);
     el::Configurations defaultConf;
     defaultConf.setToDefault();
     // Values are always std::string
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     defaultConf.setGlobally(
             el::ConfigurationType::Format, "%level %msg");
     el::Loggers::reconfigureLogger("default", defaultConf);
-
+*/
     int portNum = atoi(argv[1]);
     TcpServer* tcp = new TcpServer(portNum);
     tcp->start();
