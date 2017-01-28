@@ -179,7 +179,7 @@ void Menu::getDriverLocation() {
 Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
     inputParser->addRegex("taxi cab", "\\d+,[12],[FHTS],[RBGWP]");
-    inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,[1-9]\\d*");
+    inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,(?:\\d*\\.)?\\d+,[1-9]\\d*");
     inputParser->addRegex("manu options", "[123479]");
 
 }

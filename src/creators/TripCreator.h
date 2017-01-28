@@ -15,7 +15,7 @@
 #include "../ThreadPool.h"
 //help to create a trip
 Trip *createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long yEnd, int numOfPass, double tariff,
-                 int timeOfStart, ThreadPool *tripThreadPool, TaxiCenter *taxiCenter);
+                 int timeOfStart, ThreadPool *tripThreadPool, class TaxiCenter *taxiCenter);
 
 void * calculatePath(void *pathArgs);
 
@@ -27,7 +27,7 @@ public:
     Point* start;
     Point* end;
     Trip* trip;
-    TaxiCenter* taxiCenter;
+    class TaxiCenter* taxiCenter;
 
     PathAgrs(Matrix *grid, Point start,  Point end, Trip* trip, TaxiCenter* taxiCenter)
             : grid(grid), trip(trip), taxiCenter(taxiCenter) {
