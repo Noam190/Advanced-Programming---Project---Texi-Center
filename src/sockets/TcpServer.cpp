@@ -1,7 +1,7 @@
 
 #include <map>
 #include "TcpServer.h"
-#include "../logging/easylogging++.h"
+/*#include "../logging/easylogging++.h"*/
 
 TcpServer::TcpServer(int port) {
 	this->port = port;
@@ -16,10 +16,10 @@ int TcpServer::start() {
 	// Socketing TCP
 	this->server_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (this->server_socket == -1) {
-        LOG(ERROR) << ">> Failure: opening socket.";
+/*        LOG(ERROR) << ">> Failure: opening socket.";*/
         return ERROR_SOCKET;
     } else {
-        LOG(DEBUG) << ">> Successfully opened socket.";
+/*        LOG(DEBUG) << ">> Successfully opened socket.";*/
     }
 	// Server details
 	memset(&this->server_details, 0, sizeof(this->server_details));
@@ -30,18 +30,18 @@ int TcpServer::start() {
 
 	// Binding
 	if (bind(this->server_socket, (struct sockaddr*)&this->server_details, sizeof(struct sockaddr)) < 0) {
-        LOG(ERROR) << ">> Failure: binding.";
+/*        LOG(ERROR) << ">> Failure: binding.";*/
         return ERROR_BIND;
 	} else {
-        LOG(DEBUG) << ">> Successfully binded.";
+/*        LOG(DEBUG) << ">> Successfully binded.";*/
     }
 
 	// Listening
 	if(listen(this->server_socket, this->capacity) < 0) {
-        LOG(ERROR) << ">> Failure: listening.";
+/*        LOG(ERROR) << ">> Failure: listening.";*/
         return ERROR_LISTEN;
     }
-    LOG(DEBUG) << ">> Server is listening on port: " << this->port << ".";
+/*    LOG(DEBUG) << ">> Server is listening on port: " << this->port << ".";*/
     this->online = true;
     return CORRECT;
 }
@@ -57,7 +57,7 @@ TcpServer::~TcpServer() {
     }
 
 	delete this->clients;
-    LOG(DEBUG) << "close SERVER";
+ /*   LOG(DEBUG) << "close SERVER";*/
 }
 
 
@@ -82,14 +82,14 @@ int TcpServer::connectClient() {
 
             // Push the client to the list
             this->clients->push_back(data);
-            LOG(DEBUG) << ">> accepting new client.";
+/*            LOG(DEBUG) << ">> accepting new client.";*/
             return data->client;
         } else {
-            LOG(ERROR) << ">> Failure: accepting client.";
+/*            LOG(ERROR) << ">> Failure: accepting client.";*/
             return ERROR_ACCEPT;
         }
     }
-    LOG(ERROR) << ">> Failure: accepting client - out of capacity.";
+/*    LOG(ERROR) << ">> Failure: accepting client - out of capacity.";*/
     return ERROR_CAPACITY;
 }
 

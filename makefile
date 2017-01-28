@@ -5,13 +5,13 @@
 
 all: server.out client.out
 
-server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o
-	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o -pthread -lboost_serialization
+server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o InputParser.o Job.o ThreadPool.o
+	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o InputParser.o Job.o ThreadPool.o -pthread -lboost_serialization -lboost_regex-mt
 
-client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o
-	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o -pthread -lboost_serialization
+client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o InputParser.o Job.o ThreadPool.o
+	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o InputParser.o TcpServer.o Job.o ThreadPool.o -pthread -lboost_serialization -lboost_regex-mt
 
-client.o: src/client.cpp src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h
+client.o: src/client.cpp src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h src/InputParser.h
 	g++ -g -c src/client.cpp
 
 server.o: src/server.cpp src/TaxiCenter.h src/Menu.h src/core/Matrix.h
@@ -31,6 +31,15 @@ Driver.o: src/persons/Driver.cpp src/persons/Driver.h src/persons/Person.h src/T
 
 DriverCreator.o: src/creators/DriverCreator.cpp src/persons/Driver.h src/TaxiCenter.h
 	g++ -g -c -std=c++0x src/creators/DriverCreator.cpp
+
+InputParser.o: src/InputParser.cpp src/InputParser.h
+	g++ -g -c -std=c++0x src/InputParser.cpp
+
+Job.o: src/Job.cpp src/Job.h
+	g++ -g -c -std=c++0x src/Job.cpp
+
+ThreadPool.o: src/ThreadPool.cpp src/ThreadPool.h src/Job.h
+	g++ -g -c -std=c++0x src/ThreadPool.cpp
 
 LuxuryCab.o: src/cabs/LuxuryCab.cpp src/cabs/LuxuryCab.h src/cabs/TaxiCab.h
 	g++ -g -c -std=c++0x src/cabs/LuxuryCab.cpp
@@ -74,7 +83,7 @@ TaxiCreator.o: src/creators/TaxiCreator.cpp src/creators/TaxiCreator.h src/cabs/
 Trip.o: src/Trip.cpp src/Trip.h src/core/Point.h
 	g++ -g -c -std=c++0x src/Trip.cpp
 
-TripCreator.o: src/creators/TripCreator.cpp src/creators/TripCreator.h src/Trip.h src/core/Matrix.h src/creators/ThreadCreator.h
+TripCreator.o: src/creators/TripCreator.cpp src/creators/TripCreator.h src/Trip.h src/core/Matrix.h src/creators/ThreadCreator.h src/Job.h src/ThreadPool.h
 	g++ -g -c -std=c++0x src/creators/TripCreator.cpp
 
 ThreadCreator.o: src/creators/ThreadCreator.cpp src/creators/ThreadCreator.h src/core/Matrix.h src/persons/Driver.h src/Serialization.h src/TaxiCenter.h

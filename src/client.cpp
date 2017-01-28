@@ -20,11 +20,12 @@ Driver* insertDriver() {
     if(inputParser.checkInput(regex("\\d\\d*,\\d*,[M,D,W,S],\\d\\d*,\\d\\d*"), input)) {
         vector<string> temp;
         boost::split(temp, input, boost::is_any_of(","));
-        id = stoi(temp[0]);
-        age = stoi(temp[1]);
+        id =atoi(temp[0].c_str());
+
+        age = atoi(temp[1].c_str());
         status = temp[2][0];
-        experience = stoi(temp[3]);
-        vehicleId = stoi(temp[4]);
+        experience = atoi(temp[3].c_str());
+        vehicleId = atoi(temp[4].c_str());
         Driver *d = createDriver(id, age, status, experience, vehicleId);
         return d;
     }
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]) {
     Driver* driver = insertDriver();
 
 
-    TcpClient* tcpClient = new TcpClient(argv[1], stoi(argv[2]));
+    TcpClient* tcpClient = new TcpClient(argv[1],atoi(argv[2]) );
     tcpClient->Connect();
 
     std::cout<<"start serialize \n";

@@ -6,12 +6,12 @@
 #include <boost/algorithm/string.hpp>
 
 #define ELPP_THREAD_SAFE
-#include "logging/easylogging++.h"
+/*#include "logging/easylogging++.h"*/
 #include "Job.h"
 #include "ThreadPool.h"
-
+/*
 INITIALIZE_EASYLOGGINGPP
-
+*/
 vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     for (int i = 0; i < obstacles->size(); ++i) {
         delete (*obstacles)[i];
@@ -33,7 +33,8 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
     if (!inputParser->checkInput(regex("\\d+"), input)) {
         return NULL;
     }
-    numOfObstacles = stoi(input);
+   // numOfObstacles = stoi(input);
+    numOfObstacles =atoi(input.c_str());
     while (numOfObstacles > 0) {
         input.clear();
         getline(cin, input);
@@ -41,8 +42,10 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
         if (inputParser->checkInput(regex("\\d+,\\d+"), input)) {
             vector<string> temp;
             boost::split(temp, input, boost::is_any_of(","));
-            x = stol(temp[0]);
-            y = stol(temp[1]);
+            //x = stol(temp[0]);
+            x =atol(temp[0].c_str());
+           // y = stoll(temp[1]);
+            y =atol(temp[1].c_str());
             if (x >= 0 && x < width && y >= 0 && x < height) {
                 NodeMatrix *n = new NodeMatrix(x, y);
                 obstacles->push_back(n);
@@ -68,8 +71,10 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
     if (inputParser->checkInput(regex("\\d+ \\d+"), inputGrid)) {
         vector<string> temp;
         boost::split(temp, inputGrid, boost::is_any_of(" "));
-        *width = stol(temp[0]);
-        *height = stol(temp[1]);
+       // *width = stol(temp[0]);
+        *width =atol(temp[0].c_str());
+       // *height = stol(temp[1]);
+        *height =atol(temp[1].c_str());
         if (*height > 0 && *width > 0) {
             return getObstacles(inputParser, *width, *height);
         } else {
@@ -81,7 +86,7 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
 }
 
 int main(int argc, char *argv[]) {
-    START_EASYLOGGINGPP(argc, argv);
+ /*   START_EASYLOGGINGPP(argc, argv);
     el::Configurations defaultConf;
     defaultConf.setToDefault();
     // Values are always std::string
@@ -94,7 +99,7 @@ int main(int argc, char *argv[]) {
     defaultConf.setGlobally(
             el::ConfigurationType::Format, "%level %msg");
     el::Loggers::reconfigureLogger("default", defaultConf);
-
+*/
 
     int portNum = atoi(argv[1]);
     TcpServer* tcp = new TcpServer(portNum);
