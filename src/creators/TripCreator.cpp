@@ -43,7 +43,10 @@ Trip *createTrip(Matrix *grid, int id, long xStart, long yStart, long xEnd, long
 
          args->trip->setPath(pathPoints);
      } else {
+         pthread_mutex_lock(&args->lock);
          args->taxiCenter->removeTrip(args->trip->getId());
+         pthread_mutex_unlock(&args->lock);
+
      }
 
     delete args;

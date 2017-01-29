@@ -6,10 +6,10 @@
 all: server.out client.out
 
 server.out: server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o InputParser.o Job.o ThreadPool.o
-	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o InputParser.o Job.o ThreadPool.o -pthread -lboost_serialization -lboost_regex-mt -DELPP_THREAD_SAFE -DELPP_DISABLE_LOGS
+	g++ -g -o server.out server.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpServer.o ThreadCreator.o InputParser.o Job.o ThreadPool.o easylogging.o -pthread -lboost_serialization -lboost_regex-mt -DELPP_THREAD_SAFE -DELPP_DISABLE_LOGS
 
 client.out: client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o TcpServer.o InputParser.o Job.o ThreadPool.o
-	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o InputParser.o TcpServer.o Job.o ThreadPool.o -pthread -lboost_serialization -lboost_regex-mt -DELPP_THREAD_SAFE -DELPP_DISABLE_LOGS
+	g++ -g -o client.out client.o Point.o Node.o Matrix.o BFS.o NodeMatrix.o Driver.o Passenger.o TaxiCab.o Trip.o LuxuryCab.o StandardCab.o Statistics.o Person.o TaxiCenter.o Vehicle.o TripCreator.o TaxiCreator.o DriverCreator.o Menu.o Ride.o Clock.o TcpClient.o ThreadCreator.o InputParser.o TcpServer.o Job.o ThreadPool.o easylogging.o -pthread -lboost_serialization -lboost_regex-mt -DELPP_THREAD_SAFE -DELPP_DISABLE_LOGS
 
 client.o: src/client.cpp src/persons/Driver.h src/creators/DriverCreator.h src/sockets/TcpClient.h src/Serialization.h src/InputParser.h
 	g++ -g -c src/client.cpp
@@ -97,6 +97,9 @@ TcpServer.o: src/sockets/TcpServer.h src/sockets/TcpServer.cpp
 
 TcpClient.o: src/sockets/TcpClient.h src/sockets/TcpClient.cpp
 	g++ -g -c -std=c++0x src/sockets/TcpClient.cpp
+
+easylogging.o: log/easylogging++.cpp log/easylogging++.h
+    g++ -g -c -std=c++0x log/easylogging++.cpp
 
 clean:
 	rm -f *.o *.out

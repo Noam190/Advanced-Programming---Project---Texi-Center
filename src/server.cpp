@@ -5,12 +5,10 @@
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
-#define ELPP_THREAD_SAFE
-#include "logging/easylogging++.h"
-#include "Job.h"
-#include "ThreadPool.h"
+//#define ELPP_THREAD_SAFE
+#include "logging/easyloggingpp++.h"
 
-INITIALIZE_EASYLOGGINGPP
+_INITIALIZE_EASYLOGGINGPP
 
 vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     for (int i = 0; i < obstacles->size(); ++i) {
@@ -33,8 +31,7 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
     if (!inputParser->checkInput(regex("\\d+"), input)) {
         return NULL;
     }
-   // numOfObstacles = stoi(input);
-    numOfObstacles =atoi(input.c_str());
+    numOfObstacles = atoi(input.c_str());
     while (numOfObstacles > 0) {
         input.clear();
         getline(cin, input);
@@ -42,10 +39,8 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
         if (inputParser->checkInput(regex("\\d+,\\d+"), input)) {
             vector<string> temp;
             boost::split(temp, input, boost::is_any_of(","));
-            //x = stol(temp[0]);
-            x =atol(temp[0].c_str());
-           // y = stoll(temp[1]);
-            y =atol(temp[1].c_str());
+            x = atol(temp[0].c_str());
+            y = atol(temp[1].c_str());
             if (x >= 0 && x < width && y >= 0 && x < height) {
                 NodeMatrix *n = new NodeMatrix(x, y);
                 obstacles->push_back(n);
@@ -62,7 +57,6 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
     return obstacles;
 }
 
-
 //create obstacles from the input arguments
 vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* height) {
     string inputGrid;
@@ -71,10 +65,8 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
     if (inputParser->checkInput(regex("\\d+ \\d+"), inputGrid)) {
         vector<string> temp;
         boost::split(temp, inputGrid, boost::is_any_of(" "));
-       // *width = stol(temp[0]);
-        *width =atol(temp[0].c_str());
-       // *height = stol(temp[1]);
-        *height =atol(temp[1].c_str());
+        *width = atol(temp[0].c_str());
+        *height = atol(temp[1].c_str());
         if (*height > 0 && *width > 0) {
             return getObstacles(inputParser, *width, *height);
         } else {
@@ -85,33 +77,34 @@ vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* he
     }
 }
 
+using namespace easyloggingpp;
 int main(int argc, char *argv[]) {
-    START_EASYLOGGINGPP(argc, argv);
-    el::Configurations defaultConf;
+    _START_EASYLOGGINGPP(argc, argv);
+    Configurations defaultConf;
     defaultConf.setToDefault();
     // Values are always std::string
-    defaultConf.set(el::Level::Info,
-                    el::ConfigurationType::Format, "%datetime %level %msg");
+    defaultConf.set(Level::Info,
+                    ConfigurationType::Format, "%datetime %level %msg");
     // default logger uses default configurations
-    el::Loggers::reconfigureLogger("default", defaultConf);
+    Loggers::reconfigureLogger("default", defaultConf);
     LOG(INFO) << "SERVER LOG: \n";
-    // To set GLOBAL configurations you may use
-    defaultConf.setGlobally(
-            el::ConfigurationType::Format, "%level %msg");
-    el::Loggers::reconfigureLogger("default", defaultConf);
+//    // To set GLOBAL configurations you may use
+//    defaultConf.setGlobally(
+//            ConfigurationType::Format, "%level >> %msg");
+//    Loggers::reconfigureLogger("default", defaultConf);
 
     int portNum = atoi(argv[1]);
-    TcpServer* tcp = new TcpServer(portNum);
+    TcpServer *tcp = new TcpServer(portNum);
     tcp->start();
 
-    ThreadPool* tripThreadPool= new ThreadPool(5);
+    ThreadPool *tripThreadPool = new ThreadPool(5);
 
 
-    Clock* clock = new Clock();
-    TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp);
-    InputParser* inputParser = new InputParser();
+    Clock *clock = new Clock();
+    TaxiCenter *taxiCenter = new TaxiCenter(clock, tcp);
+    InputParser *inputParser = new InputParser();
 
-    long width = -1  , height = -1;
+    long width = -1, height = -1;
     vector<NodeMatrix *> *obstacles = NULL;
     do {
         obstacles = getGridArgs(inputParser, &width, &height);
@@ -121,7 +114,7 @@ int main(int argc, char *argv[]) {
     } while (obstacles == NULL);
     Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
     for (int i = 0; i < obstacles->size(); ++i) {
-        Node* n = (*obstacles)[i];
+        Node *n = (*obstacles)[i];
         grid->addObstacle(n);
         delete n;
     }
@@ -138,30 +131,4 @@ int main(int argc, char *argv[]) {
     delete tcp;
     delete inputParser;
     return 0;
-
-
 }
-
-
-//Node* n  = grid->getNode(4, 34);
-//std::list<Node*> l = n->getNeighbors();
-//while (!l.empty()){
-//std::cout << *(l.front()) << std::endl;
-//l.pop_front();
-//}
-
-//    //thread
-//    pthread_t t1;
-//    int * data = new int;
-//    *data = 2;
-//    int status = pthread_create(&t1, NULL, printTry, (void*) data);
-//    if (status)
-//    {
-//        std::cout<<" error";
-//    }
-
-//void *printTry( void *ptr )
-//{
-//    int message = *((int*) ptr);
-//    cout << "test seoond thread" << message << "\n";
-//}

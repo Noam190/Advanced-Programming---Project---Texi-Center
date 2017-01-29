@@ -28,14 +28,18 @@ public:
     Point* end;
     Trip* trip;
     class TaxiCenter* taxiCenter;
+    pthread_mutex_t lock;
+
 
     PathAgrs(Matrix *grid, Point start,  Point end, Trip* trip, TaxiCenter* taxiCenter)
             : grid(grid), trip(trip), taxiCenter(taxiCenter) {
+        pthread_mutex_init(&lock, NULL);
         this->start = new Point(start.x(), start.y());
         this->end = new Point(end.x(), end.y());
     }
 
     ~PathAgrs(){
+        pthread_mutex_destroy(&lock);
         delete start;
         delete end;
     }
