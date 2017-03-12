@@ -55,8 +55,8 @@ vector<NodeMatrix*>* getObstacles(std::string obsecalesInput,int numObstacles,
             if (x >= 0 && x < width && y >= 0 && x < height) {
                 NodeMatrix *n = new NodeMatrix(x, y);
                 obstacles->push_back(n);
-                numObstacles--;
                 counterStringParse++;
+                numObstacles--;
             } else {
                 return deleteObstacles(obstacles);
             }
