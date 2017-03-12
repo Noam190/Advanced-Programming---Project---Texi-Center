@@ -28,6 +28,7 @@ private:
     std::map<int, pair<Trip*, char> > tripByDrivers;
     //std::map<int, pthread_t> tripThreads;
     pthread_mutex_t map_locker;
+    int guiNum;
 
 
     struct ClientData {
@@ -80,6 +81,11 @@ public:
     void clientFunction(int client_socket);
 
     static void* threadFunction(void* element);
-};
+
+    void addGuiClient();
+
+    int getGuiNum();
+
+    };
 
 #endif //EX2AP_TAXICENTER_H
