@@ -82,7 +82,7 @@ public:
 
     static void* threadFunction(void* element);
 
-   // void addGuiClient();
+    string getGuiDriverLocationString();
 
     int getGuiNum();
 

@@ -27,3 +27,9 @@ ostream& operator<<(ostream &os, const Point &p) {
 bool Point::operator==(const Point &p) const {
     return ((xVal == p.x()) && (yVal == p.y()));
 }
+
+string Point::toString() {
+    string str =  "" + this->xVal;
+    str += "," + this->yVal;
+    return str;
+}

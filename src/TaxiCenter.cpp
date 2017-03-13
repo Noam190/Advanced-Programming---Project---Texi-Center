@@ -264,3 +264,25 @@ void TaxiCenter::addClient() {
 int TaxiCenter::getGuiNum(){
     return this->guiNum;
 }
+
+string TaxiCenter::getGuiDriverLocationString() {
+    string str = "";
+    for (int i = 0; i < freeDrivers.size(); ++i) {
+        str += " ";
+        int id = freeDrivers[i]->getId();
+        str += id;
+        Point p = freeDrivers[i]->getCurrentLocation();
+        str += p.toString();
+
+
+    }
+    for (int j = 0; j < rides.size() ; ++j) {
+        Driver* d = rides[j]->getDriver();
+        str += " ";
+        int id = d->getId();
+        str += id;
+        Point p = d->getCurrentLocation();
+        str += p.toString();
+    }
+    return str;
+}
