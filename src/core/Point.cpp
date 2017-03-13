@@ -1,6 +1,7 @@
 
 #include "Point.h"
 #include <iostream>
+#include <sstream>
 
 // Constructor uses int x and y values
 Point::Point(long x, long y) : xVal(x), yVal(y) {}
@@ -29,7 +30,8 @@ bool Point::operator==(const Point &p) const {
 }
 
 string Point::toString() {
-    string str =  "" + this->xVal;
-    str += "," + this->yVal;
-    return str;
+    std::ostringstream str;
+    str<<" "<<this->xVal<<","<<this->yVal;
+    std::string str1 = str.str();
+    return str1;
 }
