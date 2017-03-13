@@ -37,7 +37,7 @@ private:
     };
 public:
     //constructor
-    TaxiCenter(Clock *clock, TcpServer* tcp);
+    TaxiCenter(Clock *clock, TcpServer* tcp,int guiNum);
 
     ~TaxiCenter();
 
@@ -82,7 +82,7 @@ public:
 
     static void* threadFunction(void* element);
 
-    void addGuiClient();
+   // void addGuiClient();
 
     int getGuiNum();
 

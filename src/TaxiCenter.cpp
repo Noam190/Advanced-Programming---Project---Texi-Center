@@ -102,8 +102,8 @@ TaxiCab * TaxiCenter::getTaxi(int idVehicle) {
     return NULL;
 }
 
-TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp)
-        : clock(clock),tcp(tcp) {
+TaxiCenter::TaxiCenter(Clock *clock, TcpServer* tcp,int guiNum)
+        : clock(clock),tcp(tcp),guiNum(guiNum) {
     pthread_mutex_init(&this->map_locker, 0);
 
 }
@@ -260,16 +260,19 @@ void TaxiCenter::addClient() {
     pthread_t pthread = createThread(threadFunction, clientData);
     this->clientsThreads.push_back(pthread);
 }
-void TaxiCenter::addGuiClient() {
-    ClientData* clientData = new ClientData;
-    clientData->client_socket = tcp->connectClient();
-    clientData->taxiCenter = this;
-
-    guiNum=clientData->client_socket;
-}
 int TaxiCenter::getGuiNum(){
     return this->guiNum;
 }
+//void TaxiCenter::addGuiClient() {
+//    ClientData* clientData = new ClientData;
+//    clientData->client_socket = tcp->connectClient();
+//    clientData->taxiCenter = this;
+//
+//    guiNum=clientData->client_socket;
+//}
+//int TaxiCenter::getGuiNum(){
+//    return this->guiNum;
+//}
 
 
 //void TaxiCenter::sendTrip(int driverId, Trip *trip) {

@@ -71,7 +71,8 @@ vector<NodeMatrix*>* getObstacles(std::string obsecalesInput,int numObstacles,
 
 
 //create obstacles from the input arguments
-vector<NodeMatrix*>* getGridArgs(char* inputArgs,InputParser* inputParser, long* width, long* height) {
+vector<NodeMatrix*>* getGridArgs(string inputArgs,InputParser* inputParser, long* width,
+                                 long* height) {
     //gridWidth gridHeight*numObstecal*
     vector<string> tempParse;
     std::string str(inputArgs);
@@ -98,11 +99,7 @@ vector<NodeMatrix*>* getGridArgs(char* inputArgs,InputParser* inputParser, long*
     }
 }
 
-void expectingGui(TaxiCenter* taxiCenter) {
 
-    taxiCenter->addGuiClient();
-
-}
 int main(int argc, char *argv[]) {
 /*    START_EASYLOGGINGPP(argc, argv);
     el::Configurations defaultConf;
@@ -123,30 +120,25 @@ int main(int argc, char *argv[]) {
     tcp->start();
 
     ThreadPool* tripThreadPool= new ThreadPool(5);
+    int guiNum=tcp->connectClient();
 
     Clock* clock = new Clock();
-    TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp);
+    TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp,guiNum);
     InputParser* inputParser = new InputParser();
 
     //adding Gui as a client***********************************************************
-    expectingGui(taxiCenter);
-    GridAndObstecalesArgs* gridAndObstecalesArgs;
+
 
     long readBytes;
     char buffer[120000];
 
-    readBytes = tcp->receiveData(buffer, sizeof(buffer),taxiCenter->getGuiNum());
-    std::string gridAndObstecalesArgsStr(buffer, readBytes);
-    //deserialize receive gui
-    gridAndObstecalesArgs = deserialize<GridAndObstecalesArgs>(gridAndObstecalesArgsStr);
-
-
-
-
+//    readBytes = tcp->receiveData(buffer, sizeof(buffer),guiNum);
+//    std::string gridAndObstecalesArgsStr(buffer, readBytes);
+    std::string stringToGui="";
     long width = -1  , height = -1;
     vector<NodeMatrix *> *obstacles = NULL;
     do {
-        obstacles = getGridArgs(gridAndObstecalesArgs->getString(),inputParser, &width, &height);
+        obstacles = getGridArgs(stringToGui,inputParser, &width, &height);
         if (obstacles == NULL) {
             std::cout << "-1" << std::endl;
         }
