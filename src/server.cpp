@@ -9,7 +9,6 @@
 /*#include "logging/easylogging++.h"*/
 #include "Job.h"
 #include "ThreadPool.h"
-#include "GridAndObstecalesArgs.h"
 
 /*
 INITIALIZE_EASYLOGGINGPP
@@ -150,7 +149,7 @@ int main(int argc, char *argv[]) {
         delete n;
     }
     delete obstacles;
-
+    tcp->sendData(stringToGui,guiNum);
     Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool);
     //run all the other inputs
     menu.run();
