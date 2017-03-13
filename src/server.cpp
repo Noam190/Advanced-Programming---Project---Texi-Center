@@ -102,8 +102,8 @@ int main(int argc, char *argv[]) {
             stringToGui = "";
         }
     } while (obstacles == NULL);
-
-    std::cout << "gui check string:" << stringToGui << std::endl;
+    stringToGui += "\n";
+    std::cout << "gui check string:" << stringToGui << "check \\n" << std::endl;
 
     tcp->sendData(stringToGui, guiPort);
 

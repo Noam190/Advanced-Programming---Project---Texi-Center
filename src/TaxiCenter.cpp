@@ -284,5 +284,5 @@ string TaxiCenter::getGuiDriverLocationString() {
         Point p = d->getCurrentLocation();
         str += p.toString();
     }
-    return str;
+    return str + "\n";
 }

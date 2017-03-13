@@ -31,7 +31,7 @@ bool Point::operator==(const Point &p) const {
 
 string Point::toString() {
     std::ostringstream str;
-    str<<" "<<this->xVal<<","<<this->yVal;
+    str<<this->xVal<<","<<this->yVal;
     std::string str1 = str.str();
     return str1;
 }

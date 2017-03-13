@@ -46,7 +46,7 @@ void Menu::runOption(int option) {
         case 4: //get the drivers location
             getDriverLocation();
             break;
-        case 9:// move the drivers to the next point.
+        case 9: // move the drivers to the next point.
             moveOneStep();
             break;
         default:
@@ -82,6 +82,8 @@ void Menu::insertTaxi() {
     }
 
     std::cout << "-1" << endl;
+    tcp->sendData("error", guiPort);
+
 }
 
 //expecting a new driver from the client
@@ -98,6 +100,8 @@ void Menu::expectingDriver() {
         return;
     }
     std::cout << "-1" << endl;
+    tcp->sendData("error", guiPort);
+
 }
 
 //insert a new trip from the input arguments
@@ -136,6 +140,8 @@ void Menu::insertTrip() {
         }
     }
     std::cout << "-1" << endl;
+    tcp->sendData("error", guiPort);
+
 }
 
 //get the driver location from the input arguments
@@ -150,10 +156,14 @@ void Menu::getDriverLocation() {
             std::cout << this->taxiCenter->getDriverLocation(idDriver);
         } catch (...) {
             std::cout << -1 << std::endl;
+            tcp->sendData("error", guiPort);
+
         }
         return;
     }
     std::cout << "-1" << endl;
+    tcp->sendData("error", guiPort);
+
 }
 
 //constructor to a new
