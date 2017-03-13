@@ -260,47 +260,7 @@ void TaxiCenter::addClient() {
     pthread_t pthread = createThread(threadFunction, clientData);
     this->clientsThreads.push_back(pthread);
 }
+
 int TaxiCenter::getGuiNum(){
     return this->guiNum;
 }
-//void TaxiCenter::addGuiClient() {
-//    ClientData* clientData = new ClientData;
-//    clientData->client_socket = tcp->connectClient();
-//    clientData->taxiCenter = this;
-//
-//    guiNum=clientData->client_socket;
-//}
-//int TaxiCenter::getGuiNum(){
-//    return this->guiNum;
-//}
-
-
-//void TaxiCenter::sendTrip(int driverId, Trip *trip) {
-//    int client_socket = this->clients[driverId];
-//    this->tcp->sendData("T", client_socket);
-//    //serialize taxi
-//    string serial_str_trip = serialize(trip);
-//    //sent back the taxi
-//    this->tcp->sendData(serial_str_trip, client_socket);
-//}
-
-
-
-//Trip* TaxiCenter::getTripById(int driverId) {
-//    return this->drivers_trips.at(driverId);
-//}
-
-//void TaxiCenter::clientFunction(Driver *d, int client_socket) {
-//    this->clients.insert(pair<int, int>(d->getId(), client_socket));
-//    this->clientFunction(d);
-//}
-
-////move all the rides to the end point
-//void TaxiCenter::moveAllRidesToTheEnd() {
-//    while(rides.size() > 0) {
-//        rides.front()->moveToTheEnd();
-//        freeDrivers.push_back(rides.front()->getDriver());
-//        delete rides[0];
-//        rides.erase(rides.begin());
-//    }
-//}

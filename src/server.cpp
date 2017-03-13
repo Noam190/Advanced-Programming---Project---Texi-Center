@@ -5,14 +5,6 @@
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
-#define ELPP_THREAD_SAFE
-/*#include "logging/easylogging++.h"*/
-#include "Job.h"
-#include "ThreadPool.h"
-
-/*
-INITIALIZE_EASYLOGGINGPP
-*/
 vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     for (int i = 0; i < obstacles->size(); ++i) {
         delete (*obstacles)[i];
@@ -21,41 +13,36 @@ vector<NodeMatrix*>* deleteObstacles(vector<NodeMatrix *> *obstacles) {
     return NULL;
 }
 
-vector<NodeMatrix*>* getObstacles(std::string obsecalesInput,int numObstacles,
-                              InputParser *inputParser, long width, long height) {
+vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long height, string* guiStr) {
     vector<NodeMatrix *> *obstacles = new vector<NodeMatrix *>();
     ;
     string input;
-   // long numOfObstacles;
+    long numOfObstacles;
     long x;
     long y;
-//    //num of obstacles
-//    getline(cin, input);
-//    trim(input);
-//    if (!inputParser->checkInput(regex("\\d+"), input)) {
-//        return NULL;
-//    }
-   // numOfObstacles = stoi(input);
-    //numOfObstacles =atoi(input.c_str());
-    vector<string> tempStringParse;
-    std::string str(obsecalesInput);
-    boost::split(tempStringParse, str, boost::is_any_of("-"));
-    int counterStringParse=0;
+    //num of obstacles
+    getline(cin, input);
+    trim(input);
+    if (!inputParser->checkInput(regex("\\d+"), input)) {
+        return NULL;
+    }
+    *guiStr += " " + input + " ";
 
-    while (numObstacles > 0) {
-        input=tempStringParse[counterStringParse];
+    numOfObstacles = atoi(input.c_str());
+    while (numOfObstacles > 0) {
+        input.clear();
+        getline(cin, input);
+        trim(input);
         if (inputParser->checkInput(regex("\\d+,\\d+"), input)) {
             vector<string> temp;
             boost::split(temp, input, boost::is_any_of(","));
-            //x = stol(temp[0]);
-            x =atol(temp[0].c_str());
-           // y = stoll(temp[1]);
-            y =atol(temp[1].c_str());
+            x = atol(temp[0].c_str());
+            y = atol(temp[1].c_str());
             if (x >= 0 && x < width && y >= 0 && x < height) {
                 NodeMatrix *n = new NodeMatrix(x, y);
                 obstacles->push_back(n);
-                counterStringParse++;
-                numObstacles--;
+                numOfObstacles--;
+                *guiStr += input + "-";
             } else {
                 return deleteObstacles(obstacles);
             }
@@ -69,27 +56,20 @@ vector<NodeMatrix*>* getObstacles(std::string obsecalesInput,int numObstacles,
 }
 
 
-//create obstacles from the input arguments
-vector<NodeMatrix*>* getGridArgs(string inputArgs,InputParser* inputParser, long* width,
-                                 long* height) {
-    //gridWidth gridHeight*numObstecal*
-    vector<string> tempParse;
-    std::string str(inputArgs);
-    boost::split(tempParse, str, boost::is_any_of("*"));
 
-    string inputGrid=tempParse[0];
-   // trim(inputGrid);
+//create obstacles from the input arguments
+vector<NodeMatrix*>* getGridArgs(InputParser* inputParser, long* width, long* height, string* guiStr) {
+    string inputGrid;
+    getline(cin, inputGrid);
+    trim(inputGrid);
     if (inputParser->checkInput(regex("\\d+ \\d+"), inputGrid)) {
+        *guiStr += inputGrid;
         vector<string> temp;
         boost::split(temp, inputGrid, boost::is_any_of(" "));
-       // *width = stol(temp[0]);
-        *width =atol(temp[0].c_str());
-       // *height = stol(temp[1]);
-        *height =atol(temp[1].c_str());
+        *width = atol(temp[0].c_str());
+        *height = atol(temp[1].c_str());
         if (*height > 0 && *width > 0) {
-            int numObstecale=atoi(tempParse[1]);
-            std::string obsecalesInput= tempParse[2];
-            return getObstacles(obsecalesInput,numObstecale,inputParser, *width, *height);
+            return getObstacles(inputParser, *width, *height, guiStr);
         } else {
             return NULL;
         }
@@ -100,48 +80,34 @@ vector<NodeMatrix*>* getGridArgs(string inputArgs,InputParser* inputParser, long
 
 
 int main(int argc, char *argv[]) {
-/*    START_EASYLOGGINGPP(argc, argv);
-    el::Configurations defaultConf;
-    defaultConf.setToDefault();
-    // Values are always std::string
-    defaultConf.set(el::Level::Info,
-                    el::ConfigurationType::Format, "%datetime %level %msg");
-    // default logger uses default configurations
-    el::Loggers::reconfigureLogger("default", defaultConf);
-    LOG(INFO) << "SERVER LOG: \n";
-    // To set GLOBAL configurations you may use
-    defaultConf.setGlobally(
-            el::ConfigurationType::Format, "%level %msg");
-    el::Loggers::reconfigureLogger("default", defaultConf);
-*/
-    int portNum = atoi(argv[1]);
-    TcpServer* tcp = new TcpServer(portNum);
-    tcp->start();
-
-    ThreadPool* tripThreadPool= new ThreadPool(5);
-    int guiNum=tcp->connectClient();
-
-    Clock* clock = new Clock();
-    TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp,guiNum);
-    InputParser* inputParser = new InputParser();
-
-    //adding Gui as a client***********************************************************
-
-
-    long readBytes;
-    char buffer[120000];
-
-//    readBytes = tcp->receiveData(buffer, sizeof(buffer),guiNum);
-//    std::string gridAndObstecalesArgsStr(buffer, readBytes);
-    std::string stringToGui="";
     long width = -1  , height = -1;
+    ThreadPool* tripThreadPool= new ThreadPool(5);
+    Clock* clock = new Clock();
+    InputParser* inputParser = new InputParser();
+    TcpServer* tcp = new TcpServer(atoi(argv[1]));
+    tcp->start();
+    //adding Gui as a client***********************************************************
+    int guiPort = tcp->connectClient();
+    //int guiPort = 0;
+    TaxiCenter* taxiCenter = new TaxiCenter(clock, tcp, guiPort);
+
+
+    // check th grid args
+    std::string stringToGui = "";
     vector<NodeMatrix *> *obstacles = NULL;
     do {
-        obstacles = getGridArgs(stringToGui,inputParser, &width, &height);
+        obstacles = getGridArgs(inputParser, &width, &height, &stringToGui);
         if (obstacles == NULL) {
             std::cout << "-1" << std::endl;
+            stringToGui = "";
         }
     } while (obstacles == NULL);
+
+    std::cout << "gui check string:" << stringToGui << std::endl;
+
+    tcp->sendData(stringToGui, guiPort);
+
+    // create matrix
     Matrix *grid = new Matrix((unsigned) width, (unsigned) height);
     for (int i = 0; i < obstacles->size(); ++i) {
         Node* n = (*obstacles)[i];
@@ -149,8 +115,8 @@ int main(int argc, char *argv[]) {
         delete n;
     }
     delete obstacles;
-    tcp->sendData(stringToGui,guiNum);
-    Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool);
+
+    Menu menu = Menu(taxiCenter, grid, inputParser, tripThreadPool, guiPort, tcp);
     //run all the other inputs
     menu.run();
 
@@ -161,30 +127,4 @@ int main(int argc, char *argv[]) {
     delete tcp;
     delete inputParser;
     return 0;
-
-
 }
-
-
-//Node* n  = grid->getNode(4, 34);
-//std::list<Node*> l = n->getNeighbors();
-//while (!l.empty()){
-//std::cout << *(l.front()) << std::endl;
-//l.pop_front();
-//}
-
-//    //thread
-//    pthread_t t1;
-//    int * data = new int;
-//    *data = 2;
-//    int status = pthread_create(&t1, NULL, printTry, (void*) data);
-//    if (status)
-//    {
-//        std::cout<<" error";
-//    }
-
-//void *printTry( void *ptr )
-//{
-//    int message = *((int*) ptr);
-//    cout << "test seoond thread" << message << "\n";
-//}
