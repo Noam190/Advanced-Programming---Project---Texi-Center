@@ -22,9 +22,9 @@ void Menu::run() {
         if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
             option = atoi(buffer);
             runOption(option);
-            if (option != 9) {
-                tcp->sendData("valid", guiPort);
-            }
+//            if (option != 9) {
+//                tcp->sendData("valid", guiPort);
+//            }
         } else {
             std::cout << "-1" << endl;
             tcp->sendData("error", guiPort);
@@ -62,15 +62,21 @@ void Menu::moveOneStep() {
 
 //insert a new taxi from the input arguments
 void Menu::insertTaxi() {
+    long readBytes;
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
     string input;
     int id, taxiType;
     char manufacturer, color;
 
-    getline(cin, input);
-    trim(input);
-    if(this->inputParser->checkInput("taxi cab", input)) {
+//    getline(cin, input);
+//    trim(input);
+    tcp->sendData("valid", guiPort);
+    readBytes = tcp->receiveData(buffer, 8192, guiPort);
+
+    if(readBytes > 0 && this->inputParser->checkInput("taxi cab", buffer)) {
         vector<string> temp;
-        boost::split(temp, input, boost::is_any_of(","));
+        boost::split(temp, buffer, boost::is_any_of(","));
         id = stoi(temp[0]);
         taxiType = stoi(temp[1]);
         manufacturer = temp[2][0];
@@ -88,12 +94,19 @@ void Menu::insertTaxi() {
 
 //expecting a new driver from the client
 void Menu::expectingDriver() {
+    long readBytes;
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
     string input;
     int numOfDrivers;
-    getline(cin, input);
-    trim(input);
-    if(this->inputParser->checkInput(regex("\\d+"), input)) {
-        numOfDrivers = stoi(input);
+//    getline(cin, input);
+//    trim(input);
+
+    tcp->sendData("valid", guiPort);
+    readBytes = tcp->receiveData(buffer, 8192, guiPort);
+
+    if(readBytes > 0 && this->inputParser->checkInput(regex("\\d+"), buffer)) {
+        numOfDrivers = atoi(buffer);
         for (int i = 0; i < numOfDrivers; ++i) {
             taxiCenter->addClient();
         }
@@ -106,6 +119,9 @@ void Menu::expectingDriver() {
 
 //insert a new trip from the input arguments
 void Menu::insertTrip() {
+    long readBytes;
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
     string input;
     int id;
     long xStart, yStart, xEnd, yEnd;
@@ -113,11 +129,15 @@ void Menu::insertTrip() {
     double tariff;
     int timeOfStart;
 
-    getline(cin, input);
-    trim(input);
-    if(this->inputParser->checkInput("trip", input)) {
+//    getline(cin, input);
+//    trim(input);
+
+    tcp->sendData("valid", guiPort);
+    readBytes = tcp->receiveData(buffer, 8192, guiPort);
+
+    if(readBytes > 0 && this->inputParser->checkInput("trip", buffer)) {
         vector<string> temp;
-        boost::split(temp, input, boost::is_any_of(","));
+        boost::split(temp, buffer, boost::is_any_of(","));
         id = stoi(temp[0]);
         xStart = stol(temp[1]);
         yStart = stol(temp[2]);
@@ -146,12 +166,19 @@ void Menu::insertTrip() {
 
 //get the driver location from the input arguments
 void Menu::getDriverLocation() {
+    long readBytes;
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
     string input;
     int idDriver;
-    getline(cin, input);
-    trim(input);
-    if(this->inputParser->checkInput(regex("\\d+"), input)) {
-        idDriver = stoi(input);
+//    getline(cin, input);
+//    trim(input);
+
+    tcp->sendData("valid", guiPort);
+    readBytes = tcp->receiveData(buffer, 8192, guiPort);
+
+    if(readBytes > 0 && this->inputParser->checkInput(regex("\\d+"), buffer)) {
+        idDriver = stoi(buffer);
         try {
             std::cout << this->taxiCenter->getDriverLocation(idDriver);
         } catch (...) {

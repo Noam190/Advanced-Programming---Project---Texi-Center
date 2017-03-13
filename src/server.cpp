@@ -38,7 +38,7 @@ vector<NodeMatrix*>* getObstacles(InputParser *inputParser, long width, long hei
             boost::split(temp, input, boost::is_any_of(","));
             x = atol(temp[0].c_str());
             y = atol(temp[1].c_str());
-            if (x >= 0 && x < width && y >= 0 && x < height) {
+            if (x >= 0 && x < width && y >= 0 && y < height) {
                 NodeMatrix *n = new NodeMatrix(x, y);
                 obstacles->push_back(n);
                 numOfObstacles--;
