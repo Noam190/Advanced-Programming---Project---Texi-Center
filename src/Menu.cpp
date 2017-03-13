@@ -22,7 +22,9 @@ void Menu::run() {
         if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
             option = atoi(buffer);
             runOption(option);
-            tcp->sendData("valid", guiPort);
+            if (option != 9) {
+                tcp->sendData("valid", guiPort);
+            }
         } else {
             std::cout << "-1" << endl;
             tcp->sendData("error", guiPort);
@@ -45,11 +47,17 @@ void Menu::runOption(int option) {
             getDriverLocation();
             break;
         case 9:// move the drivers to the next point.
-            this->taxiCenter->moveAllRidesOneStep();
+            moveOneStep();
             break;
         default:
             return;
     }
+}
+
+void Menu::moveOneStep() {
+    this->taxiCenter->moveAllRidesOneStep();
+    string guiDriverLocationString =  this->taxiCenter->getGuiDriverLocationString();
+    tcp->sendData(guiDriverLocationString, guiPort);
 }
 
 //insert a new taxi from the input arguments
@@ -166,5 +174,7 @@ bool Menu::checkPoint(long x, long y){
     }
     return false;
 }
+
+
 
 

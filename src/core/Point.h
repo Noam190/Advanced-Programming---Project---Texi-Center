@@ -20,12 +20,13 @@ private:
 public:
     Point() : xVal(0), yVal(0) {}
 
-
     // Constructor uses int x and y values
     Point(long x, long y);
 
     //constructor uses Point p
     Point(const Point &p);
+
+    string toString();
 
     //get x
     long x()const;

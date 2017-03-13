@@ -39,8 +39,7 @@ public:
     //run the funcs with input
     void run();
 
-    //create obstacles from the input arguments
-    //void getObstacles();
+    void moveOneStep();
 
     //insert a new driver from the input arguments
     void expectingDriver();
