@@ -9,19 +9,23 @@
 
 //  run the input to the program
 void Menu::run() {
-    string input;
+    //string input;
+    long readBytes;
+    char buffer[8192];
+    std::fill_n(buffer, 8192, 0);
     int option = 0;
 
-    //getObstacles();
-    //cin.ignore();
-     do {
-         getline(cin, input);
-         trim(input);
-         if(this->inputParser->checkInput("manu options", input)) {
-            option = stoi(input);
+    do {
+//         getline(cin, input);
+//         trim(input);
+        readBytes = tcp->receiveData(buffer, 8192, guiPort);
+        if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
+            option = atoi(buffer);
             runOption(option);
+            tcp->sendData("valid", guiPort);
         } else {
             std::cout << "-1" << endl;
+            tcp->sendData("error", guiPort);
         }
     } while (option != 7);
 }
@@ -126,37 +130,6 @@ void Menu::insertTrip() {
     std::cout << "-1" << endl;
 }
 
-////create obstacles from the input arguments
-//void Menu::getObstacles() {
-//    string input;
-//    int numOfObstacles;
-//    long x;
-//    long y;
-//    //num of obstacles
-//    getline(cin, input);
-//    if(this->inputParser->checkInput(regex("\\d*"), input)) {
-//        numOfObstacles = stoi(input);
-//        if (numOfObstacles >= 0) {
-//            while (numOfObstacles > 0) {
-//                input.clear();
-//                getline(cin, input);
-//                if(this->inputParser->checkInput(regex("\\d*,\\d*"), input)) {
-//                    vector<string> temp;
-//                    boost::split(temp, input, boost::is_any_of(","));
-//                    x = stol(temp[0]);
-//                    y = stol(temp[1]);
-//                    if (checkPoint(x, y)) {
-//                        Node *n = new NodeMatrix(x, y);
-//                        this->grid->addObstacle(n);
-//                        delete n;
-//                        numOfObstacles--;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
-
 //get the driver location from the input arguments
 void Menu::getDriverLocation() {
     string input;
@@ -176,8 +149,11 @@ void Menu::getDriverLocation() {
 }
 
 //constructor to a new
-Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool)
+Menu::Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser, ThreadPool* tripThreadPool,
+           int guiPort, TcpServer* tcp)
         : grid(grid), taxiCenter(taxiCenter), inputParser(inputParser), tripThreadPool(tripThreadPool){
+    this->tcp = tcp;
+    this->guiPort = guiPort;
     inputParser->addRegex("taxi cab", "\\d+,[12],[FHTS],[RBGWP]");
     inputParser->addRegex("trip", "\\d+,\\d+,\\d+,\\d+,\\d+,\\d+,(?:\\d*\\.)?\\d+,[1-9]\\d*");
     inputParser->addRegex("manu options", "[123479]");

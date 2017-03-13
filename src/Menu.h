@@ -21,6 +21,8 @@
 
 class Menu {
 private:
+    int guiPort;
+    TcpServer* tcp;
     InputParser* inputParser;
     Matrix *grid;
     TaxiCenter *taxiCenter;
@@ -32,7 +34,7 @@ public:
 
     //constructor to a new
     Menu(TaxiCenter *taxiCenter, Matrix *grid, InputParser *inputParser,
-         ThreadPool* tripThreadPool);
+         ThreadPool* tripThreadPool, int guiPort, TcpServer* tcp);
 
     //run the funcs with input
     void run();
