@@ -271,6 +271,7 @@ string TaxiCenter::getGuiDriverLocationString() {
         str += " ";
         int id = freeDrivers[i]->getId();
         str += id;
+        str+="-";
         Point p = freeDrivers[i]->getCurrentLocation();
         str += p.toString();
 
@@ -281,6 +282,7 @@ string TaxiCenter::getGuiDriverLocationString() {
         str += " ";
         int id = d->getId();
         str += id;
+        str+="-";
         Point p = d->getCurrentLocation();
         str += p.toString();
     }

@@ -100,6 +100,7 @@ int main(int argc, char *argv[]) {
         if (obstacles == NULL) {
             std::cout << "-1" << std::endl;
             stringToGui = "";
+
         }
     } while (obstacles == NULL);
     stringToGui += "\n";

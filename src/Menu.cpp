@@ -21,6 +21,7 @@ void Menu::run() {
         readBytes = tcp->receiveData(buffer, 8192, guiPort);
         if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
             option = atoi(buffer);
+            cout<<"hiiiiiiiiiii"<<option;
             runOption(option);
 //            if (option != 9) {
 //                tcp->sendData("valid", guiPort);
