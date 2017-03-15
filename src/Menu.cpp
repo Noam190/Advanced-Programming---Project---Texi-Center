@@ -12,12 +12,12 @@ void Menu::run() {
     //string input;
     long readBytes;
     char buffer[8192];
-    std::fill_n(buffer, 8192, 0);
     int option = 0;
 
     do {
 //         getline(cin, input);
 //         trim(input);
+        std::fill_n(buffer, 8192, 0);
         readBytes = tcp->receiveData(buffer, 8192, guiPort);
         if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
             option = atoi(buffer);
@@ -85,6 +85,7 @@ void Menu::insertTaxi() {
         //create the taxi
         TaxiCab *cab = createTaxi(id, taxiType, manufacturer, color);
         this->taxiCenter->addTaxiCab(cab);
+        tcp->sendData("valid\n", guiPort);
         return;
     }
 
@@ -157,8 +158,11 @@ void Menu::insertTrip() {
                                        tripThreadPool, taxiCenter);
 
             taxiCenter->insertTrip(newTrip);
+            tcp->sendData("valid\n", guiPort);
             return;
         }
+        std::cout << "-1" << endl;
+        tcp->sendData("error\n", guiPort);
     }
     std::cout << "-1" << endl;
     tcp->sendData("error\n", guiPort);
@@ -187,6 +191,7 @@ void Menu::getDriverLocation() {
             tcp->sendData("error\n", guiPort);
 
         }
+        tcp->sendData("valid\n", guiPort);
         return;
     }
     std::cout << "-1" << endl;
