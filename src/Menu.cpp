@@ -21,14 +21,14 @@ void Menu::run() {
         readBytes = tcp->receiveData(buffer, 8192, guiPort);
         if(readBytes > 0 && this->inputParser->checkInput("manu options", buffer)) {
             option = atoi(buffer);
-            cout<<"hiiiiiiiiiii"<<option;
+            cout<<"hiiiiiiiiiii"<< option << endl;
             runOption(option);
 //            if (option != 9) {
 //                tcp->sendData("valid", guiPort);
 //            }
         } else {
             std::cout << "-1" << endl;
-            tcp->sendData("error", guiPort);
+            tcp->sendData("error\n", guiPort);
         }
     } while (option != 7);
 }
@@ -72,7 +72,7 @@ void Menu::insertTaxi() {
 
 //    getline(cin, input);
 //    trim(input);
-    tcp->sendData("valid", guiPort);
+    tcp->sendData("valid\n", guiPort);
     readBytes = tcp->receiveData(buffer, 8192, guiPort);
 
     if(readBytes > 0 && this->inputParser->checkInput("taxi cab", buffer)) {
@@ -89,7 +89,7 @@ void Menu::insertTaxi() {
     }
 
     std::cout << "-1" << endl;
-    tcp->sendData("error", guiPort);
+    tcp->sendData("error\n", guiPort);
 
 }
 
@@ -103,7 +103,7 @@ void Menu::expectingDriver() {
 //    getline(cin, input);
 //    trim(input);
 
-    tcp->sendData("valid", guiPort);
+    tcp->sendData("valid\n", guiPort);
     readBytes = tcp->receiveData(buffer, 8192, guiPort);
 
     if(readBytes > 0 && this->inputParser->checkInput(regex("\\d+"), buffer)) {
@@ -114,7 +114,7 @@ void Menu::expectingDriver() {
         return;
     }
     std::cout << "-1" << endl;
-    tcp->sendData("error", guiPort);
+    tcp->sendData("error\n", guiPort);
 
 }
 
@@ -133,7 +133,7 @@ void Menu::insertTrip() {
 //    getline(cin, input);
 //    trim(input);
 
-    tcp->sendData("valid", guiPort);
+    tcp->sendData("valid\n", guiPort);
     readBytes = tcp->receiveData(buffer, 8192, guiPort);
 
     if(readBytes > 0 && this->inputParser->checkInput("trip", buffer)) {
@@ -161,7 +161,7 @@ void Menu::insertTrip() {
         }
     }
     std::cout << "-1" << endl;
-    tcp->sendData("error", guiPort);
+    tcp->sendData("error\n", guiPort);
 
 }
 
@@ -175,7 +175,7 @@ void Menu::getDriverLocation() {
 //    getline(cin, input);
 //    trim(input);
 
-    tcp->sendData("valid", guiPort);
+    tcp->sendData("valid\n", guiPort);
     readBytes = tcp->receiveData(buffer, 8192, guiPort);
 
     if(readBytes > 0 && this->inputParser->checkInput(regex("\\d+"), buffer)) {
@@ -184,13 +184,13 @@ void Menu::getDriverLocation() {
             std::cout << this->taxiCenter->getDriverLocation(idDriver);
         } catch (...) {
             std::cout << -1 << std::endl;
-            tcp->sendData("error", guiPort);
+            tcp->sendData("error\n", guiPort);
 
         }
         return;
     }
     std::cout << "-1" << endl;
-    tcp->sendData("error", guiPort);
+    tcp->sendData("error\n", guiPort);
 
 }
 
